@@ -54,3 +54,17 @@ exports.getCreatePaymentsPayloadTemplate = function() {
 		  }
 		}
 }
+
+exports.getNVPCreatePaymentsPayloadTemplate=function() {
+return {
+	"USER":"Mario1267_api1.gmail.com",
+	"PWD":"6QT974GBLAVZX5AE",
+	"SIGNATURE":"AJBjrAOFeBi.IDmiOFQfhCvLWSn0AbNm-He.J4jVOt3DK39k729LW.bx",
+	"VERSION":"204.0",
+	"METHOD":"SetExpressCheckout",
+	"RETURNURL":"https://android-paypal-ec-server.herokuapp.com/execute-payments",
+	"CANCELURL":"https://android-paypal-ec-server.herokuapp.com/cancel-url",
+	"AMOUNT":"0.01",
+	"PAYMENTACTION":"Sale"
+}
+}

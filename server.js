@@ -27,6 +27,7 @@ const products = require('./products');
 
 const configuration = config.getConfig();
 const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
+const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
 const productsJson = products.getProductsTemplate()
 
 
@@ -49,7 +50,7 @@ function getAccessToken(cb) {
 			  method: 'POST',
 			  url: configuration.ACCESS_TOKEN_URL,
 			  headers: {
-							'authorization': "Basic "+encodedKey,
+							//'authorization': "Basic "+encodedKey,
 							'accept': "application/json",
 							'accept-language': "en_US",
 							'cache-control': "no-cache",
@@ -113,6 +114,11 @@ function buildCreatePaymentPayload(data) {
 
 }
 
+function buildNVPCreatePaymentPayload(data) {
+	var template = createNVPPaymentPayloadTemplates;
+	return template;
+}
+
 function makeid() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -129,10 +135,10 @@ router.post('/create-payments', function(req, res, next) {
 
 	try{
 		
-	 	var payLoad = buildCreatePaymentPayload(req.body);
+	 	var payLoad = buildNVPCreatePaymentPayload(req.body);
 	 	getAccessToken(function(data) {
 
-			var accessToken = JSON.parse(data).access_token;
+			//var accessToken = JSON.parse(data).access_token;
 		
 			var _dataToSend = {
 
@@ -140,15 +146,15 @@ router.post('/create-payments', function(req, res, next) {
 			
 			var options = { 
 			  method: 'POST',
-			  url: configuration.CREATE_PAYMENT_URL,
+			  url: configuration.SETEC_NVP_URL,
 			  headers : {
-					'content-type': "application/json",
-					'authorization': "Bearer "+accessToken,
+					'content-type': "application/x-www-form-urlencoded",
+					//'authorization': "Bearer "+accessToken,
 					'cache-control': "no-cache",
 					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 				},
 				body: payLoad,
-				json:true
+				//json:true
 				
 			}
 			request(options, function (error, response, body) {
