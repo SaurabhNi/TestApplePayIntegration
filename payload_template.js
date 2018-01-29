@@ -64,7 +64,7 @@ return {
 	"METHOD":"SetExpressCheckout",
 	"RETURNURL":"https://android-paypal-ec-server.herokuapp.com/execute-payments",
 	"CANCELURL":"https://android-paypal-ec-server.herokuapp.com/cancel-url",
-	"AMOUNT":"0.01",
+	"AMT":"0.01",
 	"PAYMENTACTION":"Sale"
 }
 }
