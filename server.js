@@ -28,6 +28,7 @@ const products = require('./products');
 const configuration = config.getConfig();
 const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
 const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
+const executeNVPPaymentPayloadTemplates = payLoadTemplate.getNVPExecutePaymentsPayloadTemplate();
 const productsJson = products.getProductsTemplate()
 
 
@@ -119,6 +120,13 @@ function buildNVPCreatePaymentPayload(data) {
 	return template;
 }
 
+function buildNVPExecutePaymentPayload(req) {
+	var template = executeNVPPaymentPayloadTemplates;
+	template.PAYERID=req.query.PayerID;
+	template.TOKEN=req.query.token;
+	return template;
+}
+
 function makeid() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -136,53 +144,16 @@ router.post('/create-payments', function(req, res, next) {
 	try{
 		
 	 	var payLoad = buildNVPCreatePaymentPayload(req.body);
-	 	getAccessToken(function(data) {
-
-			//var accessToken = JSON.parse(data).access_token;
-		
-			var _dataToSend = {
-
-			}
-			
-			var options = { 
-			  method: 'POST',
-			  url: configuration.SETEC_NVP_URL,
-			  headers : {
-					'content-type': "application/x-www-form-urlencoded",
-					//'authorization': "Bearer "+accessToken,
-					'cache-control': "no-cache",
-					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
-				},
-				body: payLoad,
-				//json:true
-				
-			}
-			request.post({url:configuration.SETEC_NVP_URL, form: {	"USER":"Mario1267_api1.gmail.com",
-			"PWD":"6QT974GBLAVZX5AE",
-			"SIGNATURE":"AJBjrAOFeBi.IDmiOFQfhCvLWSn0AbNm-He.J4jVOt3DK39k729LW.bx",
-			"VERSION":"204.0",
-			"METHOD":"SetExpressCheckout",
-			"RETURNURL":"https://android-paypal-ec-server.herokuapp.com/execute-payments",
-			"CANCELURL":"https://android-paypal-ec-server.herokuapp.com/cancel-url",
-			"AMT":"0.01",
-			"PAYMENTACTION":"Sale"}}, function(error,response,body){  if (error) {
-				throw new Error(error);
-			}
-			else{
-			
-				res.send(body);
-			}});
-		// 	request(options, function (error, response, body) {
-		// 	  if (error) {
-		// 	  	throw new Error(error);
-		// 	  }
-		// 	  else{
-			  
-		// 	  	res.send(body);
-		// 	  }
-		// 	});
-			
-		 });
+	 		request.post(
+				 {url:configuration.SETEC_NVP_URL, form: payLoad}, 
+				 function(error,response,body){  
+					 if (error) {
+						throw new Error(error);
+					}
+					else{
+			    		res.send(body);
+					}
+				});
 	}catch(e) {
 		console.log(e)
 	}
@@ -190,51 +161,28 @@ router.post('/create-payments', function(req, res, next) {
 
 router.get('/execute-payments', function(req, res, next) {
 
-	try{
-		var paymentId = req.query.paymentId;
-		var payerId =  req.query.PayerID;
-	
-	 	var payLoad = req.body;
-	 	getAccessToken(function(data) {
-
-			var accessToken = JSON.parse(data).access_token;
-			var _dataToSend = {
-				"payer_id": payerId
+	try{		
+		var payLoad = buildNVPExecutePaymentPayload(req);
+		console.log("Execute payment payload :",payLoad);
+		request.post(
+			{url:configuration.DOEC_NVP_URL, form: payLoad}, function(error,response,body){  if (error) {
+			   throw new Error(error);
+		   }
+		   else{
+			   console.log(body);
+			   console.log(body.ACK);
+				if(body.ACK = 'Success') {
+					res.redirect('/success.html?id='+body.TRANSACTIONID);	
+				}else {
+					res.redirect('/error.html');	
+				}
 			}
-			var options = { 
-			  method: 'POST',
-			  url:  configuration.EXECUTE_PAYMENT_URL.replace('{payment_id}', paymentId),
-			  headers : {
-					'content-type': "application/json",
-					'authorization': "Bearer "+accessToken,
-					'cache-control': "no-cache",
-					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
-				},
-				body: _dataToSend,
-				json:true
-				
-			}
-			
-			request(options, function (error, response, body) {
-			  if (error) {
-			  	throw new Error(error);
-			  }
-			  else{
-			 
-			  	if(body.state = 'approved') {
-			  		res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id);	
-			  	}else {
-			  		res.redirect('/error.html');	
-			  	}
-			  	
-			  }
-			});
-			
-		});
-	}catch(e) {
-		console.log(e)
-	}
-});
+		   });
+	    }catch(e) {
+	   console.log(e)
+   }
+}
+);
 
 
 router.post('/get-payment-details', function(req, res, next) {
