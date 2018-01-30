@@ -8,6 +8,7 @@ var socketio = require('socket.io');
 var express = require('express');
 var request = require("request");
 var bodyParser = require('body-parser');
+var decoder = require('utf8');
 
 
 var router = express();
@@ -170,9 +171,27 @@ router.get('/execute-payments', function(req, res, next) {
 		   }
 		   else{
 			   console.log(body);
-			   console.log(body.ACK);
-				if(body.ACK = 'Success') {
-					res.redirect('/success.html?id='+body.TRANSACTIONID);	
+			   var response = decoder.decode(body);
+			   console.log(response);
+			   var respArray = response.split("&");
+			   var transactionId = "";
+			   var transactionStatus = "";
+			   var respItems;
+			   respArray.forEach(function(respItem){
+				console.log(respItem);   
+				respItems = respItem.split("=");
+				   if(respItems[0]=='TRANSACTIONID')
+				   {
+					   transactionId=respItems[1];
+				   }
+				   if(respItems[0]=='ACK')
+				   {
+					   transactionStatus=respItems[1];
+				   }
+			   });
+			   console.log("Transaction ID :",transactionId);
+				if(transactionStatus == 'Success') {
+					res.redirect('/success.html?id='+transactionId);	
 				}else {
 					res.redirect('/error.html');	
 				}
