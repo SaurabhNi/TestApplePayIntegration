@@ -14,9 +14,10 @@ var decoder = require('utf8');
 var router = express();
 router.use(bodyParser.json());
 var server = http.createServer(router);
-
+var returnCapture = require('./returnCapture.js');
 
 router.use(express.static(path.resolve(__dirname, 'client')));
+router.use('/return',returnCapture);
 var messages = [];
 var sockets = [];
 
