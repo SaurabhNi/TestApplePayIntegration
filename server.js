@@ -53,7 +53,7 @@ function getAccessToken(cb) {
 			  method: 'POST',
 			  url: configuration.ACCESS_TOKEN_URL,
 			  headers: {
-							//'authorization': "Basic "+encodedKey,
+							'authorization': "Basic "+encodedKey,
 							'accept': "application/json",
 							'accept-language': "en_US",
 							'cache-control': "no-cache",
