@@ -141,69 +141,165 @@ function makeid() {
 
 
 
+// router.post('/create-payments', function(req, res, next) {
+
+// 	try{
+		
+// 	 	var payLoad = buildNVPCreatePaymentPayload(req.body);
+// 	 		request.post(
+// 				 {url:configuration.SETEC_NVP_URL, form: payLoad}, 
+// 				 function(error,response,body){  
+// 					 if (error) {
+// 						throw new Error(error);
+// 					}
+// 					else{
+// 			    		res.send(body);
+// 					}
+// 				});
+// 	}catch(e) {
+// 		console.log(e)
+// 	}
+// });
+
 router.post('/create-payments', function(req, res, next) {
 
 	try{
 		
-	 	var payLoad = buildNVPCreatePaymentPayload(req.body);
-	 		request.post(
-				 {url:configuration.SETEC_NVP_URL, form: payLoad}, 
-				 function(error,response,body){  
-					 if (error) {
-						throw new Error(error);
-					}
-					else{
-			    		res.send(body);
-					}
-				});
+	 	var payLoad = buildCreatePaymentPayload(req.body);
+	 	getAccessToken(function(data) {
+
+			var accessToken = JSON.parse(data).access_token;
+		
+			var _dataToSend = {
+
+			}
+			
+			var options = { 
+			  method: 'POST',
+			  url: configuration.CREATE_PAYMENT_URL,
+			  headers : {
+					'content-type': "application/json",
+					'authorization': "Bearer "+accessToken,
+					'cache-control': "no-cache",
+					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
+					//'PayPal-Client-Metadata-Id' : req.body.riskParingId
+				},
+				body: payLoad,
+				json:true
+				
+			}
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			console.log(options.headers)
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			request(options, function (error, response, body) {
+			  if (error) {
+			  	throw new Error(error);
+			  }
+			  else{
+			  
+			  	res.send(body);
+			  }
+			});
+			
+		});
 	}catch(e) {
 		console.log(e)
 	}
 });
 
+// router.get('/execute-payments', function(req, res, next) {
+
+// 	try{		
+// 		var payLoad = buildNVPExecutePaymentPayload(req);
+// 		console.log("Execute payment payload :",payLoad);
+// 		request.post(
+// 			{url:configuration.DOEC_NVP_URL, form: payLoad}, function(error,response,body){  if (error) {
+// 			   throw new Error(error);
+// 		   }
+// 		   else{
+// 			   console.log(body);
+// 			   var response = decoder.decode(body);
+// 			   console.log(response);
+// 			   var respArray = response.split("&");
+// 			   var transactionId = "";
+// 			   var transactionStatus = "";
+// 			   var respItems;
+// 			   respArray.forEach(function(respItem){
+// 				console.log(respItem);   
+// 				respItems = respItem.split("=");
+// 				   if(respItems[0]=='TRANSACTIONID')
+// 				   {
+// 					   transactionId=respItems[1];
+// 				   }
+// 				   if(respItems[0]=='ACK')
+// 				   {
+// 					   transactionStatus=respItems[1];
+// 				   }
+// 			   });
+// 			   console.log("Transaction ID :",transactionId);
+// 				if(transactionStatus == 'Success') {
+// 					res.redirect('/success.html?id='+transactionId);	
+// 				}else {
+// 					res.redirect('/error.html');	
+// 				}
+// 			}
+// 		   });
+// 	    }catch(e) {
+// 	   console.log(e)
+//    }
+// }
+// );
+
 router.get('/execute-payments', function(req, res, next) {
 
-	try{		
-		var payLoad = buildNVPExecutePaymentPayload(req);
-		console.log("Execute payment payload :",payLoad);
-		request.post(
-			{url:configuration.DOEC_NVP_URL, form: payLoad}, function(error,response,body){  if (error) {
-			   throw new Error(error);
-		   }
-		   else{
-			   console.log(body);
-			   var response = decoder.decode(body);
-			   console.log(response);
-			   var respArray = response.split("&");
-			   var transactionId = "";
-			   var transactionStatus = "";
-			   var respItems;
-			   respArray.forEach(function(respItem){
-				console.log(respItem);   
-				respItems = respItem.split("=");
-				   if(respItems[0]=='TRANSACTIONID')
-				   {
-					   transactionId=respItems[1];
-				   }
-				   if(respItems[0]=='ACK')
-				   {
-					   transactionStatus=respItems[1];
-				   }
-			   });
-			   console.log("Transaction ID :",transactionId);
-				if(transactionStatus == 'Success') {
-					res.redirect('/success.html?id='+transactionId);	
-				}else {
-					res.redirect('/error.html');	
-				}
-			}
-		   });
-	    }catch(e) {
-	   console.log(e)
-   }
-}
-);
+	try{
+		var paymentId = req.query.paymentId;
+		var payerId =  req.query.PayerID;
+		
 
+	 	var payLoad = req.body;
+	 	getAccessToken(function(data) {
+
+			var accessToken = JSON.parse(data).access_token;
+			var _dataToSend = {
+				"payer_id": payerId
+			}
+			var options = { 
+			  method: 'POST',
+			  url:  configuration.EXECUTE_PAYMENT_URL.replace('{payment_id}', paymentId),
+			  headers : {
+					'content-type': "application/json",
+					'authorization': "Bearer "+accessToken,
+					'cache-control': "no-cache",
+					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
+				},
+				body: _dataToSend,
+				json:true
+				
+			}
+			
+			request(options, function (error, response, body) {
+			  if (error) {
+			  	throw new Error(error);
+			  }
+			  else{
+			 
+			  	if(body.state = 'approved') {
+		  		    //custom check 
+					var webview = req.query.webview;
+					res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id+"&webview="+webview);	
+			  	}else {
+			  		res.redirect('/error.html?webview='+webview);	
+			  	}
+			  	
+			  }
+			});
+			
+		});
+	}catch(e) {
+		console.log(e)
+	}
+});
 
 router.post('/get-payment-details', function(req, res, next) {
 

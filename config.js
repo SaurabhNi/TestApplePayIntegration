@@ -14,8 +14,8 @@ var config = {
 		"DOEC_NVP_URL":"https://api-3t.sandbox.paypal.com/nvp",
 		"EXECUTE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}/execute/",
 		"GET_PAYMENT_DETAILS":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}",
-		"CANCEL_URL":"https://android-paypal-ec-server.herokuapp.com/cancel-url",
-		"RETURN_URL":"https://android-paypal-ec-server.herokuapp.com/execute-payments",
+		"CANCEL_URL":"https://android-ec-nvp-server.herokuapp.com/cancel-url",
+		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
 		"BN_CODE":"PP-DemoPortal-EC-JSV4-python-REST"
 	},
 
