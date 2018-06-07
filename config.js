@@ -15,7 +15,7 @@ var config = {
 		"EXECUTE_PAYMENT_URL":"https://www.sandbox.paypal.com/v1/payments/payment/{payment_id}/execute/",
 		"GET_PAYMENT_DETAILS":"https://www.sandbox.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",
-		"RETURN_URL":"com.example.paypalcustomtabdemo",
+		"RETURN_URL":"/com.example.paypalcustomtabdemo",
 		"BN_CODE":"PP-DemoPortal-EC-JSV4-python-REST"
 	},
 
