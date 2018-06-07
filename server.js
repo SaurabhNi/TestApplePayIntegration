@@ -162,7 +162,7 @@ function makeid() {
 // });
 
 router.post('/create-payments', function(req, res, next) {
-
+	console.log ('In calling Create-Payments');
 	try{
 		
 	 	var payLoad = buildCreatePaymentPayload(req.body);
@@ -287,7 +287,7 @@ router.get('/execute-payments', function(req, res, next) {
 			  	if(body.state = 'approved') {
 		  		    //custom check 
 					var webview = req.query.webview;
-					res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id+"&webview="+webview);	
+					res.send(body.id);	
 			  	}else {
 			  		res.redirect('/error.html?webview='+webview);	
 			  	}
