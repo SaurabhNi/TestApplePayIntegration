@@ -2,8 +2,8 @@ var config = {
 	"IS_APPLICATION_IN_SANDBOX" : true,
 
 	"sandbox" : {
-		"CLIENT_ID" :"AU39RvgmCiRSZRQlFubrLpXrPasfKty5dVoHXhtLW-yXyZTYq56Ah7Yve_CAy9CPSvLPqx5mdyvuK5M4",
-		"SECRET":"EMbefy-1wbLVZKLyOK8J0FXwQR5oooQB3WwbNsuO9GDiSUPXHsyTa_UzDSW5GrA3v6SYxbirgmQej0_q",
+		"CLIENT_ID" :"AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf",
+		"SECRET":"EHp-nENfthAt7JHBd2eBHEBJA8TN8d11CZ76lVYpybGc7Vy7fhpZz8kxBOo-tlVGn9-_TkCXuBhaNRa0",
 		"USER_NAME":"Mario1267_api1.gmail.com",
 		"PASSWORD":"6QT974GBLAVZX5AE",
 		"SIGNATURE":"AJBjrAOFeBi.IDmiOFQfhCvLWSn0AbNm-He.J4jVOt3DK39k729LW.bx",
