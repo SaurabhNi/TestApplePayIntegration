@@ -74,6 +74,7 @@ function getAccessToken(cb) {
 		}
 
 function buildCreatePaymentPayload(data) {
+	console.log("Data in API Request is",data);
 	var template = createPaymentPayloadTemplates;
 		template.transactions[0].amount.total = data.total
 		template.transactions[0].amount.currency = data.currency
@@ -191,7 +192,7 @@ router.post('/create-payments', function(req, res, next) {
 			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 			console.log(options.headers)
 			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-			console.log(payLoad);
+			console.log(JSON.stringify(payLoad));
 			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 			request(options, function (error, response, body) {
 			  if (error) {
