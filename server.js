@@ -196,7 +196,7 @@ router.post('/create-payments', function(req, res, next) {
 			  	throw new Error(error);
 			  }
 			  else{
-			  
+			    console.log("Sending response",body);
 			  	res.send(body);
 			  }
 			});
