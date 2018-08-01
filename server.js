@@ -191,6 +191,8 @@ router.post('/create-payments', function(req, res, next) {
 			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 			console.log(options.headers)
 			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			console.log(payLoad);
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 			request(options, function (error, response, body) {
 			  if (error) {
 			  	throw new Error(error);
