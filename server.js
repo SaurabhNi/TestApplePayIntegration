@@ -292,10 +292,11 @@ router.get('/execute-payments', function(req, res, next) {
 					var webview = req.query.webview;
 					//res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id);
 					console.log('updated code is executing');
-					res.redirect('com.example.paypalcustomtabdemo:/success/'+body.id+"/"+body.payer.payer_info.payer_id);
+					//res.redirect('com.example.paypalcustomtabdemo:/success/'+body.id+"/"+body.payer.payer_info.payer_id);
 					console.log('updated code ended');
-					//res.writeHead(302, {'Location':"com.example.paypalcustomtabdemo:/success/"+body.id+"/"+body.payer.payer_info.payer_id });
-					//res.end();
+					res.writeHead(302, {'Location':"com.example.paypalcustomtabdemo:/success/"+body.id+"/"+body.payer.payer_info.payer_id });
+					res.end();
+					console.log('updated to old version code with latest express');
 					//res.send(body.id);	
 			  	}else {
 			  		res.redirect('/error.html?webview='+webview);	
