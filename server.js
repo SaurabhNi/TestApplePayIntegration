@@ -291,7 +291,9 @@ router.get('/execute-payments', function(req, res, next) {
 		  		    //custom check 
 					var webview = req.query.webview;
 					//res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id);
+					console.log('updated code is executing');
 					res.redirect('com.example.paypalcustomtabdemo:/success/'+body.id+"/"+body.payer.payer_info.payer_id);
+					console.log('updated code ended');
 					//res.writeHead(302, {'Location':"com.example.paypalcustomtabdemo:/success/"+body.id+"/"+body.payer.payer_info.payer_id });
 					//res.end();
 					//res.send(body.id);	
