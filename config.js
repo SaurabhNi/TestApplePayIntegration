@@ -17,7 +17,7 @@ var config = {
 		"EXECUTE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}/execute/",
 		"GET_PAYMENT_DETAILS":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",
-		"RETURN_URL":"com.example.paypalcustomtabdemo:/success",
+		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
 		"BN_CODE":"PP-DemoPortal-EC-JSV4-python-REST"
 	},
 
