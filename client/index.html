@@ -68,7 +68,7 @@
 
             // onAuthorize() is called when the buyer approves the payment
             onAuthorize: function(data, actions) {
-                window.alert('Payment approved');
+                //window.alert('Payment approved');
                 // Make a call to the REST api to execute the payment
                 return actions.payment.execute().then(function(res) {
                     
