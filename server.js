@@ -362,9 +362,19 @@ router.get('/apple-app-site-association', function(req, res, next) {
 
 
 router.post('/post-ipn-parameters', function(req, res, next) {
-	console.log('Parameters received are'+req.body);
-	console.log('Parameters received in strings are'+JSON.stringify(req.body));
+	//console.log('Parameters received are'+req.body);
+	//console.log('Parameters received in strings are'+JSON.stringify(req.body));
 	//res.send('{"applinks":{"apps":[],"details":[{"appID":"87GA28WQTJ.paypal.TestPayPalNativeXO","paths":["*"]}]}}');
+
+	const FORM_URLENCODED = 'application/x-www-form-urlencoded';
+    if(req.headers['content-type'] === FORM_URLENCODED) {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+       console.log('Parameters are'+body);
+    }
+
 	res.send('Success');
   	
 });
