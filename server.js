@@ -27,6 +27,8 @@ const config = require('./config');
 const payLoadTemplate = require('./payload_template')
 const products = require('./products');
 
+const queryString = require('querystring');
+
 const configuration = config.getConfig();
 const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
 const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
@@ -365,18 +367,9 @@ router.post('/post-ipn-parameters', function(req, res, next) {
 	//console.log('Parameters received are'+req.body);
 	//console.log('Parameters received in strings are'+JSON.stringify(req.body));
 	//res.send('{"applinks":{"apps":[],"details":[{"appID":"87GA28WQTJ.paypal.TestPayPalNativeXO","paths":["*"]}]}}');
-
-	const FORM_URLENCODED = 'application/x-www-form-urlencoded';
-    if(req.headers['content-type'] === FORM_URLENCODED) {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-       console.log('Parameters are'+body);
-    }
-
-	res.send('Success');
-  	
+    console.log('In handling IPN message');
+	let params = queryString.stringify(req.body);
+  	console.logs('Parameters received are :'+params);
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
