@@ -12,6 +12,7 @@ var decoder = require('utf8');
 
 
 var router = express();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 router.use(bodyParser.json());
 var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
@@ -363,13 +364,15 @@ router.get('/apple-app-site-association', function(req, res, next) {
 });
 
 
-router.post('/post-ipn-parameters', function(req, res, next) {
+router.post('/post-ipn-parameters', urlencodedParser, function(req, res, next) {
 	//console.log('Parameters received are'+req.body);
 	//console.log('Parameters received in strings are'+JSON.stringify(req.body));
 	//res.send('{"applinks":{"apps":[],"details":[{"appID":"87GA28WQTJ.paypal.TestPayPalNativeXO","paths":["*"]}]}}');
     console.log('In handling IPN message');
-	let params = queryString.stringify(req.body);
-	  console.log('Parameters received are :'+params);
+	//let params = queryString.stringify(req.body);
+	  console.log('Invoice passed in request:'+req.body.invoice);
+	  console.log('Custom passed in request:'+req.body.custom);
+	  //console.log('Parameters received are :'+params);
 	  res.status(200).end();
 });
 
