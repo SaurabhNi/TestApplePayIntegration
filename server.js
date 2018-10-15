@@ -369,7 +369,7 @@ router.post('/post-ipn-parameters', function(req, res, next) {
 	//res.send('{"applinks":{"apps":[],"details":[{"appID":"87GA28WQTJ.paypal.TestPayPalNativeXO","paths":["*"]}]}}');
     console.log('In handling IPN message');
 	let params = queryString.stringify(req.body);
-  	console.logs('Parameters received are :'+params);
+  	console.log('Parameters received are :'+params);
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
