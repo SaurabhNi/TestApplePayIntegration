@@ -341,7 +341,8 @@ router.post('/get-payment-details', function(req, res, next) {
 			  	throw new Error(error);
 			  }
 			  else{
-			  	//console.log("Response sent")
+				  //console.log("Response sent")
+				  console.log(body);
 			  	res.send(body);
 			  }
 			});
