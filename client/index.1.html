@@ -1,107 +1,87 @@
-<!DOCTYPE html>
-
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-</head>
-
-<body>
-
-<div id="paypal-button-container"></div>
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>PayPal Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  </head>
+  <body>
+    <div class="container" ng-controller="ChatController">
+      <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+          <div class="pull-right">
+            <a href="https://c9.io" class="brand">Demo Showcasing PayPal EC v4 </a>
+          </div>
+        </div>
+      </div>
+      <div class="page-header">
+        <h1>PayPal Native XO Demo</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p>This is a demo server to showcase PayPal Express Checkout </p>       
+        </div>
+      </div>
+     
+    </div>
+    
+    <div id="paypal-button-container"></div>
 
     <script>
-       paypal.Button.render({
-    env: 'sandbox', 
-    client: {
-        sandbox: 'AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf'      
-    },
-    commit: true,
-    style: {
-      layout: 'vertical'
-    },
-    funding: {
-      allowed: [ paypal.FUNDING.CARD ],
-      disallowed: [ paypal.FUNDING.CREDIT ]
-    },
-    payment: function(data, actions) {
-        return actions.order.create({
-            order: {
-                "intent": "CAPTURE",
-                "purchase_units": [
-                  {
-                    "amount": {
-                      "currency_code": "USD",
-                      "value": "24.00",
-                      "breakdown": {
-                        "item_total": {
-                          "currency_code": "USD",
-                          "value": "19.00"
-                        },
-                        "shipping": {
-                          "currency_code": "USD",
-                          "value": "2.00"
-                        },
-                        "handling": {
-                          "currency_code": "USD",
-                          "value": "1.00"
-                        },
-                        "tax_total": {
-                          "currency_code": "USD",
-                          "value": "3.00"
-                        },
-                        "shipping_discount": {
-                          "currency_code": "USD",
-                          "value": "1.00"
-                        }
-                      }
-                    },
-                    //"payee":
-                      //  {
-                        //  "email_address": "india-business2@test.com"
-                         // "merchant_id": "4QYTDNTGLHGWQ"
-                        //},
-                    "items": [
-                    {
-                      "name": "T-Shirt",
-                      "description": "Green XL",
-                      "sku": "sku01",
-                      "unit_amount": {
-                        "currency_code": "USD",
-                        "value": "9.00"
-                      },
-                      "tax": {
-                        "currency_code": "USD",
-                        "value": "1.00"
-                      },
-                      "quantity": "1",
-                      "category": "PHYSICAL_GOODS"
-                    },
-                    {
-                      "name": "Shoes",
-                      "description": "Running, Size 10.5",
-                      "sku": "sku02",
-                      "unit_amount": {
-                        "currency_code": "USD",
-                        "value": "5.00"
-                      },
-                      "tax": {
-                        "currency_code": "USD",
-                        "value": "1.00"
-                      },
-                      "quantity": "2",
-                      "category": "PHYSICAL_GOODS"
-                    }]
-                  }]
+        paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+            client: {
+                sandbox:    'AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf',
+                production: ''
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // payment() is called when the button is clicked
+            payment: function(data, actions) {
+
+                // Make a call to the REST api to create the payment
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '10.00', currency: 'USD' }
+                            }
+                        ]
                     }
                 });
             },
-    onAuthorize: function(data, actions) {   
-        return actions.order.capture().then(function() {
-            window.alert('Payment Complete!');
-        });
-    }
-}, '#paypal-button-container');
+
+            // onAuthorize() is called when the buyer approves the payment
+            onAuthorize: function(data, actions) {
+                //window.alert('Payment approved');
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function(res) {
+                    
+                    window.alert('Payment Complete!');
+                });
+            }
+
+        }, '#paypal-button-container');
 
     </script>
-</body>
+         
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  
+  </body>
+</html>
