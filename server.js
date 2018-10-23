@@ -18,7 +18,7 @@ var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
 
 
-router.use('/.well-known',express.static(path.resolve(__dirname, 'client')));
+//router.use('/.well-known',express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use('/return',returnCapture);
 var messages = [];
