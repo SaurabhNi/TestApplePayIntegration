@@ -365,7 +365,7 @@ router.get('/apple-app-site-association', function(req, res, next) {
 });
 
 router.get('/.well-known/assetlinks.json', function(req, res, next) {
-	res.json('[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": {   "namespace": "android_app",   "package_name": "com.example.paypalcustomtabdemo",   "sha256_cert_fingerprints":   ["AC:C4:A4:4E:4D:9C:01:C4:C6:6A:D6:4C:B6:6E:50:FE:8A:BC:2B:E4:C9:87:53:07:9E:cd:C0:EC:4C:14:82:B6"] }}]');
+	res.json('{"relation":["delegate_permission/common.handle_all_urls"],"target":{"namespace":"android_app","package_name":"com.example.paypalcustomtabdemo","sha256_cert_fingerprints":["AC:C4:A4:4E:4D:9C:01:C4:C6:6A:D6:4C:B6:6E:50:FE:8A:BC:2B:E4:C9:87:53:07:9E:CD:C0:EC:4C:14:82:B6"]}}');
 });
 
 
