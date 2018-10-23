@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : true,
+	"IS_APPLICATION_IN_SANDBOX" : false,
 
 	"sandbox" : {
 		"CLIENT_ID" :"AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf",
@@ -22,14 +22,14 @@ var config = {
 	},
 
 	"live" : {
-		"CLIENT_ID" :"AYBymkGzvoY4j4GlCAFt3B3lDZ0v9DPqPgLzQ-qLFDvInFseYLfY2jkDBR83V6audEq8uUHGYYPTufdV",
-		"SECRET":"EIGA-3CbWmvV5mNZQGBkbJXARbnErhE08OnbbSdq_d3WzL1_SeYwK54KQrCdMBg2yYLLpeCFy4yNUUgW",
-		"ACCESS_TOKEN_URL":"https://api.sandbox.paypal.com/v1/oauth2/token",
-		"CREATE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment",
-		"EXECUTE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}/execute/",
-		"GET_PAYMENT_DETAILS":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}",
+		"CLIENT_ID" :"AbbffcE40zN4jTzseb_MEfzEmSHUGJQecC5ei9PNdE4bnft3mpOoTEc35JAkcuANnq5JU70yeUsTtAId",
+		"SECRET":"EHh1enq26E2Y2kWx1JL9yDKGZLo0z8BaeHXbcIHWhCL79SJzlxqiXLmeEuzljwzGx6Tz0VcpcO7RqAdE",
+		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
+		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
+		"EXECUTE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment/{payment_id}/execute/",
+		"GET_PAYMENT_DETAILS":"https://api.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"cancel-url",
-		"RETURN_URL":"cancel-url",
+		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
 		"BN_CODE":"PP-DemoPortal-EC-JSV4-python-REST"
 	}
 }
