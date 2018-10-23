@@ -22,8 +22,8 @@ var config = {
 	},
 
 	"live" : {
-		"CLIENT_ID" :"AbbffcE40zN4jTzseb_MEfzEmSHUGJQecC5ei9PNdE4bnft3mpOoTEc35JAkcuANnq5JU70yeUsTtAId",
-		"SECRET":"EHh1enq26E2Y2kWx1JL9yDKGZLo0z8BaeHXbcIHWhCL79SJzlxqiXLmeEuzljwzGx6Tz0VcpcO7RqAdE",
+		"CLIENT_ID" :"AY9D-HDO9zWylPFQzuCMwap9Iq4L_N4k0_nS3-rzdHJhM8p6gcW_AqdabfyCTf5bVoT9SB-0-LbYV5BI",
+		"SECRET":"EFTuy_gNhfkO-OIUMVtzMU4yyf2UKXS9tn4uIKMsgfyzfu9XP0KY1K-azGi0KKyGOHjzT270B0tmaNII",
 		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
 		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
 		"EXECUTE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment/{payment_id}/execute/",
