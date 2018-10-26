@@ -373,7 +373,7 @@ router.get('/apple-app-site-association', function(req, res, next) {
 //});
 
 
-router.post('/post-ipn-parameters', urlencodedParser, function(req, res, next) {
+router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	//console.log('Parameters received are'+req.body);
 	//console.log('Parameters received in strings are'+JSON.stringify(req.body));
 	//res.send('{"applinks":{"apps":[],"details":[{"appID":"87GA28WQTJ.paypal.TestPayPalNativeXO","paths":["*"]}]}}');
