@@ -381,7 +381,7 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	//let params = queryString.stringify(req.body);
 	  console.log('Invoice passed in request:'+req.body.invoice);
 	  console.log('Custom passed in request:'+req.body.custom);
-	  console.log (req.body);
+	  console.log (JSON.stringify(req.body));
 	  //console.log('Parameters received are :'+params);
 	  res.status(200).end();
 });
