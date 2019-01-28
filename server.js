@@ -381,12 +381,15 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	//let params = queryString.stringify(req.body);
 	  console.log('Invoice passed in request:'+req.body.invoice);
 	  console.log('Custom passed in request:'+req.body.custom);
-	  var ip = (req.headers['x-forwarded-for'] || '').split(',').pop() || 
-         req.connection.remoteAddress || 
-         req.socket.remoteAddress || 
-		 req.connection.socket.remoteAddress;
+	  var ip1 = (req.headers['x-forwarded-for'] || '').split(',').pop();
+	  var ip2 = req.connection.remoteAddress;
+	  var ip3 = req.socket.remoteAddress;
+	  var ip4 = req.connection.socket.remoteAddress;
 		 
-	  console.log('Request is coming from this IP'+ip);
+	  console.log('Request is coming from this IP'+ip1);
+	  console.log('Request is coming from this IP'+ip2);
+	  console.log('Request is coming from this IP'+ip3);
+	  console.log('Request is coming from this IP'+ip4);
 	  console.log (JSON.stringify(req.body));
 	  //console.log('Parameters received are :'+params);
 	  res.status(200).end();
