@@ -384,7 +384,7 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	  var ip1 = (req.headers['x-forwarded-for'] || '').split(',').pop();
 	  var ip2 = req.connection.remoteAddress;
 	  var ip3 = req.socket.remoteAddress;
-	  var ip4 = req.connection.socket.remoteAddress;
+	  //var ip4 = req.connection.socket.remoteAddress;
 		 
 	  console.log('Request is coming from this IP'+ip1);
 	  console.log('Request is coming from this IP'+ip2);
