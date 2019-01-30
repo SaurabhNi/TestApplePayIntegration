@@ -46,6 +46,8 @@
     <script>
       var scrt_var = "myapp://returnApp?status=1"+qs("id")+"/"+qs("payerId");
       document.getElementById("link").setAttribute("href",scrt_var);
+
+      document.getElementById("successButton").click();
     
       function qs(key) {
 			    key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
