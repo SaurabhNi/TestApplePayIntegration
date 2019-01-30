@@ -51,18 +51,18 @@
 			    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
 			}
 			
-			$( document ).ready(function() {
-               setTimeout(function() {
-                 $("#successButton").trigger("click");
-                }, 1000);
-          });
+			// $( document ).ready(function() {
+      //          setTimeout(function() {
+      //            $("#successButton").trigger("click");
+      //           }, 1000);
+      //     });
       
-          $( document ).ready(function() {
-               setTimeout(function() {
-                    $("#successButton").trigger("click");
-                  RedirectSuccess();
-                }, 1000);
-            });
+      //     $( document ).ready(function() {
+      //          setTimeout(function() {
+      //               $("#successButton").trigger("click");
+      //             RedirectSuccess();
+      //           }, 1000);
+      //       });
 		
           function RedirectSuccess(){
              window.location = "com.example.paypalcustomtabdemo://success/"+qs("id")+"/"+qs("payerId")
