@@ -33,7 +33,7 @@
 
 <a id="link" >click here to redirect to app</a>
 <br/>
-<a href="com.example.paypalcustomtabdemo://success/"> hardcoded</a>
+<a href="myapp://returnApp?status=1"> hardcoded</a>
 
 <input type="button" class="btn btn-primary" onclick="RedirectSuccess();" name="ok" id="successButton" value="Continue" style="display:none" />
 					   
@@ -44,7 +44,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script>
-      var scrt_var = "com.example.paypalcustomtabdemo://success/"+qs("id")+"/"+qs("payerId");
+      var scrt_var = "myapp://returnApp?status=1"+qs("id")+"/"+qs("payerId");
       document.getElementById("link").setAttribute("href",scrt_var);
     
       function qs(key) {
