@@ -47,7 +47,10 @@
       var scrt_var = "myapp://returnApp?status=1"+qs("id")+"/"+qs("payerId");
       document.getElementById("link").setAttribute("href",scrt_var);
 
-      document.getElementById("testing").click();
+setTimeout(function(){
+  document.getElementById("testing").click();
+},2000);
+     
 
     
       function qs(key) {
