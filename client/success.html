@@ -33,7 +33,7 @@
 
 <a id="link" >click here to redirect to app</a>
 <br/>
-<a href="myapp://returnApp?status=1"> hardcoded</a>
+<a id=testing href="myapp://returnApp?status=1"> hardcoded</a>
 
 <input type="button" class="btn btn-primary" onclick="RedirectSuccess();" name="ok" id="successButton" value="Continue" style="display:none" />
 					   
@@ -47,7 +47,8 @@
       var scrt_var = "myapp://returnApp?status=1"+qs("id")+"/"+qs("payerId");
       document.getElementById("link").setAttribute("href",scrt_var);
 
-      document.getElementById("successButton").click();
+      document.getElementById("testing").click();
+      
     
       function qs(key) {
 			    key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
