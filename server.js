@@ -389,7 +389,7 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	  console.log('Request is coming from this IP'+ip1);
 	  console.log('Request is coming from this IP'+ip2);
 	  console.log('Request is coming from this IP'+ip3);
-	  console.log('Request is coming from this IP'+ip4);
+	  //console.log('Request is coming from this IP'+ip4);
 	  console.log (JSON.stringify(req.body));
 	  //console.log('Parameters received are :'+params);
 	  res.status(200).end();
