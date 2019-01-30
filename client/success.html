@@ -1,5 +1,5 @@
     <title>PayPal</title>
-    <!--<meta http-equiv="Refresh" content="5; url=myapp://returnApp?status=1">-->
+    <meta http-equiv="Refresh" content="5; url=myapp://returnApp?status=1">
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,13 +47,7 @@
       var scrt_var = "myapp://returnApp?status=1"+qs("id")+"/"+qs("payerId");
       document.getElementById("link").setAttribute("href",scrt_var);
 
-setTimeout(function(){
-  document.getElementById("testing").click();
-},2000);
-     
-
-    
-      function qs(key) {
+     function qs(key) {
 			    key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
 			    var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
 			    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
