@@ -190,7 +190,7 @@ router.post('/create-payments', function(req, res, next) {
 					'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 					//'PayPal-Client-Metadata-Id' : req.body.riskParingId
 				},
-				body: payLoad,
+				body: req.body,
 				json:true
 				
 			}
