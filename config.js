@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : true,
+	"IS_APPLICATION_IN_SANDBOX" : false,
 
 	"sandbox" : {
 		"CLIENT_ID" :"AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_",
@@ -22,8 +22,8 @@ var config = {
 	},
 
 	"live" : {
-		"CLIENT_ID" :"AY9D-HDO9zWylPFQzuCMwap9Iq4L_N4k0_nS3-rzdHJhM8p6gcW_AqdabfyCTf5bVoT9SB-0-LbYV5BI",
-		"SECRET":"EFTuy_gNhfkO-OIUMVtzMU4yyf2UKXS9tn4uIKMsgfyzfu9XP0KY1K-azGi0KKyGOHjzT270B0tmaNII",
+		"CLIENT_ID" :"AeIP3_gc2KU8iMd1JAZ-3P0WJMQCijHaqvTV6rwN7kLTjPl5oRyM0xZ43U6gwKjVhRciR-LQy21d7E74",
+		"SECRET":"EJQyU0dEc-d_uvm4QzpsQNexTx146ZTVz-gE_1ZArO53AUiyNKuppjTrcfuZDl3de6csjclXQhHcq-It",
 		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
 		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
 		"EXECUTE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment/{payment_id}/execute/",
