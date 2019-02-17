@@ -296,9 +296,10 @@ router.get('/execute-payments', function(req, res, next) {
 		  		    //custom check 
 					var webview = req.query.webview;
 					console.log('About to redirect to success.html');
-					res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id);
+					//res.redirect('/success.html?id='+body.id+"&payerId="+body.payer.payer_info.payer_id);
 					console.log('updated code is executing');
 					//res.redirect('com.example.paypalcustomtabdemo://success?payID='+body.id);
+					res.writeHead(302,{'Location':("com.reena.ec-rest://success/?paymentId="+body.id)});
 					console.log('updated code ended');
 					//res.writeHead(302, {'Location':"https://android-ec-nvp-server.herokuapp.com/paypalPaymentSuccess"});
 					//res.end();
@@ -306,7 +307,8 @@ router.get('/execute-payments', function(req, res, next) {
 					//console.log('updated to old version code with latest express');
 					//res.send(body.id);	
 			  	}else {
-			  		res.redirect('/error.html?webview='+webview);	
+					  //res.redirect('/error.html?webview='+webview);	
+					  res.writeHead(302,{'Location':("com.reena.ec-rest://error/?token="+req.query.token)});
 			  	}
 			  	
 			  }
