@@ -41,7 +41,7 @@
     document.getElementById("FNBlock").innerHTML='<script type="application/json" fncls="fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99"> { "f":"'+uniqueId+'","s":"MERCHANT_CHECKOUT_BA_RT_FN"}<\/script>'; 
     function getParameterByName(name, url) { if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
 
-    function makeServerCall(uniqueId)
+    function makeServerCall()
     {
       fetch('https://arvindamrit.herokuapp.com/juspaycreate', {
   method: 'post',
@@ -58,7 +58,7 @@
 
     
     <div id="paypal-button-container"></div>
-    <button id="rtButton" onclick="makeServerCall">Pay with PayPal Account</button>
+    <button id="rtButton" onclick="makeServerCall()">Pay with PayPal Account</button>
     <!-- <script>
         paypal.Button.render({
 
