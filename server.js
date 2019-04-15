@@ -22,7 +22,7 @@ var returnCapture = require('./returnCapture.js');
 
 const uuidV4 = require('uuid/v4');
 	router.get('/', function(req, res, next) {
-		    var str=uuidv1();
+		    var str=uuidV4();
 		    res.redirect('/index1.html?id='+str);
 		});
 
