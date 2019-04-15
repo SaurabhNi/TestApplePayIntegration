@@ -10,11 +10,7 @@ var request = require("request");
 var bodyParser = require('body-parser');
 var decoder = require('utf8');
 
-const uuidV4 = require('uuid/v4');
-	router.get('/', function(req, res, next) {
-		    var str=uuidv1();
-		    res.redirect('/index1.html?id='+str);
-		});
+
 
 
 
@@ -24,6 +20,11 @@ router.use(bodyParser.json());
 var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
 
+const uuidV4 = require('uuid/v4');
+	router.get('/', function(req, res, next) {
+		    var str=uuidv1();
+		    res.redirect('/index1.html?id='+str);
+		});
 
 router.use('/.well-known',express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'client')));
