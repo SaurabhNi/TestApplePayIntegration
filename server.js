@@ -10,6 +10,13 @@ var request = require("request");
 var bodyParser = require('body-parser');
 var decoder = require('utf8');
 
+const uuidV4 = require('uuid/v4');
+	router.get('/', function(req, res, next) {
+		    var str=uuidv1();
+		    res.redirect('/index1.html?id='+str);
+		});
+
+
 
 var router = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });

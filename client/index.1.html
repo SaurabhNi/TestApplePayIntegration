@@ -33,6 +33,30 @@
       </div>
      
     </div>
+
+    <div id="FNBlock">
+      <button id="rtButton" onclick="makeServerCall">Pay with PayPal Account</button>
+    </div>
+    <script type="text/javascript">
+    var uniqueId=getParameterByName("id");
+    document.getElementById(“FNBlock").innerHTML='<script type="application/json" fncls="fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99"> { "f":"'+uniqueId+'","s":"MERCHANT_CHECKOUT_BA_RT_FN"}<\/script>'; 
+    function getParameterByName(name, url) { if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
+
+    function makeServerCall(uniqueId)
+    {
+      fetch('https://arvindamrit.herokuapp.com/juspaycreate', {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({"customer_id": "cst_zdwpilklo6wa6sfa", "risk_id":uniqueId})
+}).then(res=>res.json())
+  .then(res => console.log(res));
+    }
+</script>
+<script type="text/javascript" src="https://c.paypal.com/da/r/fb.js"></script>
+
     
     <div id="paypal-button-container"></div>
 
@@ -55,15 +79,17 @@
             payment: function(data, actions) {
 
                 // Make a call to the REST api to create the payment
-                return actions.payment.create({
-                    payment: {
-                        transactions: [
-                            {
-                                amount: { total: '10.00', currency: 'USD' }
-                            }
-                        ]
-                    }
-                });
+                // return actions.payment.create({
+                //     payment: {
+                //         transactions: [
+                //             {
+                //                 amount: { total: '10.00', currency: 'USD' }
+                //             }
+                //         ]
+                //     }
+                // });
+
+                
             },
 
             // onAuthorize() is called when the buyer approves the payment
