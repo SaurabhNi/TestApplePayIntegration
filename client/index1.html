@@ -38,11 +38,13 @@
     </div>
     <script type="text/javascript">
     var uniqueId=getParameterByName("id");
+    var counter=0;
     document.getElementById("FNBlock").innerHTML='<script type="application/json" fncls="fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99"> { "f":"'+uniqueId+'","s":"MERCHANT_CHECKOUT_BA_RT_FN"}<\/script>'; 
     function getParameterByName(name, url) { if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
 
     function makeServerCall()
     {
+      console.log(counter+=1);
       fetch('https://arvindamrit.herokuapp.com/juspaycreate', {
   method: 'post',
   headers: {
