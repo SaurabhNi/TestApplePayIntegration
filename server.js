@@ -402,7 +402,7 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	  //console.log('Request is coming from this IP'+ip4);
 	  console.log (JSON.stringify(req.body));
 	  //console.log('Parameters received are :'+params);
-	  //res.status(200).end();
+	  res.status(200).end();
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
