@@ -271,7 +271,7 @@ router.post('/create-order', function(req, res, next) {
                 "intent": "CAPTURE",
                 "purchase_units": [{
                     "amount": {
-                        "currency_code": "INR",
+                        "currency_code": "USD",
                         "value": "100.00"
                     }
                 }],
