@@ -1,114 +1,38 @@
-<!doctype html>
-<html lang="en" ng-app>
-  <head>
-    <title>PayPal Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
-    <style>
-      body {
-        padding-top: 60px;
-      }
-    </style>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!--<script src="https://www.paypalobjects.com/api/checkout.js"></script>-->
+<html lang="en" ng-app=""><head>
+    <title>PayPal Payments SDK Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
   </head>
   <body>
-    <div class="container" ng-controller="ChatController">
-      <div class="navbar navbar-fixed-top navbar-inverse">
-        <div class="navbar-inner">
-          <div class="pull-right">
-            <a href="https://c9.io" class="brand">Demo Showcasing PayPal EC v4 </a>
-          </div>
-        </div>
-      </div>
-      <div class="page-header">
-        <h1>PayPal Native XO Demo</h1>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p>This is a demo server to showcase PayPal Express Checkout </p>       
-        </div>
-      </div>
-     
-    </div>
-
-    <div id="FNBlock">
-    </div>
-    <script type="text/javascript">
-    var uniqueId=getParameterByName("id");
-    var counter=0;
-    document.getElementById("FNBlock").innerHTML='<script type="application/json" fncls="fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99"> { "f":"'+uniqueId+'","s":"MERCHANT_CHECKOUT_BA_RT_FN"}<\/script>'; 
-    function getParameterByName(name, url) { if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
-
-    function makeServerCall()
-    {
-      console.log(counter+=1);
-      fetch('https://arvindamrit.herokuapp.com/juspaycreate', {
-  method: 'post',
-  headers: {
-    'Accept': 'application/json, text/plain, */*',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({"customer_id": "cst_zdwpilklo6wa6sfa", "risk_id":uniqueId,"security":"amrit"})
-}).then(res=>res.json())
-  .then(res => console.log(res));
-    }
-</script>
-<script type="text/javascript" src="https://c.paypal.com/da/r/fb.js"></script>
-
-    
-    <div id="paypal-button-container"></div>
-    <button id="rtButton" onclick="makeServerCall()">Pay with PayPal Account</button>
-    <!-- <script>
-        paypal.Button.render({
-
-            env: 'sandbox', // sandbox | production
-
-            // PayPal Client IDs - replace with your own
-            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
-            client: {
-                sandbox:    'AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf',
-                production: ''
-            },
-
-            // Show the buyer a 'Pay Now' button in the checkout flow
-            commit: true,
-
-            // payment() is called when the button is clicked
-            payment: function(data, actions) {
-
-                // Make a call to the REST api to create the payment
-                // return actions.payment.create({
-                //     payment: {
-                //         transactions: [
-                //             {
-                //                 amount: { total: '10.00', currency: 'USD' }
-                //             }
-                //         ]
-                //     }
-                // });
-
-                
-            },
-
-            // onAuthorize() is called when the buyer approves the payment
-            onAuthorize: function(data, actions) {
-                //window.alert('Payment approved');
-                // Make a call to the REST api to execute the payment
-                return actions.payment.execute().then(function(res) {
-                    
-                    window.alert('Payment Complete!');
-                });
-            }
-
-        }, '#paypal-button-container');
-
-    </script> -->
-         
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script>
   
-  </body>
-</html>
+      function getParameterByName(name, url) { console.log("im called");if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
+      
+      let token= getParameterByName("id");
+      console.log(token);
+      </script>
+       <!--
+    <script>
+    
+   fetch('get-client-token', {
+            method: 'POST'
+          }).then(response =>{
+           return response.json();
+          }).then(function(myJson){
+          console.log(myJson.client_token);
+          client_token=myJson.client_token;
+          //document.getElementById("PayPal-button").innerHTML='<script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&vault=true" data-client-token='+client_token+'> <\/script><script>alert("Here");<\/script><div id="paypal-button-container"><\/div><script> paypal.Buttons({ style:{layout:  \'vertical\', color:\'blue\', shape:\'rect\', label: \'paypal\'},   createOrder: function (data, actions) { return fetch(\'/create-order\', { method: \'POST\' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch(\'/capture-order\' + data.orderID, {method: \'POST\'}).then(function(res) {if (!res.ok) {alert(\'Something went wrong\'); }});}}).render(\'#paypal-button-container\');<\/script>'; 
+   });
+   </script>
+   -->
+   <!--<script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&amp;vault=true" data-client-token="eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiODI5MTZkYTQ2OTlhZDkyYzUyZmJkN2RmZGViMTg3OGMyZWU5OGM2ZmVjYjc5YTMxN2YyM2UyMDNkYzYyOTY0YXxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMTktMDctMDJUMDQ6MzY6MDMuMTI5WiZjdXN0b21lcl9pZD1DVVNUT01FUl9JRF8xMjM0NSIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiYWNjZXNzVG9rZW4iOiJBMjFBQUdUU25tZnVyNDVpQi1yWGVmY2llUWhqSWpqcTRPUncwNlJNQTQ1RGllMGFNSXRURXVzVnZxZUpCZHJoQVRoVGlKUVFwQkc2WnBsSGFSVllVYTRuSG8wd2JJZ1F3In19"> </script><script>alert("Here");</script><div id="paypal-button-container"></div><script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},   createOrder: function (data, actions) { return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch('/capture-order' + data.orderID, {method: 'POST'}).then(function(res) {if (!res.ok) {alert('Something went wrong'); }});}}).render('#paypal-button-container');</script></div>-->
+  
+      <script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&vault=true&currency=INR" data-client-token=eval(token)></script>
+      
+      <div id="paypal-button-container"></div>
+      <script>
+       paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},   createOrder: function (data, actions) { return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch('/capture-order' + data.orderID, {method: 'POST'}).then(function(res) {if (!res.ok) {alert('Something went wrong'); }});}}).render('#paypal-button-container');
+      </script>
+      </div>
+  
+</body></html>

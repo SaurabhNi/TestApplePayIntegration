@@ -9,6 +9,8 @@ var express = require('express');
 var request = require("request");
 var bodyParser = require('body-parser');
 var decoder = require('utf8');
+var request = require('request');
+var ejs = require('ejs');
 
 
 
@@ -17,13 +19,44 @@ var decoder = require('utf8');
 var router = express();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 router.use(bodyParser.json());
+router.set('view engine','ejs');
 var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
 
 const uuidV4 = require('uuid/v4');
 	router.get('/', function(req, res, next) {
 		    var str=uuidV4();
-		    res.redirect('/index1.html?id='+str);
+
+		try{
+		
+			getAccessToken(function(data) {
+   			   var accessToken = JSON.parse(data).access_token;
+		   	   var options = { 
+				 method: 'POST',
+				 url: configuration.GET_CLIENT_TOKEN,
+				 headers : {
+					   'content-type': "application/json",
+					   'authorization': "Bearer "+accessToken,
+					   'cache-control': "no-cache"
+				   },
+				   body: {customer_id: "CUSTOMER_ID_123456"},
+				   json:true				   
+				}
+			   request(options, function (error, response, body) {
+				 if (error) {
+					 throw new Error(error);
+				 }
+				 else{
+				   console.log("Sending response",body);
+				  // res.redirect('/index1.html?id='+body.client_token);
+				  res.render("index",{token: body.client_token});
+				 }
+			   });
+			   
+		   });
+	   }catch(e) {
+		   console.log(e)
+	   }
 		});
 
 router.use('/.well-known',express.static(path.resolve(__dirname, 'client')));
@@ -214,6 +247,126 @@ router.post('/create-payments', function(req, res, next) {
 			  else{
 			    console.log("Sending response",body);
 			  	res.send(body);
+			  }
+			});
+			
+		});
+	}catch(e) {
+		console.log(e)
+	}
+});
+
+router.post('/create-order', function(req, res, next) {
+	console.log ('In calling Create-Order');
+	try{
+		getAccessToken(function(data) {
+
+			var accessToken = JSON.parse(data).access_token;
+			request.post('https://api.sandbox.paypal.com/v2/checkout/orders', {
+            headers: {
+                'content-type': "application/json",
+                'authorization': "Bearer "+accessToken
+            },
+            body: {
+                "intent": "CAPTURE",
+                "purchase_units": [{
+                    "amount": {
+                        "currency_code": "INR",
+                        "value": "100.00"
+                    }
+                }],
+            },
+            json: true
+        }, function (err, response, body) {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+			console.log (body);
+            res.json({
+                id: body.id
+            });
+        });
+	});
+}catch(e) {
+		console.log(e)
+	}
+});
+
+router.post('/capture-order/:id', function(req, res, next) {
+	console.log ('In calling Capture-Order');
+	try{
+		getAccessToken(function(data) {
+			{
+				var OrderID = req.params.id;
+				var accessToken = JSON.parse(data).access_token;
+				request.post('https://api.sandbox.paypal.com/v2/checkout/orders/' + OrderID + '/capture', {
+					headers: {
+						'content-type': "application/json",
+						'authorization': "Bearer "+accessToken
+					}
+				}, function (err, response, body) {
+					if (err) {
+						console.error(err);
+						return res.sendStatus(500);
+					}
+					console.log(body);
+					res.send
+					res.json({
+						status: 'success'
+					});
+				});
+			}
+		});
+}catch(e) {
+		console.log(e)
+	}
+});
+
+
+router.post('/get-client-token', function(req, res, next) {
+	console.log ('In calling Get Client Token');
+	try{
+		
+	 	var payLoad = buildCreatePaymentPayload(req.body);
+	 	getAccessToken(function(data) {
+
+			var accessToken = JSON.parse(data).access_token;
+		
+			var _dataToSend = {
+
+			}
+			
+			var options = { 
+			  method: 'POST',
+			  url: configuration.GET_CLIENT_TOKEN,
+			  headers : {
+					'content-type': "application/json",
+					'authorization': "Bearer "+accessToken,
+					'cache-control': "no-cache",
+					//'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
+					//'PayPal-Client-Metadata-Id' : req.body.riskParingId
+				},
+				body: {customer_id: "CUSTOMER_ID_12345"},
+				json:true
+				
+			}
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			console.log(options.headers)
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			console.log(JSON.stringify(payLoad));
+			console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+			request(options, function (error, response, body) {
+			  if (error) {
+			  	throw new Error(error);
+			  }
+			  else{
+				console.log("Sending response",body);
+				res.status(200).send(body);
+				res.end();
+				//res.send(200, {
+				//	clientToken: body.client_token
+				//  });
 			  }
 			});
 			

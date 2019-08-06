@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : false,
+	"IS_APPLICATION_IN_SANDBOX" : true,
 
 	"sandbox" : {
 		"CLIENT_ID" :"AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_",
@@ -12,6 +12,7 @@ var config = {
 		"VERSION":"204.0",
 		"ACCESS_TOKEN_URL":"https://api.sandbox.paypal.com/v1/oauth2/token",
 		"CREATE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment",
+		"GET_CLIENT_TOKEN":"https://api.sandbox.paypal.com/v1/identity/generate-token",
 		"SETEC_NVP_URL":"https://api-3t.sandbox.paypal.com/nvp",
 		"DOEC_NVP_URL":"https://api-3t.sandbox.paypal.com/nvp",
 		"EXECUTE_PAYMENT_URL":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}/execute/",
