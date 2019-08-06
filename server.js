@@ -39,7 +39,7 @@ const uuidV4 = require('uuid/v4');
 					   'authorization': "Bearer "+accessToken,
 					   'cache-control': "no-cache"
 				   },
-				   body: {customer_id: "CUSTOMER_ID_123456"},
+				   body: {customer_id: "CUSTOMER_ID_12345678"},
 				   json:true				   
 				}
 			   request(options, function (error, response, body) {
