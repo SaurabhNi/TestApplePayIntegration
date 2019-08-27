@@ -37,9 +37,10 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
+					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9.",
 					   'cache-control': "no-cache"
 				   },
-				   body: {customer_id: "CUSTOMER_ID_12345678"},
+				   body: {customer_id: "Mrss_Meenakshi_Nigam"},
 				   json:true				   
 				}
 			   request(options, function (error, response, body) {
@@ -85,7 +86,7 @@ function getAccessToken(cb) {
 	var url = configuration.ACCESS_TOKEN_URL;
 	var token  = configuration.CLIENT_ID+":"+configuration.SECRET,
 	    encodedKey = new Buffer(token).toString('base64'),
-	    payload = "grant_type=client_credentials&Content-Type=application%2Fx-www-form-urlencoded&response_type=token&return_authn_schemes=true",
+	    payload = "grant_type=client_credentials&Content-Type=application%2Fx-www-form-urlencoded&response_type=token&return_authn_schemes=true&ignoreCache=true",
 	    headers = {
 			'authorization': "Basic "+encodedKey,
 			'accept': "application/json",
@@ -265,7 +266,8 @@ router.post('/create-order', function(req, res, next) {
 			request.post('https://api.sandbox.paypal.com/v2/checkout/orders', {
             headers: {
                 'content-type': "application/json",
-                'authorization': "Bearer "+accessToken
+				'authorization': "Bearer "+accessToken,
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
             },
             body: {
                 "intent": "CAPTURE",
@@ -273,8 +275,8 @@ router.post('/create-order', function(req, res, next) {
                     "amount": {
                         "currency_code": "USD",
                         "value": "100.00"
-                    }
-                }],
+					}
+					}],
             },
             json: true
         }, function (err, response, body) {
@@ -303,7 +305,8 @@ router.post('/capture-order/:id', function(req, res, next) {
 				request.post('https://api.sandbox.paypal.com/v2/checkout/orders/' + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken
+						'authorization': "Bearer "+accessToken,
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
 					}
 				}, function (err, response, body) {
 					if (err) {

@@ -1,8 +1,92 @@
 <html lang="en" ng-app=""><head>
         <title>PayPal Payments SDK Demo</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      </head>
+        <style>
+.hosted-field {
+  height: 50px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  display: inline-block;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+  line-height: 20px;
+  background: #fcfcfc;
+  margin-bottom: 12px;
+  background: linear-gradient(to right, white 50%, #fcfcfc 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 300ms ease-in-out;
+}
+
+.hosted-fields--label {
+  font-family: courier, monospace;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.button-container {
+  display: block;
+  text-align: center;
+}
+
+.button {
+  cursor: pointer;
+  font-weight: 500;
+  line-height: inherit;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+}
+
+.button--small {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+}
+
+.button--green {
+  outline: none;
+  background-color: #64d18a;
+  border-color: #64d18a;
+  color: white;
+  transition: all 200ms ease;
+}
+
+.button--green:hover {
+  background-color: #8bdda8;
+  color: white;
+}
+
+.braintree-hosted-fields-focused {
+  border: 1px solid #64d18a;
+  border-radius: 1px;
+  background-position: left bottom;
+}
+
+.braintree-hosted-fields-invalid {
+  border: 1px solid #ed574a;
+}
+
+.braintree-hosted-fields-valid {
+}
+
+#cardForm {
+  max-width: 50.75em;
+  margin: 0 auto;
+  padding: 1.875em;
+}
+        </style>
+       </head>
       <body>
         <!--
         <script>
@@ -26,7 +110,121 @@
        });
        </script>
        -->
-       <script src="https://www.paypal.com/sdk/js?client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&vault=true" data-client-token="<%= token %>"></script> 
+
+
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&intent=capture&currency=USD"></script>
+<div id=div1  >
+<form id="my-sample-form">
+  <label for="card-number">Card Number</label>
+  <div id="card-number"  class="hosted-field"></div>
+  <label for="expiration-date">Expiration Date</label>
+  <div id="expiration-date"  class="hosted-field"></div>
+  <label for="cvv">CVV</label>
+  <div id="cvv"  class="hosted-field"></div>
+  <input type="checkbox" id="vault" name="vault">
+  <label for="vault">Save your Card</label>
+  <button value="submit" id="submit" class="btn">Pay with Card</button>
+</form>
+</div>
+<div id="payments-sdk__contingency-lightbox"></div>
+<script>
+// Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
+console.log("Just before entering hosted fields check");
+  if (paypal.HostedFields.isEligible() === true) {
+    console.log("Hosted Fields is enabled");
+    paypal.HostedFields.render({
+      createOrder: function(data, actions) {
+        return fetch('/create-order', { method: 'POST' }).then(function(res) {
+            return res.json();
+        }).then(function(data) {
+            return data.id;
+        });
+      },
+      styles: {
+          'input': {
+              'font-size': '14px',
+              'font-family': 'Product Sans',
+              'color': '#3a3a3a'
+          },
+          ':focus': {
+              'color': 'black'
+          }
+      },
+      fields: {
+          number: {
+              selector: '#card-number',
+              placeholder: 'Credit Card Number',
+          },
+          cvv: {
+              selector: '#cvv',
+              placeholder: 'CVV',
+          },
+          expirationDate: {
+              selector: '#expiration-date',
+              placeholder: 'MM/YYYY',
+          }
+      }
+    }).then(hostedFields => {
+      document.querySelector('#my-sample-form').addEventListener('submit', event => {
+        event.preventDefault();
+        hostedFields.submit(
+          {
+          // Need to specify the buyer action to save the card
+          contingencies: ['3D_SECURE'],
+          vault: document.querySelector('#vault').checked
+          }
+        ).then(payload => {
+          console.log("Order Id is "+payload.orderId);
+          if (payload.liabilityShifted === undefined) {
+                     // Handle no 3D Secure contingency passed scenario
+                     console.log("Entering no 3DS");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
+
+                if (payload.liabilityShifted) {
+                     // Handle Buyer confirmed 3D Secure successfully
+                     console.log("Entering 3DS completed successfully");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
+
+                if (payload.liabilityShifted === false) {
+                     // Handle buyer failed or skipped 3D Secure use-case
+                     console.log("Entering 3DS failure case");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
+              });
+      });
+    });
+  }
+</script>
+
+<!--
+       <script src="https://www.paypal.com/sdk/js?components=buttons&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&vault=true" data-client-token="<%= token %>"></script> -->
+       
        <div id="paypal-button-container"></div>
        <script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},
           createOrder: function (data, actions) 
