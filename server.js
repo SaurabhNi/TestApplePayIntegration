@@ -37,7 +37,7 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9.",
+					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9.",
 					   'cache-control': "no-cache"
 				   },
 				   body: {customer_id: "Mrss_Meenakshi_Nigam"},
@@ -266,8 +266,8 @@ router.post('/create-order', function(req, res, next) {
 			request.post('https://api.sandbox.paypal.com/v2/checkout/orders', {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken
-				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
+				'authorization': "Bearer "+accessToken,
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
             },
             body: {
                 "intent": "CAPTURE",
@@ -305,8 +305,8 @@ router.post('/capture-order/:id', function(req, res, next) {
 				request.post('https://api.sandbox.paypal.com/v2/checkout/orders/' + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken
-						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
+						'authorization': "Bearer "+accessToken,
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
 					}
 				}, function (err, response, body) {
 					if (err) {
