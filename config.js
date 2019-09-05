@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : true,
+	"IS_APPLICATION_IN_SANDBOX" : false,
 
 	"sandbox" : {
 		//"CLIENT_ID" :"AZN1cfAKLJSwDHfnIks7oGrjriBD3b6HS91ziYeRcKAGLSgQejjJmrPAL501icsygCTya3KJAqqHUDny",
@@ -8,6 +8,12 @@ var config = {
 		//"SECRET":"EBOzYhK58t-vvBWsTMNOaM55DDW53XgpjocCbzcJx-6uHumQT6g6V1Xee1X-RH_ln7vEmZ1tiVpLMNWS",
 		"CLIENT_ID" :"AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf",
 		"SECRET":"EHp-nENfthAt7JHBd2eBHEBJA8TN8d11CZ76lVYpybGc7Vy7fhpZz8kxBOo-tlVGn9-_TkCXuBhaNRa0",
+		"MERCHANTID":"QNL4ZALLLNREG",
+		"STC":"https://api.sandbox.paypal.com/v1/risk/transaction-contexts/",
+		"CREATE_ORDER_URL":"https://api.sandbox.paypal.com/v2/checkout/orders",
+		"CAPTURE_ORDER_URL":"https://api.sandbox.paypal.com/v2/checkout/orders/",
+		//"CLIENT_ID":"ASuu5Mry_jCK3EWOzhSXAoTFJ0kBe_CNhTE_V68atBPfHMKdyU3FvLe6tVk-DAj43xjxIyZnfm9nXEeu",
+		//"SECRET":"EEhN5c_tXXialdxHTcNRVxAs0n3OiS33ndeeCsXkHGzWEtt1QdMtx813-6J4GECKCF9ZGCact-uAX6MN",
 		//"CLIENT_ID" :"AUy9j0vE2UevpqIxAR2QsxzDJBM2dB3tBNwe6hLTRFY3DOAI8n1pC3vKmdoWMORxy5YpXWcqF3o0dW3E",
 		//"SECRET":"EMv9tv-oRlIQQPkgP1hLW5LYvmW6-rO4XUOybTRKO4-pkOHCazAq-TbJZYHOMHJUWsP-uIrCUQLiUuVV",
 		"USER_NAME":"Mario1267_api1.gmail.com",
@@ -30,7 +36,11 @@ var config = {
 		"CLIENT_ID" :"AeIP3_gc2KU8iMd1JAZ-3P0WJMQCijHaqvTV6rwN7kLTjPl5oRyM0xZ43U6gwKjVhRciR-LQy21d7E74",
 		"SECRET":"EJQyU0dEc-d_uvm4QzpsQNexTx146ZTVz-gE_1ZArO53AUiyNKuppjTrcfuZDl3de6csjclXQhHcq-It",
 		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
+		"MERCHANTID":"SKBHKJUHPEPS8",
 		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
+		"STC":"https://api.paypal.com/v1/risk/transaction-contexts/",
+		"CREATE_ORDER_URL":"https://api.paypal.com/v2/checkout/orders",
+		"CAPTURE_ORDER_URL":"https://api.paypal.com/v2/checkout/orders/",
 		"EXECUTE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment/{payment_id}/execute/",
 		"GET_PAYMENT_DETAILS":"https://api.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",

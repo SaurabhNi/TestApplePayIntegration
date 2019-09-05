@@ -37,10 +37,10 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9.",
+					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9.",
 					   'cache-control': "no-cache"
 				   },
-				   body: {customer_id: "Mrss_Meenakshi_Nigam"},
+				   body: {customer_id: "Mrss123_Meenakshi_Nigam"},
 				   json:true				   
 				}
 			   request(options, function (error, response, body) {
@@ -263,20 +263,20 @@ router.post('/create-order', function(req, res, next) {
 		getAccessToken(function(data) {
 
 			var accessToken = JSON.parse(data).access_token;
-			request.post('https://api.sandbox.paypal.com/v2/checkout/orders', {
+			request.post(configuration.CREATE_ORDER_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
             },
             body: {
                 "intent": "CAPTURE",
                 "purchase_units": [{
                     "amount": {
                         "currency_code": "INR",
-                        "value": "100.00"
+                        "value": "1.00"
 					}
-					}],
+					}]
             },
             json: true
         }, function (err, response, body) {
@@ -285,6 +285,44 @@ router.post('/create-order', function(req, res, next) {
                 return res.sendStatus(500);
             }
 			console.log (body);
+
+			// STC API Call
+			console.log("Before calling STC API");
+			request.post(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
+            headers: {
+                'content-type': "application/json",
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
+            },
+            body: {
+                	"additional_data": [
+					{
+					  "key": "sender_account_id",
+					  "value": "A12345N343"
+					},
+					{
+					  "key": "sender_first_name",
+					  "value": "Saurabh"
+					},
+					{
+						"key":"sender_last_name",
+						"value":"Nigam"
+					},
+					{
+						"key":"sender_email",
+						"value":"saunig+1@gmail.com"
+					},
+					{
+						"key":"sender_country_code",
+						"value":"IN"
+					}]
+					
+            },
+            json: true
+		});
+		
+		console.log("After calling STC API");
+		console.log ("Order ID is :"+body.id);
             res.json({
                 id: body.id
             });
@@ -302,11 +340,11 @@ router.post('/capture-order/:id', function(req, res, next) {
 			{
 				var OrderID = req.params.id;
 				var accessToken = JSON.parse(data).access_token;
-				request.post('https://api.sandbox.paypal.com/v2/checkout/orders/' + OrderID + '/capture', {
+				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
+						'authorization': "Bearer "+accessToken
+						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVlfN090MWJEYmtlVWUwQTYxSTZvYUZlQkFBdTM2dk9VUTdkSkNtN182YXFZZHdYampJXzNmYjEtdGdxNDNCeWtUbnE0ZFVnN0QyalVad2YiLAogICJwYXllcl9pZCI6ICJCWFFGRzdZQ0Y1RUc4Igp9."
 					}
 				}, function (err, response, body) {
 					if (err) {

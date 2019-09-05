@@ -111,8 +111,8 @@
        </script>
        -->
 
-
-<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&intent=capture&currency=USD" data-client-token="<%= token %>"></script>
+<!--
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&intent=capture&currency=USD" data-client-token="<%= token %>" data-enable-3ds></script>-->
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -222,14 +222,18 @@ console.log("Just before entering hosted fields check");
   }
 </script>
 
-<!--
-       <script src="https://www.paypal.com/sdk/js?components=buttons&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&vault=true" data-client-token="<%= token %>"></script> -->
+
+       <script src="https://www.paypal.com/sdk/js?components=buttons&client-id=AeIP3_gc2KU8iMd1JAZ-3P0WJMQCijHaqvTV6rwN7kLTjPl5oRyM0xZ43U6gwKjVhRciR-LQy21d7E74&currency=INR" data-client-token="<%= token %>"></script> -->
        
        <div id="paypal-button-container"></div>
        <script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},
           createOrder: function (data, actions) 
-          { return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) 
-          {return data.id;});},
+          { 
+            console.log("Data Payload is :"+JSON.stringify(data));
+            console.log("Action Payload is :"+JSON.stringify(actions));
+            return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) 
+          {
+            return data.id;});},
           onApprove: function (data, actions) {return fetch('/capture-order/' + data.orderID, {method: 'POST'}).then(function(res) 
           {
             if (!res.ok) {
