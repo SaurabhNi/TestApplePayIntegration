@@ -37,6 +37,7 @@ var config = {
 		"SECRET":"EJQyU0dEc-d_uvm4QzpsQNexTx146ZTVz-gE_1ZArO53AUiyNKuppjTrcfuZDl3de6csjclXQhHcq-It",
 		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
 		"MERCHANTID":"SKBHKJUHPEPS8",
+		"GET_CLIENT_TOKEN":"https://api.paypal.com/v1/identity/generate-token",
 		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
 		"STC":"https://api.paypal.com/v1/risk/transaction-contexts/",
 		"CREATE_ORDER_URL":"https://api.paypal.com/v2/checkout/orders",
