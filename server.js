@@ -285,7 +285,7 @@ router.post('/create-order', function(req, res, next) {
                 return res.sendStatus(500);
             }
 			console.log (body);
-
+			var orderId=body.id;
 			// STC API Call
 			console.log("Before calling STC API");
 			request.post(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
@@ -319,19 +319,24 @@ router.post('/create-order', function(req, res, next) {
 					
             },
             json: true
-		});
-		
-		console.log("After calling STC API");
-		console.log ("Order ID is :"+body.id);
+		},function (err, response, body) {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+			console.log (body);
+			console.log("After calling STC API");
+			console.log ("Order ID is :"+orderId);
             res.json({
-                id: body.id
+                id: orderId
             });
         });
 	});
-}catch(e) {
-		console.log(e)
-	}
 });
+}catch(e) {
+	console.log(e)
+}
+});	
 
 router.post('/capture-order/:id', function(req, res, next) {
 	console.log ('In calling Capture-Order');
