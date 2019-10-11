@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : false,
+	"IS_APPLICATION_IN_SANDBOX" : true,
 
 	"sandbox" : {
 		//"CLIENT_ID" :"AZN1cfAKLJSwDHfnIks7oGrjriBD3b6HS91ziYeRcKAGLSgQejjJmrPAL501icsygCTya3KJAqqHUDny",
