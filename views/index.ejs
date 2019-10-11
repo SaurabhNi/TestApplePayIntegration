@@ -112,7 +112,7 @@
        -->
 
 
-<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AT5vIvI-b7hTlfwQQdjf__hhMG489_kxEilxC_AXH2jKH6_E7GjaTPb8ht-CTM5YmW9Zy92HiD4igtXG&merchant-id=DCLGA7J5NE3VY&intent=capture&currency=EUR"></script>
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AT5vIvI-b7hTlfwQQdjf__hhMG489_kxEilxC_AXH2jKH6_E7GjaTPb8ht-CTM5YmW9Zy92HiD4igtXG&merchant-id=DCLGA7J5NE3VY&intent=capture&currency=EUR" data-client-token="<%= token %>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -121,8 +121,8 @@
   <div id="expiration-date"  class="hosted-field"></div>
   <label for="cvv">CVV</label>
   <div id="cvv"  class="hosted-field"></div>
-  <!--<input type="checkbox" id="vault" name="vault">
-  <label for="vault">Save your Card</label>-->
+  <input type="checkbox" id="vault" name="vault">
+  <label for="vault">Save your Card</label>
   <button value="submit" id="submit" class="btn">Pay with Card</button>
 </form>
 </div>
@@ -171,8 +171,8 @@ console.log("Just before entering hosted fields check");
         hostedFields.submit(
           {
           // Need to specify the buyer action to save the card
-          contingencies: ['3D_SECURE']
-          //vault: document.querySelector('#vault').checked
+          contingencies: ['3D_SECURE'],
+          vault: document.querySelector('#vault').checked
           }
         ).then(payload => {
           console.log("Order Id is "+payload.orderId);
