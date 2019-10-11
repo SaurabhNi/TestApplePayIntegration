@@ -273,8 +273,11 @@ router.post('/create-order', function(req, res, next) {
                 "intent": "CAPTURE",
                 "purchase_units": [{
                     "amount": {
-                        "currency_code": "INR",
-                        "value": "1.00"
+                        "currency_code": "EUR",
+                        "value": "10.00"
+					},
+					"payee":{
+						"merchant_id":"DCLGA7J5NE3VY"
 					}
 					}]
             },

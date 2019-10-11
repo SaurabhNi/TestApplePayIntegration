@@ -111,8 +111,8 @@
        </script>
        -->
 
-<!--
-<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&intent=capture&currency=USD" data-client-token="<%= token %>" data-enable-3ds></script>-->
+
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AT5vIvI-b7hTlfwQQdjf__hhMG489_kxEilxC_AXH2jKH6_E7GjaTPb8ht-CTM5YmW9Zy92HiD4igtXG&merchant-id=DCLGA7J5NE3VY&intent=capture&currency=EUR" data-client-token="<%= token %>"></script>-->
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -127,7 +127,7 @@
 </form>
 </div>
 <div id="payments-sdk__contingency-lightbox"></div>
-<!--
+
 <script>
 // Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
 console.log("Just before entering hosted fields check");
@@ -176,6 +176,7 @@ console.log("Just before entering hosted fields check");
           }
         ).then(payload => {
           console.log("Order Id is "+payload.orderId);
+          
           if (payload.liabilityShifted === undefined) {
                      // Handle no 3D Secure contingency passed scenario
                      console.log("Entering no 3DS");
@@ -222,9 +223,9 @@ console.log("Just before entering hosted fields check");
     });
   }
 </script>
--->
+<!--
 
-       <script src="https://www.paypal.com/sdk/js?components=buttons&client-id=AeIP3_gc2KU8iMd1JAZ-3P0WJMQCijHaqvTV6rwN7kLTjPl5oRyM0xZ43U6gwKjVhRciR-LQy21d7E74&currency=INR" data-client-token="<%= token %>"></script> 
+       <script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=&currency=EUR" data-client-token="<%= token %>"></script> 
        
        <div id="paypal-button-container"></div>
        <script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},
@@ -247,7 +248,7 @@ console.log("Just before entering hosted fields check");
           }}).render('#paypal-button-container');</script>
       </div>
       
-          <!--<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+          script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
           
           <div id="paypal-button-container"></div>
           <script>
