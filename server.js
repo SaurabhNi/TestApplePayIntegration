@@ -277,7 +277,7 @@ router.post('/create-order', function(req, res, next) {
                         "value": "10.00"
 					},
 					"payee":{
-						"merchant_id":"DCLGA7J5NE3VY"
+						"merchant_id":"UY6JR2CQ25KUE"
 					}
 					}]
             },
