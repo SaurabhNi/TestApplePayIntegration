@@ -279,7 +279,7 @@ router.post('/create-order', function(req, res, next) {
 					"payee":{
 						"merchant_id":"8F3CK4WWQFLML"
 					},
-					"payment_instrcution":{
+					"payment_instruction":{
 						"disbursement_mode":"DELAYED"
 					}
 					}]
