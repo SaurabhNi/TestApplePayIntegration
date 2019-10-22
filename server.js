@@ -37,7 +37,7 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJEQ0xHQTdKNU5FM1ZZIgp9.",
+					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9.",
 					   'cache-control': "no-cache"
 				   },
 				   body: {customer_id: "Mr_Saurabh_Nigam"},
@@ -267,7 +267,7 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJEQ0xHQTdKNU5FM1ZZIgp9."
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
             },
             body: {
                 "intent": "CAPTURE",
@@ -277,7 +277,7 @@ router.post('/create-order', function(req, res, next) {
                         "value": "10.00"
 					},
 					"payee":{
-						"merchant_id":"DCLGA7J5NE3VY"
+						"merchant_id":"8F3CK4WWQFLML"
 					}
 					}]
             },
@@ -295,7 +295,7 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJEQ0xHQTdKNU5FM1ZZIgp9."
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
             },
             body: {
                 	"additional_data": [
@@ -352,7 +352,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJEQ0xHQTdKNU5FM1ZZIgp9."
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
 					}
 				}, function (err, response, body) {
 					if (err) {
