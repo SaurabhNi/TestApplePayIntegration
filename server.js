@@ -37,10 +37,10 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9.",
+					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9.",
 					   'cache-control': "no-cache"
 				   },
-				   body: {customer_id: "Mr_Saurabh_Nigam_Sr"},
+				   body: {customer_id: "Mr_Saurabh_Nigam_Srsms"},
 				   json:true				   
 				}
 			   request(options, function (error, response, body) {
@@ -266,21 +266,21 @@ router.post('/create-order', function(req, res, next) {
 			request.post(configuration.CREATE_ORDER_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken
-				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
+				'authorization': "Bearer "+accessToken,
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
             },
             body: {
-                "intent": "CAPTURE",
+                "intent": "AUTHORIZE",
                 "purchase_units": [{
                     "amount": {
                         "currency_code": "USD",
                         "value": "10.00"
+					},
+					"payee":{
+						"merchant_id":"PPC6CRGZNWY5C"
 					}
-					//"payee":{
-					//	"merchant_id":"8F3CK4WWQFLML"
-					//},
 					//"payment_instruction":{
-					//	"disbursement_mode":"DELAYED"
+					//"disbursement_mode":"DELAYED"
 					//}
 					}]
             },
@@ -297,8 +297,8 @@ router.post('/create-order', function(req, res, next) {
 			request.put(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken
-				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
+				'authorization': "Bearer "+accessToken,
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
             },
             body: {
                 	"additional_data": [
@@ -351,11 +351,11 @@ router.post('/capture-order/:id', function(req, res, next) {
 			{
 				var OrderID = req.params.id;
 				var accessToken = JSON.parse(data).access_token;
-				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
+				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/authorize', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken
-						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICI4RjNDSzRXV1FGTE1MIgp9."
+						'authorization': "Bearer "+accessToken,
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
 					}
 				}, function (err, response, body) {
 					if (err) {
