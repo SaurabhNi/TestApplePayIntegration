@@ -270,7 +270,21 @@ router.post('/create-order', function(req, res, next) {
 				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
             },
             body: {
-                "intent": "CAPTURE",
+				"intent": "CAPTURE",
+				"payer":{
+					"address":{
+						"address_line_1":"1 Zwirkrand Wigury Str.",
+						"admin_area_2":"Warsaw",
+						"admin_area_1":"Poland",
+						"postal_code":"00-906",
+						"country_code":"PL"
+					},
+					"phone":{
+						"phone_number":{
+							"national_number":"+48226501000"
+						}
+					}
+				},
                 "purchase_units": [{
                     "amount": {
                         "currency_code": "USD",
@@ -279,6 +293,7 @@ router.post('/create-order', function(req, res, next) {
 					"payee":{
 						"merchant_id":"PPC6CRGZNWY5C"
 					}
+
 					//"payment_instruction":{
 					//"disbursement_mode":"DELAYED"
 					//}
