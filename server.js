@@ -298,7 +298,7 @@ router.post('/create-order', function(req, res, next) {
 						 	"postal_code":"00-906",
 						 	"country_code":"PL"
 						 }
-					//}
+					}
 
 					//"payment_instruction":{
 					//"disbursement_mode":"DELAYED"
