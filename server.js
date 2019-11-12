@@ -281,7 +281,7 @@ router.post('/create-order', function(req, res, next) {
 					},
 					"phone":{
 						"phone_number":{
-							"national_number":"+48226501000"
+							"national_number":"+48 22 650 10 00"
 						}
 					}
 				},
