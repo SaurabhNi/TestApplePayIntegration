@@ -287,6 +287,9 @@ router.post('/create-order', function(req, res, next) {
 						"merchant_id":"PPC6CRGZNWY5C"
 					},
 					"shipping":{
+						"name":{
+							"shipping_type":"SHIPPING"
+						},
 						"address":{
 							"address_line_1":"1 Zwirkrand Wigury Str.",
 							"admin_area_2":"Warsaw",
