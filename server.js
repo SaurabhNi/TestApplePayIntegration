@@ -287,11 +287,13 @@ router.post('/create-order', function(req, res, next) {
 						"merchant_id":"PPC6CRGZNWY5C"
 					},
 					"shipping":{
+						"address":{
 							"address_line_1":"1 Zwirkrand Wigury Str.",
 							"admin_area_2":"Warsaw",
 							"admin_area_1":"Poland",
 							"postal_code":"00-906",
 							"country_code":"PL"
+						}
 					}
 
 					//"payment_instruction":{
