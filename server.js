@@ -291,8 +291,8 @@ router.post('/create-order', function(req, res, next) {
 							"shipping_type":"SHIPPING"
 						},
 						"address":{
-							"address_line_1":"1 Zwirkrand Wigury Str.",
-							"admin_area_2":"Warsaw",
+							//"address_line_1":"1 Zwirkrand Wigury Str.",
+							//"admin_area_2":"Warsaw",
 							"postal_code":"00906",
 							"country_code":"PL"
 						}
