@@ -270,7 +270,7 @@ router.post('/create-order', function(req, res, next) {
 				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
             },
             body: {
-                "intent": "AUTHORIZE",
+                "intent": "CAPTURE",
                 "purchase_units": [{
                     "amount": {
                         "currency_code": "USD",
@@ -351,7 +351,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 			{
 				var OrderID = req.params.id;
 				var accessToken = JSON.parse(data).access_token;
-				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/authorize', {
+				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
