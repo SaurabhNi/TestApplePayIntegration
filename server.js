@@ -272,13 +272,6 @@ router.post('/create-order', function(req, res, next) {
             body: {
 				"intent": "CAPTURE",
 				"payer":{
-					"address":{
-						"address_line_1":"1 Zwirkrand Wigury Str.",
-						"admin_area_2":"Warsaw",
-						"admin_area_1":"Poland",
-						"postal_code":"00-906",
-						"country_code":"PL"
-					},
 					"phone":{
 						"phone_number":{
 							"national_number":"48226501000"
@@ -292,6 +285,13 @@ router.post('/create-order', function(req, res, next) {
 					},
 					"payee":{
 						"merchant_id":"PPC6CRGZNWY5C"
+					},
+					"shipping":{
+							"address_line_1":"1 Zwirkrand Wigury Str.",
+							"admin_area_2":"Warsaw",
+							"admin_area_1":"Poland",
+							"postal_code":"00-906",
+							"country_code":"PL"
 					}
 
 					//"payment_instruction":{
