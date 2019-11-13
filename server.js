@@ -291,8 +291,10 @@ router.post('/create-order', function(req, res, next) {
 						 	"full_name":"Duan Pengfei"
 						 },
 					 "address":{
-					 		 "address_line_1":"1H Zwirkrand Wigury Str.",
-					 		"admin_area_2":"Warszawa",
+							  "address_line_1":"1H Zwirkrand Wigury Str.",
+							  "address_line_2":"",
+							 "admin_area_2":"Warszawa",
+							 "admin_area_1":"",
 					 	 	"postal_code":"00-906",
 					 	 	"country_code":"PL"
 					 	 }
