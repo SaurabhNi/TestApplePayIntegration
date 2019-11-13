@@ -286,19 +286,17 @@ router.post('/create-order', function(req, res, next) {
 					"payee":{
 						"merchant_id":"PPC6CRGZNWY5C"
 					},
-					//"shipping":{
-						// "name":{
-						// 	"shipping_type":"SHIPPING"
-						// },
-					//	 "address":{
-					// 		 "address_line_1":"1H Zwirkrand Wigury Str.",
-					// 		 "address_line_2":"",
-					// 		"admin_area_2":"Warszawa",
-					// 	 	"admin_area_1":"",
-					// 	 	"postal_code":"00-906",
-					// 	 	"country_code":"PL"
-					// 	 }
-					// }
+					"shipping":{
+						"name":{
+						 	"full_name":"Duan Pengfei"
+						 },
+					 "address":{
+					 		 "address_line_1":"1H Zwirkrand Wigury Str.",
+					 		"admin_area_2":"Warszawa",
+					 	 	"postal_code":"00-906",
+					 	 	"country_code":"PL"
+					 	 }
+					 }
 
 					//"payment_instruction":{
 					//"disbursement_mode":"DELAYED"
