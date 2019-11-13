@@ -271,6 +271,7 @@ router.post('/create-order', function(req, res, next) {
             },
             body: {
 				"intent": "CAPTURE",
+				"application_context":{},
 				"payer":{
 					"phone":{
 						"phone_number":{
