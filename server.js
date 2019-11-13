@@ -298,14 +298,14 @@ router.post('/create-order', function(req, res, next) {
 					//  	 	"postal_code":"00-906",
 					//  	 	"country_code":"PL"
 					//  	 }
-					"address":{
-					"address_line_1":"Aleje Jerozolimskie 45",
-					"address_line_2":"",
-					"admin_area_2":"WARSAW",
-					"admin_area_1":"",
-					"postal_code":"44100",
-					"country_code":"PL"
-					 }
+					"address": {
+                        "address_line_1": "Shipping Aleje Jerozolimskie 45",
+                        "address_line_2": "vada",
+                        "admin_area_2": "WARSAW",
+                        "admin_area_1": "",
+                        "postal_code": "44100",
+                        "country_code": "PL"
+                      }
 					}
 					//"payment_instruction":{
 					//"disbursement_mode":"DELAYED"
