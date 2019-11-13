@@ -290,16 +290,23 @@ router.post('/create-order', function(req, res, next) {
 						"name":{
 						 	"full_name":"Duan Pengfei"
 						 },
-					 "address":{
-							  "address_line_1":"1H Zwirkrand Wigury Str.",
-							  "address_line_2":"",
-							 "admin_area_2":"Warszawa",
-							 "admin_area_1":"",
-					 	 	"postal_code":"00-906",
-					 	 	"country_code":"PL"
-					 	 }
+					//  "address":{
+					// 		  "address_line_1":"1H Zwirkrand Wigury Str.",
+					// 		  "address_line_2":"",
+					// 		 "admin_area_2":"Warszawa",
+					// 		 "admin_area_1":"",
+					//  	 	"postal_code":"00-906",
+					//  	 	"country_code":"PL"
+					//  	 }
+					"address":{
+					"address_line_1":"Aleje Jerozolimskie 45",
+					"address_line_2":"",
+					"admin_area_2":"WARSAW",
+					"admin_area_1":"",
+					"postal_code":"44100",
+					"country_code":"PL"
 					 }
-
+					}
 					//"payment_instruction":{
 					//"disbursement_mode":"DELAYED"
 					//}
