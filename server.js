@@ -302,7 +302,7 @@ router.post('/create-order', function(req, res, next) {
             },
             body: {
 				"intent": "CAPTURE",
-				"application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
+				"application_context":{"shipping_preference":"NO_SHIPPING","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
 				//"payer":{
 				//	"phone":{
 				//		"phone_number":{
