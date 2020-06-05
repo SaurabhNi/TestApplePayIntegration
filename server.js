@@ -23,6 +23,7 @@ router.set('view engine','ejs');
 var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
 
+
 const uuidV4 = require('uuid/v4');
 	router.get('/', function(req, res, next) {
 		    var str=uuidV4();
@@ -30,17 +31,45 @@ const uuidV4 = require('uuid/v4');
 		try{
 		
 			getAccessToken(function(data) {
-   			   var accessToken = JSON.parse(data).access_token;
+				  var accessToken = JSON.parse(data).access_token;
+				  console.log("Access Token"+accessToken);
+				  var token  = configuration.CLIENT_ID+":"+configuration.SECRET;
+	    		  var encodedKey = new Buffer(token).toString('base64');
+				  var GQCLient = GQclient({
+					url: configuration.GET_GRAPHQL_URL,
+					headers: {
+					  Authorization: "Basic "+encodedKey
+					}
+				  });
+				  // GraphQL to instantiate Universal Access Token (UAT)
+				  
+// GQCLient.query('mutation { authnauth{ token (clientInfo: {ipAddress: "10.11.121.1"}){ authToken(tokenClaims : [{key : "customer_id",value : "testvalue1"}]){universalAccessToken}}}}', function(req, res) {
+// 					if(res.status === 401) {
+// 					  throw new Error('Not authorized')
+// 					}
+// 				  })
+// 				  .then(function(body) {
+// 					console.log(body)
+// 				  })
+// 				  .catch(function(err) {
+// 					console.log(err.message)
+// 				  })
+
+
+
 		   	   var options = { 
 				 method: 'POST',
 				 url: configuration.GET_CLIENT_TOKEN,
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9.",
+					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
 					   'cache-control': "no-cache"
+					   //'PayPal-Partner-Attribution-Id':"GPS-APAC-US-NA"
 				   },
-				   body: {customer_id: "Mr_Saurabh_Nigam_Srsms"},
+				   body: {
+					   customer_id:"Jahnavi_Nigam_17"
+				   },
 				   json:true				   
 				}
 			   request(options, function (error, response, body) {
@@ -50,7 +79,7 @@ const uuidV4 = require('uuid/v4');
 				 else{
 				   console.log("Sending response",body);
 				  // res.redirect('/index1.html?id='+body.client_token);
-				  res.render("index",{token: body.client_token});
+				  res.render("index",{token: body.client_token,client_metadata_id:str});
 				 }
 			   });
 			   
@@ -75,6 +104,7 @@ const products = require('./products');
 const queryString = require('querystring');
 
 const configuration = config.getConfig();
+var GQclient = require('graphql-client')
 const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
 const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
 const executeNVPPaymentPayloadTemplates = payLoadTemplate.getNVPExecutePaymentsPayloadTemplate();
@@ -266,12 +296,13 @@ router.post('/create-order', function(req, res, next) {
 			request.post(configuration.CREATE_ORDER_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
+				//"PayPal-Partner-Attribution-Id":"GPS-APAC-US-NA"
             },
             body: {
 				"intent": "CAPTURE",
-				"application_context":{},
+				"application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
 				"payer":{
 					"phone":{
 						"phone_number":{
@@ -279,39 +310,110 @@ router.post('/create-order', function(req, res, next) {
 						}
 					}
 				},
-                "purchase_units": [{
-                    "amount": {
-                        "currency_code": "USD",
-                        "value": "10.00"
-					},
-					"payee":{
-						"merchant_id":"PPC6CRGZNWY5C"
-					},
-					"shipping":{
-						"name":{
-						 	"full_name":"Duan Pengfei"
-						 },
-					 "address":{
-					 		  "address_line_1":"1H Zwirkrand Wigury Str.",
-					 		  "address_line_2":"",
-					 		 "admin_area_2":"Warszawa",
-					 		 "admin_area_1":"",
-					  	 	"postal_code":"00-906",
-					  	 	"country_code":"PL"
-					  	 }
-					// "address": {
-                    //     "address_line_1": "Shipping Aleje Jerozolimskie 45",
-                    //     "address_line_2": "vada",
-                    //     "admin_area_2": "WARSAW",
-                    //     "admin_area_1": "",
-                    //     "postal_code": "44100",
-                    //     "country_code": "PL"
-                    //   }
-					}
-					//"payment_instruction":{
-					//"disbursement_mode":"DELAYED"
-					//}
-					}]
+                "purchase_units": [
+					{
+						"amount": {
+							"currency_code": "EUR",
+							"value": "200.00",
+							"breakdown": {
+								"item_total": {
+								  "currency_code": "EUR",
+								  "value": "180.00"
+								},
+								"tax_total": {
+									"currency_code": "EUR",
+									"value": "20.00"
+								  }
+						 }
+						},
+					//	"payee":{
+					//		"merchant_id":"8MMADDZZQHWLQ"
+					//	},
+						"shipping":{
+							"name":{
+								 "full_name":"Duan Pengfei"
+							 },
+						 "address":{
+								   "address_line_1":"1H Zwirkrand Wigury Str.",
+								   "address_line_2":"",
+								  "admin_area_2":"Warsaw",
+								  "admin_area_1":"",
+								   "postal_code":"00-906",
+								   "country_code":"PL"
+							   }
+						},
+						"items": [
+							{
+							  "name": "T-Shirt",
+							  "description": "Green XL#AE_Seller_001#Merchandise",
+							  "sku": "sku01",
+							  "unit_amount": {
+								"currency_code": "EUR",
+								"value": "90.00"
+							  },
+							  "tax": {
+								"currency_code": "EUR",
+								"value": "10.00"
+							  },
+							  "quantity": "1",
+							  "category": "PHYSICAL_GOODS"
+							},
+							{
+							  "name": "Shoes",
+							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
+							  "sku": "sku02",
+							  "unit_amount": {
+								"currency_code": "EUR",
+								"value": "45.00"
+							  },
+							  "tax": {
+								"currency_code": "EUR",
+								"value": "5.00"
+							  },
+							  "quantity": "2",
+							  "category": "PHYSICAL_GOODS"
+							}
+						  ]
+						//"payment_instruction":{
+						//"disbursement_mode":"DELAYED",
+						//"platform_fees":[{
+						//	"amount":{
+						//		"currency_code":"EUR",
+						//		"value":"10.00"
+						//	}}]
+						//}
+						}
+						// {
+						// 	"amount": {
+						// 		"currency_code": "EUR",
+						// 		"value": "100.00"
+						// 	 },
+						// 	 "payee":{
+						// 		  "merchant_id":"PXW28TWUB5AWW"
+						// 	  },
+						// 	"shipping":{
+						// 		"name":{
+						// 			 "full_name":"Duan Pengfei"
+						// 		 },
+						// 	 "address":{
+						// 			   "address_line_1":"1H Zwirkrand Wigury Str.",
+						// 			   "address_line_2":"",
+						// 			  "admin_area_2":"Warsaw",
+						// 			  "admin_area_1":"",
+						// 			   "postal_code":"00-906",
+						// 			   "country_code":"PL"
+						// 		   }
+						// 	},
+						// 	"payment_instruction":{
+						// 	//"disbursement_mode":"DELAYED",
+						// 	"platform_fees":[{
+						// 		"amount":{
+						// 			"currency_code":"EUR",
+						// 			"value":"10.00"
+						// 		}}]
+						// 	}
+						// 	}
+					]
             },
             json: true
         }, function (err, response, body) {
@@ -323,49 +425,52 @@ router.post('/create-order', function(req, res, next) {
 			var orderId=body.id;
 			// STC API Call
 			console.log("Before calling STC API");
-			request.put(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
-            headers: {
-                'content-type': "application/json",
-				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
-            },
-            body: {
-                	"additional_data": [
-					{
-					  "key": "sender_account_id",
-					  "value": "A12345N343"
-					},
-					{
-					  "key": "sender_first_name",
-					  "value": "Saurabh"
-					},
-					{
-						"key":"sender_last_name",
-						"value":"Nigam"
-					},
-					{
-						"key":"sender_email",
-						"value":"saunig+1@gmail.com"
-					},
-					{
-						"key":"sender_country_code",
-						"value":"IN"
-					}]
+			res.json({
+				id: orderId
+			});
+		// 	request.put(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
+        //     headers: {
+        //         'content-type': "application/json",
+		// 		'authorization': "Bearer "+accessToken,
+		// 		'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJFOTUzMkhWWFlFTFdXIgp9."
+        //     },
+        //     body: {
+        //         	"additional_data": [
+		// 			{
+		// 			  "key": "sender_account_id",
+		// 			  "value": "A12345N343"
+		// 			},
+		// 			{
+		// 			  "key": "sender_first_name",
+		// 			  "value": "Saurabh"
+		// 			},
+		// 			{
+		// 				"key":"sender_last_name",
+		// 				"value":"Nigam"
+		// 			},
+		// 			{
+		// 				"key":"sender_email",
+		// 				"value":"saunig+1@gmail.com"
+		// 			},
+		// 			{
+		// 				"key":"sender_country_code",
+		// 				"value":"IN"
+		// 			}]
 					
-            },
-            json: true
-		},function (err, response, body) {
-            if (err) {
-                console.error(err);
-                return res.sendStatus(500);
-            }
-			console.log (body);
-			console.log("After calling STC API");
-			console.log ("Order ID is :"+orderId);
-            res.json({
-                id: orderId
-            });
-        });
+        //     },
+        //     json: true
+		// },function (err, response, body) {
+        //     if (err) {
+        //         console.error(err);
+        //         return res.sendStatus(500);
+        //     }
+		// 	console.log (body);
+		// 	console.log("After calling STC API");
+		// 	console.log ("Order ID is :"+orderId);
+        //     res.json({
+        //          id: orderId
+        //      });
+        //  });
 	});
 });
 }catch(e) {
@@ -383,14 +488,16 @@ router.post('/capture-order/:id', function(req, res, next) {
 				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVQ1dkl2SS1iN2hUbGZ3UVFkamZfX2hoTUc0ODlfa3hFaWx4Q19BWEgyaktINl9FN0dqYVRQYjhodC1DVE01WW1XOVp5OTJIaUQ0aWd0WEciLAogICJwYXllcl9pZCI6ICJQUEM2Q1JHWk5XWTVDIgp9."
+						'authorization': "Bearer "+accessToken
+						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
+						//"PayPal-Partner-Attribution-Id":"GPS-APAC-US-NA"
 					}
 				}, function (err, response, body) {
 					if (err) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
+					//console.log(response);
 					console.log(body);
 					res.send
 					res.json({

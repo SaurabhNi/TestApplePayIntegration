@@ -88,31 +88,9 @@
         </style>
        </head>
       <body>
-        <!--
-        <script>
-      
-          function getParameterByName(name, url) { console.log("im called");if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
-          
-          let token= getParameterByName("id");
-          console.log(token);
-          </script>
-           
-        <script>
         
-       fetch('get-client-token', {
-                method: 'POST'
-              }).then(response =>{
-               return response.json();
-              }).then(function(myJson){
-              console.log(myJson.client_token);
-              client_token=myJson.client_token;
-              //document.getElementById("PayPal-button").innerHTML='<script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&vault=true" data-client-token='+client_token+'> <\/script><script>alert("Here");<\/script><div id="paypal-button-container"><\/div><script> paypal.Buttons({ style:{layout:  \'vertical\', color:\'blue\', shape:\'rect\', label: \'paypal\'},   createOrder: function (data, actions) { return fetch(\'/create-order\', { method: \'POST\' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch(\'/capture-order\' + data.orderID, {method: \'POST\'}).then(function(res) {if (!res.ok) {alert(\'Something went wrong\'); }});}}).render(\'#paypal-button-container\');<\/script>'; 
-       });
-       </script>
-       -->
-
-
-<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=AT5vIvI-b7hTlfwQQdjf__hhMG489_kxEilxC_AXH2jKH6_E7GjaTPb8ht-CTM5YmW9Zy92HiD4igtXG&currency=USD&buyer-country=PL&merchant-id=PPC6CRGZNWY5C&intent=capture" data-client-token="<%= token %>"></script>
+       
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&currency=EUR&buyer-country=US&intent=capture" data-client-token="<%= token %>" ></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -172,10 +150,11 @@ console.log("Just before entering hosted fields check");
           {
           // Need to specify the buyer action to save the card
           contingencies: ['3D_SECURE'],
-          vault: document.querySelector('#vault').checked
+          vault: document.querySelector('#vault').checked,
           }
         ).then(payload => {
           console.log("Order Id is "+payload.orderId);
+          console.log(payload.liabilityShifted);
           
           if (payload.liabilityShifted === undefined) {
                      // Handle no 3D Secure contingency passed scenario
@@ -218,38 +197,15 @@ console.log("Just before entering hosted fields check");
             alert("Payment is successful");
           });
                 }
-              });
+              }).catch(function (error) {
+                              console.log('PayPal CCF submission failed:' + error);
+                              // error: {code: 'error', description: 'error'}                        // NOTE Consumer cancels 3D Secure flow within online banking app. Conflicts with above options.
+                        }).finally(()=> console.log("Finally Executed"));
       });
     });
   }
 </script>
-
-
-      <!-- <script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=&currency=EUR" data-client-token="<%= token %>"></script> -->
        
-       <div id="paypal-button-container"></div>
-       <script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},
-          createOrder: function (data, actions) 
-          { 
-            console.log("Data Payload is :"+JSON.stringify(data));
-            console.log("Action Payload is :"+JSON.stringify(actions));
-            return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) 
-          {
-            return data.id;});},
-          onApprove: function (data, actions) {return fetch('/capture-order/' + data.orderID, {method: 'POST'}).then(function(res) 
-          {
-            if (!res.ok) {
-              alert('Something went wrong'); 
-            }
-            console.log("Payment is successful");
-            alert("Payment is successful");
-          }
-          );
-          }}).render('#paypal-button-container');</script>
-      </div>
-      
-         <!-- <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
-          
           <div id="paypal-button-container"></div>
           <script>
            paypal.Buttons(
@@ -286,6 +242,5 @@ console.log("Just before entering hosted fields check");
                     }
               }).render('#paypal-button-container');
           </script>
-          </div>-->
       
     </body></html>
