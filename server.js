@@ -68,7 +68,7 @@ const uuidV4 = require('uuid/v4');
 					   //'PayPal-Partner-Attribution-Id':"GPS-APAC-US-NA"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_18"
+					   customer_id:"Jahnavi_Nigam_20"
 				   },
 				   json:true				   
 				}
