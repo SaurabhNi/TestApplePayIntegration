@@ -303,13 +303,13 @@ router.post('/create-order', function(req, res, next) {
             body: {
 				"intent": "CAPTURE",
 				"application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
-				"payer":{
-					"phone":{
-						"phone_number":{
-							"national_number":"48226501000"
-						}
-					}
-				},
+				//"payer":{
+				//	"phone":{
+				//		"phone_number":{
+				//			"national_number":"48226501000"
+				//		}
+				//	}
+				//},
                 "purchase_units": [
 					{
 						"amount": {
@@ -329,19 +329,19 @@ router.post('/create-order', function(req, res, next) {
 					//	"payee":{
 					//		"merchant_id":"8MMADDZZQHWLQ"
 					//	},
-						"shipping":{
-							"name":{
-								 "full_name":"Duan Pengfei"
-							 },
-						 "address":{
-								   "address_line_1":"1H Zwirkrand Wigury Str.",
-								   "address_line_2":"",
-								  "admin_area_2":"Warsaw",
-								  "admin_area_1":"",
-								   "postal_code":"00-906",
-								   "country_code":"PL"
-							   }
-						},
+						//"shipping":{
+						//	"name":{
+						//		 "full_name":"Duan Pengfei"
+						//	 },
+						// "address":{
+						//		   "address_line_1":"1H Zwirkrand Wigury Str.",
+						//		   "address_line_2":"",
+						//		  "admin_area_2":"Warsaw",
+						//		  "admin_area_1":"",
+						//		   "postal_code":"00-906",
+						//		   "country_code":"PL"
+						//	   }
+						//},
 						"items": [
 							{
 							  "name": "T-Shirt",
