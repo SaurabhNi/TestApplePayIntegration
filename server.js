@@ -12,8 +12,12 @@ var decoder = require('utf8');
 var request = require('request');
 var ejs = require('ejs');
 
-
-
+var braintree = require('braintree');
+var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
+	merchantId: "83ghdy9cnwp4v3n8",
+	publicKey: "jgd28yfcckbnwbtp",
+	privateKey: "516f5aa74554da240e8439060026115f"
+});
 
 
 var router = express();
@@ -22,6 +26,9 @@ router.use(bodyParser.json());
 router.set('view engine','ejs');
 var server = http.createServer(router);
 var returnCapture = require('./returnCapture.js');
+
+const payLoadTemplate = require('./payload_template')
+const btPaymentRequestPayLoadTemplate = payLoadTemplate.getCreateBTPaymentsPayLoadTemplate();
 
 
 const uuidV4 = require('uuid/v4');
@@ -68,7 +75,7 @@ const uuidV4 = require('uuid/v4');
 					   //'PayPal-Partner-Attribution-Id':"GPS-APAC-US-NA"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_20"
+					   customer_id:"Jahnavi_Nigam_21"
 				   },
 				   json:true				   
 				}
@@ -79,7 +86,16 @@ const uuidV4 = require('uuid/v4');
 				 else{
 				   console.log("Sending response",body);
 				  // res.redirect('/index1.html?id='+body.client_token);
-				  res.render("index",{token: body.client_token,client_metadata_id:str});
+
+				  gateway.clientToken.generate({}, function (err, response) {
+					if(err)
+					{
+						throw new Error(err);
+					}
+					//console.log(response);
+					console.log("Token generated is"+response.clientToken);	
+					res.render("index",{token: body.client_token,bt_client_token:response.clientToken});
+				  });
 				 }
 			   });
 			   
@@ -98,17 +114,17 @@ var sockets = [];
 
 
 const config = require('./config');
-const payLoadTemplate = require('./payload_template')
+//const payLoadTemplate = require('./payload_template')
 const products = require('./products');
 
 const queryString = require('querystring');
 
 const configuration = config.getConfig();
 var GQclient = require('graphql-client')
-const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
-const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
-const executeNVPPaymentPayloadTemplates = payLoadTemplate.getNVPExecutePaymentsPayloadTemplate();
-const productsJson = products.getProductsTemplate()
+//const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
+//const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
+//const executeNVPPaymentPayloadTemplates = payLoadTemplate.getNVPExecutePaymentsPayloadTemplate();
+//const productsJson = products.getProductsTemplate()
 
 
 function getAccessToken(cb) {
@@ -285,6 +301,65 @@ router.post('/create-payments', function(req, res, next) {
 	}catch(e) {
 		console.log(e)
 	}
+});
+
+router.get("/client_token", function (req, res) {
+	gateway.clientToken.generate({}, function (err, response) {
+	  console.log("Token generated is"+response.clientToken);	
+	  res.send(response.clientToken);
+	});
+  });
+
+router.post("/checkout", function (req, res) {
+	var nonce = req.body.payment_method_nonce;
+	console.log(nonce);
+	var payLoad = buildbtPaymentRequestPayload(req.body);
+	payLoad.paymentMethodNonce = nonce;
+	//payLoad.options.storeInVaultOnSuccess = true;
+	//payLoad.deviceData = req.body.deviceData;
+	console.log(payLoad);
+
+	// gateway.transaction.submitForSettlement("02w4cssx", function (err, result) {
+	// 	if (result.success) {
+	// 	  var settledTransaction = result.transaction;
+	// 	  res.send("<h1>Success! Transaction ID: " + result.transaction.id + "</h1>");
+	// 	} else {
+	// 	  console.log(result.errors);
+	// 	}
+	//   });
+
+	
+
+	gateway.transaction.sale(payLoad, function (err, result) {
+		if (err) {
+			console.log("Inside error stream");
+			console.log(err.type); 
+   			console.log(err.name); 
+    		console.log(err.message);
+			res.send("<h1>Error:  " + err + "</h1>");
+		} else if (result.success) {
+		  console.log("Inside success. Transaction ID is :"+result.transaction.id);
+		  console.log("Result is : "+JSON.stringify(result));
+		  // console.log("PayPal paymentID is :"+result.transaction.paypal.paymentId);
+		  //console.log("Customer ID is :",result.customer.id);
+		  //console.log("Customer Payment Method Token is :",result.customer.paymentMethods[0].token);
+		  res.send("<h1>Success! Transaction ID: " + result.transaction.id + "</h1>");
+		} else {
+		  console.log("Inside result is false");
+		  console.log("Result is : "+JSON.stringify(result));
+		  console.log("Result transaction id is : "+result.transaction.id);
+		  var deepErrors = result.errors.deepErrors();
+		  for (var i in deepErrors) {
+			if (deepErrors.hasOwnProperty(i)) {
+			  console.log(deepErrors[i].attribute);
+			  console.log(deepErrors[i].code);
+			  console.log(deepErrors[i].message);
+			}
+		  }	
+		  console.log("Error is :"+result.message);
+		  res.send("<h1>Error:  " + result.transaction.id + "</h1>");
+		}
+	  });
 });
 
 router.post('/create-order', function(req, res, next) {
@@ -745,6 +820,51 @@ router.post('/post-paypal-ipn', urlencodedParser, function(req, res, next) {
 	  //console.log('Parameters received are :'+params);
 	  res.status(200).end();
 });
+
+function buildbtPaymentRequestPayload(data) {
+	console.log(data);
+	var template = btPaymentRequestPayLoadTemplate;
+		template.amount = data.total;
+		template.merchantAccountId = data.currency;
+		
+		//template.transactions[0].amount.details.subtotal = data.subtotal
+		//template.transactions[0].amount.details.shipping_discount = data.shipping_discount
+		//template.transactions[0].amount.details.insurance = data.insurance
+		//template.transactions[0].amount.details.shipping = data.shipping
+		//template.transactions[0].amount.details.tax = data.tax
+		//template.transactions[0].amount.details.handling_fee = data.handling_fee
+
+		template.orderId = makeid();
+
+		//template.descriptor.name = data.description	
+		//template.transactions[0].item_list.items[0].description = data.description	
+		//template.transactions[0].item_list.items[0].quantity = data.quantity	
+		//template.transactions[0].item_list.items[0].price = data.price	
+		//template.transactions[0].item_list.items[0].tax = data.tax	
+		//template.transactions[0].item_list.items[0].currency = data.currency	
+
+
+
+		//template.redirect_urls.return_url = configuration.RETURN_URL
+		//template.redirect_urls.cancel_url = configuration.CANCEL_URL
+		
+		if(data.customFlag == "true") {
+			template.shipping.firstName = data.recipient_name	
+			// template.transactions[0].item_list.shipping_address.line1 = data.line1
+			// template.transactions[0].item_list.shipping_address.line2 = data.line2
+			// template.transactions[0].item_list.shipping_address.city = data.city
+			// template.transactions[0].item_list.shipping_address.country_code = data.country_code
+			// template.transactions[0].item_list.shipping_address.postal_code = data.postal_code
+			// template.transactions[0].item_list.shipping_address.phone = data.phone
+			// template.transactions[0].item_list.shipping_address.state = data.state			
+		}else {
+			//delete template.transactions[0].item_list['shipping_address'];
+		}
+
+
+	return template;
+
+}
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();

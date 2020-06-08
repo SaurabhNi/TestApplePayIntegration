@@ -55,30 +55,17 @@ exports.getCreatePaymentsPayloadTemplate = function() {
 		}
 }
 
-exports.getNVPCreatePaymentsPayloadTemplate=function() {
+exports.getCreateBTPaymentsPayLoadTemplate = function()
+{
 return {
-	"USER":"Mario1267_api1.gmail.com",
-	"PWD":"6QT974GBLAVZX5AE",
-	"SIGNATURE":"AJBjrAOFeBi.IDmiOFQfhCvLWSn0AbNm-He.J4jVOt3DK39k729LW.bx",
-	"VERSION":"204.0",
-	"METHOD":"SetExpressCheckout",
-	"RETURNURL":"https://android-ec-nvp-server.herokuapp.com/execute-payments?",
-	"CANCELURL":"https://android-ec-nvp-server.herokuapp.com/cancel-url",
-	"AMT":"0.01",
-	"PAYMENTACTION":"Sale"
+		amount: "100.0",
+		orderId: "Mapped to PayPal Invoice Number",
+		options: {
+			submitForSettlement: true,
+		//	"paypal":{
+		//"description":"Your Uber ride fare"
+	//"payee_email":"sanigam-facilitator@paypal.com"
+		//}
 }
 }
-
-exports.getNVPExecutePaymentsPayloadTemplate=function() {
-	return {
-		"USER":"Mario1267_api1.gmail.com",
-		"PWD":"6QT974GBLAVZX5AE",
-		"SIGNATURE":"AJBjrAOFeBi.IDmiOFQfhCvLWSn0AbNm-He.J4jVOt3DK39k729LW.bx",
-		"VERSION":"204.0",
-		"METHOD":"DoExpressCheckoutPayment",
-		"TOKEN":"",
-		"PAYMENTACTION":"Sale",
-		"PAYERID":"",
-		"AMT":"0.01"
-	}
-	}
+}
