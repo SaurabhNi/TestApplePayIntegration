@@ -313,15 +313,15 @@ router.post('/create-order', function(req, res, next) {
                 "purchase_units": [
 					{
 						"amount": {
-							"currency_code": "EUR",
+							"currency_code": "USD",
 							"value": "200.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "EUR",
+								  "currency_code": "USD",
 								  "value": "180.00"
 								},
 								"tax_total": {
-									"currency_code": "EUR",
+									"currency_code": "USD",
 									"value": "20.00"
 								  }
 						 }
@@ -348,11 +348,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#AE_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "EUR",
+								"currency_code": "USD",
 								"value": "90.00"
 							  },
 							  "tax": {
-								"currency_code": "EUR",
+								"currency_code": "USD",
 								"value": "10.00"
 							  },
 							  "quantity": "1",
@@ -363,11 +363,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "EUR",
+								"currency_code": "USD",
 								"value": "45.00"
 							  },
 							  "tax": {
-								"currency_code": "EUR",
+								"currency_code": "USD",
 								"value": "5.00"
 							  },
 							  "quantity": "2",
