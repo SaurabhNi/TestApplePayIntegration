@@ -94,7 +94,7 @@
 <script src="https://js.braintreegateway.com/web/3.62.1/js/data-collector.min.js"></script> 
 <script src='https://js.braintreegateway.com/web/3.62.1/js/three-d-secure.min.js'></script>
 
-<script src="https://www.paypal.com/sdk/js?components=buttons&client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&currency=USD&buyer-country=DE&intent=capture" data-client-token="<%= token %>"></script>
+<script src="https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&currency=USD&buyer-country=DE&intent=capture" data-client-token="<%= token %>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -106,7 +106,7 @@
   <input type="checkbox" id="vault" name="vault">
   <label for="vault">Save your Card</label>
   <input type="submit" value="Pay" disabled />
-  <!--<button value="submit" id="submit" class="btn" disabled>Pay with Card</button>-->
+  <!--<button value="submit" id="submit" class="btn">Pay with Card</button>-->
 </form>
 </div>
 <div id="payments-sdk__contingency-lightbox"></div>
@@ -176,13 +176,42 @@
               // If this was a real integration, this is where you would
               // send the nonce to your server.
               console.log('Got a nonce: ' + payload.nonce);
+              var threeDSecure;
+              var nonce=payload.nonce;
+              var bin=payload.details.bin;
+              braintree.threeDSecure.create({
+              version: 2, // Will use 3DS 2 whenever possible
+              client: clientInstance
+              }, function (threeDSecureErr, threeDSecureInstance) {
+                if (threeDSecureErr) {
+                // Handle error in 3D Secure component creation
+                return;
+              }
+              threeDSecure = threeDSecureInstance;
               
-             fetch('/checkout', {
+              var threeDSecureParameters = {
+               amount: '100.00',
+               nonce: nonce, // Example: hostedFieldsTokenizationPayload.nonce
+                bin: bin, // Example: hostedFieldsTokenizationPayload.details.bin
+                onLookupComplete: function (data, next) {
+            // use `data` here, then call `next()`
+            next();
+            }};
+
+            threeDSecure.verifyCard(threeDSecureParameters, function (err, response) {
+            if (err) {
+            // Handle error
+            return;
+            }
+  // Send response.nonce to your server for use in your integration
+  // The 3D Secure Authentication ID can be found 
+  //  at response.threeDSecureInfo.threeDSecureAuthenticationId
+  fetch('/checkout', {
               method: 'POST',
               headers: {
               'Content-Type': 'application/json',
               },
-              body: JSON.stringify({"payment_method_nonce":payload.nonce,
+              body: JSON.stringify({"payment_method_nonce":response.nonce,
               "currency":"testalipayaliexpress","total":"100"})
                }).then(response => {
               if (!response.ok) {
@@ -191,11 +220,13 @@
                console.log("Payment is successful");
                alert("Payment is successful");
               });
-            });
-          }, false);
-        });
-      });
-    
+
+      });// end of 3DS verify card
+  });// end of 3DS object creation
+});// end of hosted field tokenization 
+},false); // end of form submit event handler 
+});// end of hosted fields create
+});// end of braintree instance create            
 
 
 

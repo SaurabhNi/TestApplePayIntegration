@@ -60,8 +60,10 @@ exports.getCreateBTPaymentsPayLoadTemplate = function()
 return {
 		amount: "100.0",
 		orderId: "Mapped to PayPal Invoice Number",
+		customerId:"Jahnavi_Nigam_21",
 		options: {
 			submitForSettlement: true,
+			storeInVaultOnSuccess: true
 		//	"paypal":{
 		//"description":"Your Uber ride fare"
 	//"payee_email":"sanigam-facilitator@paypal.com"

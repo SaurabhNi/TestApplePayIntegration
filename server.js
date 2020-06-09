@@ -572,7 +572,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
-					//console.log(response);
+					console.log(response);
 					console.log(body);
 					res.send
 					res.json({
