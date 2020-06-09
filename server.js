@@ -36,9 +36,9 @@ const uuidV4 = require('uuid/v4');
 		    var str=uuidV4();
 
 		try{
-		
+			var accessToken;
 			getAccessToken(function(data) {
-				  var accessToken = JSON.parse(data).access_token;
+				  accessToken = JSON.parse(data).access_token;
 				  console.log("Access Token"+accessToken);
 				  var token  = configuration.CLIENT_ID+":"+configuration.SECRET;
 	    		  var encodedKey = new Buffer(token).toString('base64');
@@ -48,6 +48,7 @@ const uuidV4 = require('uuid/v4');
 					  Authorization: "Basic "+encodedKey
 					}
 				  });
+			
 				  // GraphQL to instantiate Universal Access Token (UAT)
 				  
 // GQCLient.query('mutation { authnauth{ token (clientInfo: {ipAddress: "10.11.121.1"}){ authToken(tokenClaims : [{key : "customer_id",value : "testvalue1"}]){universalAccessToken}}}}', function(req, res) {
@@ -87,7 +88,7 @@ const uuidV4 = require('uuid/v4');
 				   console.log("Sending response",body);
 				  // res.redirect('/index1.html?id='+body.client_token);
 
-				  gateway.clientToken.generate({}, function (err, response) {
+				  gateway.clientToken.generate({customerId:"Jahnavi_Nigam_21"}, function (err, response) {
 					if(err)
 					{
 						throw new Error(err);
@@ -98,8 +99,8 @@ const uuidV4 = require('uuid/v4');
 				  });
 				 }
 			   });
-			   
-		   });
+			});
+		   
 	   }catch(e) {
 		   console.log(e)
 	   }
