@@ -88,7 +88,7 @@ const uuidV4 = require('uuid/v4');
 				   console.log("Sending response",body);
 				  // res.redirect('/index1.html?id='+body.client_token);
 
-				  gateway.clientToken.generate({customerId:"Jahnavi_Nigam_22"}, function (err, response) {
+				  gateway.clientToken.generate({}, function (err, response) {
 					if(err)
 					{
 						throw new Error(err);
