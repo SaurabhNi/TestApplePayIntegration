@@ -76,7 +76,7 @@ const uuidV4 = require('uuid/v4');
 					   //'PayPal-Partner-Attribution-Id':"GPS-APAC-US-NA"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_24"
+					   customer_id:"Jahnavi_Nigam_30"
 				   },
 				   json:true				   
 				}
@@ -386,6 +386,27 @@ router.post('/create-order', function(req, res, next) {
 				//		}
 				//	}
 				//},
+				payer: {
+					name: {
+					  given_name: "PayPal",
+					  surname: "Customer"
+					},
+					address: {
+					  address_line_1: '123 ABC Street',
+					  address_line_2: 'Apt 2',
+					  admin_area_2: 'San Jose',
+					  admin_area_1: 'CA',
+					  postal_code: '95121',
+					  country_code: 'US'
+					},
+					email_address: "customer@domain.com",
+					phone: {
+					  phone_type: "MOBILE",
+					  phone_number: {
+						national_number: "14082508100"
+					  }
+					}
+				  },
                 "purchase_units": [
 					{
 						"amount": {
@@ -405,19 +426,19 @@ router.post('/create-order', function(req, res, next) {
 					//	"payee":{
 					//		"merchant_id":"8MMADDZZQHWLQ"
 					//	},
-						//"shipping":{
-						//	"name":{
-						//		 "full_name":"Duan Pengfei"
-						//	 },
-						// "address":{
-						//		   "address_line_1":"1H Zwirkrand Wigury Str.",
-						//		   "address_line_2":"",
-						//		  "admin_area_2":"Warsaw",
-						//		  "admin_area_1":"",
-						//		   "postal_code":"00-906",
-						//		   "country_code":"PL"
-						//	   }
-						//},
+						"shipping":{
+							"name":{
+								 "full_name":"PayPal Customer"
+							 },
+						 "address":{
+								   "address_line_1":"123 ABC Street",
+								   "address_line_2":"Apt 2",
+								  "admin_area_2":"San Jose",
+								  "admin_area_1":"CA",
+								   "postal_code":"95121",
+								   "country_code":"US"
+							   }
+						},
 						"items": [
 							{
 							  "name": "T-Shirt",
