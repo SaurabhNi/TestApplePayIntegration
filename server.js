@@ -71,12 +71,12 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
-					   'cache-control': "no-cache"
-					   //'PayPal-Partner-Attribution-Id':"GPS-APAC-US-NA"
+					  // 'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
+					   'cache-control': "no-cache",
+					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_30"
+					   customer_id:"Jahnavi_Nigam_40"
 				   },
 				   json:true				   
 				}
@@ -374,7 +374,7 @@ router.post('/create-order', function(req, res, next) {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken
 				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
-				//"PayPal-Partner-Attribution-Id":"GPS-APAC-US-NA"
+				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
             },
             body: {
 				"intent": "CAPTURE",
@@ -386,27 +386,27 @@ router.post('/create-order', function(req, res, next) {
 				//		}
 				//	}
 				//},
-				payer: {
-					name: {
-					  given_name: "PayPal",
-					  surname: "Customer"
-					},
-					address: {
-					  address_line_1: '123 ABC Street',
-					  address_line_2: 'Apt 2',
-					  admin_area_2: 'San Jose',
-					  admin_area_1: 'CA',
-					  postal_code: '95121',
-					  country_code: 'US'
-					},
-					email_address: "customer@domain.com",
-					phone: {
-					  phone_type: "MOBILE",
-					  phone_number: {
-						national_number: "14082508100"
-					  }
-					}
-				  },
+				// payer: {
+				// 	name: {
+				// 	  given_name: "PayPal",
+				// 	  surname: "Customer"
+				// 	},
+				// 	address: {
+				// 	  address_line_1: '123 ABC Street',
+				// 	  address_line_2: 'Apt 2',
+				// 	  admin_area_2: 'San Jose',
+				// 	  admin_area_1: 'CA',
+				// 	  postal_code: '95121',
+				// 	  country_code: 'US'
+				// 	},
+				// 	email_address: "customer@domain.com",
+				// 	phone: {
+				// 	  phone_type: "MOBILE",
+				// 	  phone_number: {
+				// 		national_number: "14082508100"
+				// 	  }
+				// 	}
+				//   },
                 "purchase_units": [
 					{
 						"amount": {
@@ -423,22 +423,22 @@ router.post('/create-order', function(req, res, next) {
 								  }
 						 }
 						},
-					//	"payee":{
+					//"payee":{
 					//		"merchant_id":"8MMADDZZQHWLQ"
 					//	},
-						"shipping":{
-							"name":{
-								 "full_name":"PayPal Customer"
-							 },
-						 "address":{
-								   "address_line_1":"123 ABC Street",
-								   "address_line_2":"Apt 2",
-								  "admin_area_2":"San Jose",
-								  "admin_area_1":"CA",
-								   "postal_code":"95121",
-								   "country_code":"US"
-							   }
-						},
+						// "shipping":{
+						// 	"name":{
+						// 		 "full_name":"PayPal Customer"
+						// 	 },
+						//  "address":{
+						// 		   "address_line_1":"123 ABC Street",
+						// 		   "address_line_2":"Apt 2",
+						// 		  "admin_area_2":"San Jose",
+						// 		  "admin_area_1":"CA",
+						// 		   "postal_code":"95121",
+						// 		   "country_code":"US"
+						// 	   }
+						// },
 						"items": [
 							{
 							  "name": "T-Shirt",
@@ -470,15 +470,15 @@ router.post('/create-order', function(req, res, next) {
 							  "quantity": "2",
 							  "category": "PHYSICAL_GOODS"
 							}
-						  ]
-						//"payment_instruction":{
+						  ],
+					//	"payment_instruction":{
 						//"disbursement_mode":"DELAYED",
-						//"platform_fees":[{
-						//	"amount":{
-						//		"currency_code":"EUR",
-						//		"value":"10.00"
-						//	}}]
-						//}
+					//	"platform_fees":[{
+					//		"amount":{
+					//			"currency_code":"USD",
+					//			"value":"10.00"
+					//		}}]
+					//	}
 						}
 						// {
 						// 	"amount": {
@@ -587,7 +587,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken
 						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
-						//"PayPal-Partner-Attribution-Id":"GPS-APAC-US-NA"
+						//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
 					}
 				}, function (err, response, body) {
 					if (err) {
