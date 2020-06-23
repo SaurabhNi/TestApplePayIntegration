@@ -76,7 +76,7 @@ const uuidV4 = require('uuid/v4');
 					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_40"
+					   customer_id:"Jahnavi_Nigam_44"
 				   },
 				   json:true				   
 				}
