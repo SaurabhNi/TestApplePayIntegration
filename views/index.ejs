@@ -341,16 +341,16 @@
                 layout: 'vertical'
             }, 
                 createOrder: function (data, actions) { 
-                  // return fetch('/create-order', { 
-                  //   method: 'POST' 
-                  // }).then(function(res){
-                  //    return res.json();
-                  //   }).then(function(data) {
-                  //     return data.id;
-                  //   });
-                  return actions.order.create({
-                    "intent": "CAPTURE",
-				"application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
+                  return fetch('/create-order', { 
+                     method: 'POST' 
+                   }).then(function(res){
+                      return res.json();
+                     }).then(function(data) {
+                       return data.id;
+                     });
+        //           return actions.order.create({
+        //             "intent": "CAPTURE",
+				// "application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
 				//"payer":{
 				//	"phone":{
 				//		"phone_number":{
@@ -379,22 +379,22 @@
 				// 	  }
 				// 	}
 				//   },
-                "purchase_units": [
-					{
-						"amount": {
-							"currency_code": "USD",
-							"value": "200.00",
-							"breakdown": {
-								"item_total": {
-								  "currency_code": "USD",
-								  "value": "180.00"
-								},
-								"tax_total": {
-									"currency_code": "USD",
-									"value": "20.00"
-								  }
-						 }
-						},
+          //       "purchase_units": [
+					// {
+					// 	"amount": {
+					// 		"currency_code": "USD",
+					// 		"value": "200.00",
+					// 		"breakdown": {
+					// 			"item_total": {
+					// 			  "currency_code": "USD",
+					// 			  "value": "180.00"
+					// 			},
+					// 			"tax_total": {
+					// 				"currency_code": "USD",
+					// 				"value": "20.00"
+					// 			  }
+					// 	 }
+					// 	},
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
@@ -408,40 +408,40 @@
 						// 		   "country_code":"US"
 						// 	   }
 						// },
-						"items": [
-							{
-							  "name": "T-Shirt",
-							  "description": "Green XL#AE_Seller_001#Merchandise",
-							  "sku": "sku01",
-							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "90.00"
-							  },
-							  "tax": {
-								"currency_code": "USD",
-								"value": "10.00"
-							  },
-							  "quantity": "1",
-							  "category": "PHYSICAL_GOODS"
-							},
-							{
-							  "name": "Shoes",
-							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
-							  "sku": "sku02",
-							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "45.00"
-							  },
-							  "tax": {
-								"currency_code": "USD",
-								"value": "5.00"
-							  },
-							  "quantity": "2",
-							  "category": "PHYSICAL_GOODS"
-							}
-						  ],
-					}
-		]});
+		// 				"items": [
+		// 					{
+		// 					  "name": "T-Shirt",
+		// 					  "description": "Green XL#AE_Seller_001#Merchandise",
+		// 					  "sku": "sku01",
+		// 					  "unit_amount": {
+		// 						"currency_code": "USD",
+		// 						"value": "90.00"
+		// 					  },
+		// 					  "tax": {
+		// 						"currency_code": "USD",
+		// 						"value": "10.00"
+		// 					  },
+		// 					  "quantity": "1",
+		// 					  "category": "PHYSICAL_GOODS"
+		// 					},
+		// 					{
+		// 					  "name": "Shoes",
+		// 					  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
+		// 					  "sku": "sku02",
+		// 					  "unit_amount": {
+		// 						"currency_code": "USD",
+		// 						"value": "45.00"
+		// 					  },
+		// 					  "tax": {
+		// 						"currency_code": "USD",
+		// 						"value": "5.00"
+		// 					  },
+		// 					  "quantity": "2",
+		// 					  "category": "PHYSICAL_GOODS"
+		// 					}
+		// 				  ],
+		// 			}
+		// ]});
 },
                   onApprove: function (data, actions) {
                     return fetch('/capture-order/' + data.orderID, {
