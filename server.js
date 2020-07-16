@@ -13,11 +13,19 @@ var request = require('request');
 var ejs = require('ejs');
 
 var braintree = require('braintree');
-var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
-	merchantId: "83ghdy9cnwp4v3n8",
-	publicKey: "jgd28yfcckbnwbtp",
-	privateKey: "516f5aa74554da240e8439060026115f"
-});
+//var gateway = braintree.connect({environment: braintree.Environment.Production,
+	 //merchantId: "83ghdy9cnwp4v3n8",
+	 //publicKey: "jgd28yfcckbnwbtp",
+	 //privateKey: "516f5aa74554da240e8439060026115f"
+	// merchantId: "tywncdswf825nrc9",
+	// publicKey: "crhds8qwnxhjt9wv",
+	// privateKey: "7c8a8aeea3a710d8312d3f669530b6e6"
+	
+//});
+
+var gateway = braintree.connect({
+	accessToken: "access_token$production$t2kz2xvnj6qz54cr$c74d08d4cd2a22d24146cdfc62f5489f"
+  });
 
 
 var router = express();
@@ -76,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_44"
+					   customer_id:"Jahnavi_Nigam_48"
 				   },
 				   json:true				   
 				}
@@ -315,7 +323,8 @@ router.post("/checkout", function (req, res) {
 	var nonce = req.body.payment_method_nonce;
 	console.log(nonce);
 	var payLoad = buildbtPaymentRequestPayload(req.body);
-	payLoad.paymentMethodNonce = nonce;
+	//payLoad.paymentMethodNonce = nonce;
+	payLoad.paymentMethodToken="5qhddn4";
 	//payLoad.options.storeInVaultOnSuccess = true;
 	//payLoad.deviceData = req.body.deviceData;
 	console.log(payLoad);

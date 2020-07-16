@@ -58,16 +58,22 @@ exports.getCreatePaymentsPayloadTemplate = function() {
 exports.getCreateBTPaymentsPayLoadTemplate = function()
 {
 return {
-		amount: "100.0",
+		amount: "2.0",
 		orderId: "Mapped to PayPal Invoice Number",
-		customerId:"Jahnavi_Nigam_21",
+		//customerId:"Jahnavi_Nigam_21",
+	//customer:{
+		//id:"Jahnavi_Nigam_48"
+	//}, 
 		options: {
 			submitForSettlement: true,
-			storeInVaultOnSuccess: true
-		//	"paypal":{
+			//storeInVaultOnSuccess: true,
+		"paypal":{
 		//"description":"Your Uber ride fare"
 	//"payee_email":"sanigam-facilitator@paypal.com"
-		//}
+	"supplementary_data": { "receiver_account_id": "AE_MERCHANT_004", 
+	"vertical": "MERCHANDISE"
 }
 }
+}
+}	
 }
