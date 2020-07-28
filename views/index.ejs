@@ -94,7 +94,7 @@
 <script src="https://js.braintreegateway.com/web/3.62.1/js/data-collector.min.js"></script> 
 <script src='https://js.braintreegateway.com/web/3.62.1/js/three-d-secure.min.js'></script>
 
-<script src="https://www.paypal.com/sdk/js?client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&currency=USD&buyer-country=DE&intent=capture&components=buttons" data-client-token="<%= token %>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AY45oF49HRPTBl1qN7H0MTxZH15hET_UQpNLpnZKTQd8ES8zNs-56lVDFMXEQy-YKeULewg2Dz7eELTR&buyer-country=US&intent=capture&components=buttons,hosted-fields&merchant-id=ZUDS3HN2DLQW4" data-client-token="<%=token%>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -104,13 +104,13 @@
   <label for="cvv">CVV</label>
   <div id="cvv"  class="hosted-field"></div>
   <input type="checkbox" id="vault" name="vault">
-  <label for="vault">Save your Card</label>
-  <input type="submit" value="Pay" disabled />
+  <label for="vault">Save this card</label>
+  <input type="submit" value="Pay"/>
   <!--<button value="submit" id="submit" class="btn">Pay with Card</button>-->
 </form>
 </div>
 <div id="payments-sdk__contingency-lightbox"></div>
-
+<!--
 <script>
 // Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
 
@@ -229,105 +229,105 @@
 });// end of braintree instance create            
 
 
-
-
-// console.log("Just before entering hosted fields check");
-//   if (paypal.HostedFields.isEligible() === true) {
-//     console.log("Hosted Fields is enabled");
-//     paypal.HostedFields.render({
-//       createOrder: function(data, actions) {
-//         return fetch('/create-order', { method: 'POST' }).then(function(res) {
-//             return res.json();
-//         }).then(function(data) {
-//             return data.id;
-//         });
-//       },
-//       styles: {
-//           'input': {
-//               'font-size': '14px',
-//               'font-family': 'Product Sans',
-//               'color': '#3a3a3a'
-//           },
-//           ':focus': {
-//               'color': 'black'
-//           }
-//       },
-//       fields: {
-//           number: {
-//               selector: '#card-number',
-//               placeholder: 'Credit Card Number',
-//           },
-//           cvv: {
-//               selector: '#cvv',
-//               placeholder: 'CVV',
-//           },
-//           expirationDate: {
-//               selector: '#expiration-date',
-//               placeholder: 'MM/YYYY',
-//           }
-//       }
-//     }).then(hostedFields => {
-//       document.querySelector('#my-sample-form').addEventListener('submit', event => {
-//         event.preventDefault();
-//         hostedFields.submit(
-//           {
-//           // Need to specify the buyer action to save the card
-//           contingencies: ['3D_SECURE'],
-//           vault: document.querySelector('#vault').checked,
-//           }
-//         ).then(payload => {
-//           console.log("Order Id is "+payload.orderId);
-//           console.log(payload.liabilityShifted);
+-->
+<script>
+console.log("Just before entering hosted fields check");
+  if (paypal.HostedFields.isEligible() === true) {
+    console.log("Hosted Fields is enabled");
+    paypal.HostedFields.render({
+      createOrder: function(data, actions) {
+        return fetch('/create-order', { method: 'POST' }).then(function(res) {
+            return res.json();
+        }).then(function(data) {
+            return data.id;
+        });
+      },
+      styles: {
+          'input': {
+              'font-size': '14px',
+              'font-family': 'Product Sans',
+              'color': '#3a3a3a'
+          },
+          ':focus': {
+              'color': 'black'
+          }
+      },
+      fields: {
+          number: {
+              selector: '#card-number',
+              placeholder: 'Credit Card Number',
+          },
+          cvv: {
+              selector: '#cvv',
+              placeholder: 'CVV',
+          },
+          expirationDate: {
+              selector: '#expiration-date',
+              placeholder: 'MM/YYYY',
+          }
+      }
+    }).then(hostedFields => {
+      document.querySelector('#my-sample-form').addEventListener('submit', event => {
+        event.preventDefault();
+        hostedFields.submit(
+          {
+          // Need to specify the buyer action to save the card
+          contingencies: ['3D_SECURE'],
+          vault: document.querySelector('#vault').checked,
+          }
+        ).then(payload => {
+          console.log("Order Id is "+payload.orderId);
+          console.log(payload.liabilityShifted);
           
-//           if (payload.liabilityShifted === undefined) {
-//                      // Handle no 3D Secure contingency passed scenario
-//                      console.log("Entering no 3DS");
-//                      return fetch('/capture-order/' + payload.orderId, {
-//             method: 'POST'
-//           }).then(response => {
-//             if (!response.ok) {
-//               alert('Something went wrong');
-//             }
-//             console.log("Payment is successful");
-//             alert("Payment is successful");
-//           });
-//                 }
+          if (payload.liabilityShifted === undefined) {
+                     // Handle no 3D Secure contingency passed scenario
+                     console.log("Entering no 3DS");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
 
-//                 if (payload.liabilityShifted) {
-//                      // Handle Buyer confirmed 3D Secure successfully
-//                      console.log("Entering 3DS completed successfully");
-//                      return fetch('/capture-order/' + payload.orderId, {
-//             method: 'POST'
-//           }).then(response => {
-//             if (!response.ok) {
-//               alert('Something went wrong');
-//             }
-//             console.log("Payment is successful");
-//             alert("Payment is successful");
-//           });
-//                 }
+                if (payload.liabilityShifted) {
+                     // Handle Buyer confirmed 3D Secure successfully
+                     console.log("Entering 3DS completed successfully");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
 
-//                 if (payload.liabilityShifted === false) {
-//                      // Handle buyer failed or skipped 3D Secure use-case
-//                      console.log("Entering 3DS failure case");
-//                      return fetch('/capture-order/' + payload.orderId, {
-//             method: 'POST'
-//           }).then(response => {
-//             if (!response.ok) {
-//               alert('Something went wrong');
-//             }
-//             console.log("Payment is successful");
-//             alert("Payment is successful");
-//           });
-//                 }
-//               }).catch(function (error) {
-//                               console.log('PayPal CCF submission failed:' + error);
-//                               // error: {code: 'error', description: 'error'}                        // NOTE Consumer cancels 3D Secure flow within online banking app. Conflicts with above options.
-//                         }).finally(()=> console.log("Finally Executed"));
-//       });
-//     });
-//   }
-</script>
+                if (payload.liabilityShifted === false) {
+                     // Handle buyer failed or skipped 3D Secure use-case
+                     console.log("Entering 3DS failure case");
+                     return fetch('/capture-order/' + payload.orderId, {
+            method: 'POST'
+          }).then(response => {
+            if (!response.ok) {
+              alert('Something went wrong');
+            }
+            console.log("Payment is successful");
+            alert("Payment is successful");
+          });
+                }
+              }).catch(function (error) {
+                              console.log('PayPal CCF submission failed:' + error);
+                              // error: {code: 'error', description: 'error'}                        // NOTE Consumer cancels 3D Secure flow within online banking app. Conflicts with above options.
+                        }).finally(()=> console.log("Finally Executed"));
+      });
+    });
+  }
+</script> 
        
        <!-- PayPal Payments JS SDK integration-->
           <div id="paypal-button-container"></div>
@@ -443,6 +443,20 @@
 		// 			}
 		// ]});
 },
+
+//  createBillingAgreement: function() {
+//     return fetch('/create-billing-agreement', {
+//       method: 'post',
+//       headers: {
+//         'content-type': 'application/json'
+//       }
+//     }).then(function(res) {
+//       return res.json();
+//     }).then(function(data) {
+//       return data.id;
+//     });
+//   },
+
                   onApprove: function (data, actions) {
                     return fetch('/capture-order/' + data.orderID, {
                     method: 'POST'}
@@ -458,6 +472,23 @@
                     }
                     });
                     },
+
+
+                    // onApprove: function (data, actions) {
+                    // return fetch('/complete-billing-agreement/' + data.id, {
+                    // method: 'POST'}
+                    // ).then(function(res) {
+                    //   if(!res.ok)
+                    //   {
+                    //     alert('Something went wrong'); 
+                    //   }
+                    //   return res.json();
+                    // }).then(function(data){
+                    //   if(data.status=='success'){
+                    //   alert("Payment captured successfully");
+                    // }
+                    // });
+                    // },
 
                     onError: function (err) {
                       console.log("Some unknown error happened");
