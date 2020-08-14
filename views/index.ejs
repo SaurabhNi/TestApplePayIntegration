@@ -94,7 +94,7 @@
 <script src="https://js.braintreegateway.com/web/3.62.1/js/data-collector.min.js"></script> 
 <script src='https://js.braintreegateway.com/web/3.62.1/js/three-d-secure.min.js'></script>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AY45oF49HRPTBl1qN7H0MTxZH15hET_UQpNLpnZKTQd8ES8zNs-56lVDFMXEQy-YKeULewg2Dz7eELTR&buyer-country=US&intent=capture&components=buttons,hosted-fields&merchant-id=ZUDS3HN2DLQW4" data-client-token="<%=token%>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AY45oF49HRPTBl1qN7H0MTxZH15hET_UQpNLpnZKTQd8ES8zNs-56lVDFMXEQy-YKeULewg2Dz7eELTR&buyer-country=US&intent=capture&components=buttons,hosted-fields&merchant-id=6EUZPWAS6Q8VW" data-client-token="<%=token%>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -456,6 +456,19 @@ console.log("Just before entering hosted fields check");
 //       return data.id;
 //     });
 //   },
+
+                  // createSubscription: function(data, actions) {
+                  //   // return actions.subscription.create({
+                  //   //   'plan_id': 'YOUR_PLAN_ID' // Creates the subscription
+                  //   // });
+                  //   return 'I-B42MGX87APUF';
+                  // },
+                  
+                  // onApprove: function(data, actions) {
+                  // alert('You have successfully created subscription ' + data.subscriptionID); // Optional message given to subscriber
+                  // },
+                  
+
 
                   onApprove: function (data, actions) {
                     return fetch('/capture-order/' + data.orderID, {

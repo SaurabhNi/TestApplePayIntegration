@@ -79,12 +79,12 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICJaVURTM0hOMkRMUVc0Igp9.",
+					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
 					   'cache-control': "no-cache",
 					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_58"
+					   customer_id:"Jahnavi_Nigam_72"
 				   },
 				   json:true				   
 				}
@@ -382,7 +382,7 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICJaVURTM0hOMkRMUVc0Igp9.",
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
 				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
             },
             body: {
@@ -432,9 +432,9 @@ router.post('/create-order', function(req, res, next) {
 								  }
 						 }
 						},
-					//"payee":{
-					//		"merchant_id":"8MMADDZZQHWLQ"
-					//	},
+					     "payee":{
+						 	"merchant_id":"6EUZPWAS6Q8VW"
+						 },
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
@@ -480,14 +480,15 @@ router.post('/create-order', function(req, res, next) {
 							  "category": "PHYSICAL_GOODS"
 							}
 						  ],
-						//"payment_instruction":{
+						"payment_instruction":{
 						//"disbursement_mode":"DELAYED",
-					//"platform_fees":[{
-					//		"amount":{
-					//			"currency_code":"USD",
-					//			"value":"10.00"
-					//		}}]
-					//	}
+					"platform_fees":[{
+							"amount":{
+								"currency_code":"USD",
+							"value":"10.00"
+							}
+						}]
+						}
 						}
 						// {
 						// 	"amount": {
@@ -727,7 +728,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICJaVURTM0hOMkRMUVc0Igp9.",
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
 						//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
 					}
 				}, function (err, response, body) {
