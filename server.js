@@ -418,6 +418,7 @@ router.post('/create-order', function(req, res, next) {
 				//   },
                 "purchase_units": [
 					{
+						"referenced_id":"PU001",
 						"amount": {
 							"currency_code": "EUR",
 							"value": "200.00",
@@ -491,6 +492,7 @@ router.post('/create-order', function(req, res, next) {
 						}
 						},
 						{
+							"referenced_id":"PU002",
 							"amount": {
 								"currency_code": "EUR",
 								"value": "200.00",
