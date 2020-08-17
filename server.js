@@ -79,12 +79,12 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
+					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 					   'cache-control': "no-cache",
 					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_72"
+					   customer_id:"Jahnavi_Nigam_80"
 				   },
 				   json:true				   
 				}
@@ -381,8 +381,8 @@ router.post('/create-order', function(req, res, next) {
 			request.post(configuration.CREATE_ORDER_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
             },
             body: {
@@ -419,21 +419,21 @@ router.post('/create-order', function(req, res, next) {
                 "purchase_units": [
 					{
 						"amount": {
-							"currency_code": "USD",
+							"currency_code": "EUR",
 							"value": "200.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "USD",
+								  "currency_code": "EUR",
 								  "value": "180.00"
 								},
 								"tax_total": {
-									"currency_code": "USD",
+									"currency_code": "EUR",
 									"value": "20.00"
 								  }
 						 }
 						},
 					     "payee":{
-						 	"merchant_id":"6EUZPWAS6Q8VW"
+						 	"merchant_id":"XD6W3B38MQMEQ"
 						 },
 						// "shipping":{
 						// 	"name":{
@@ -454,11 +454,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#AE_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "EUR",
 								"value": "90.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "EUR",
 								"value": "10.00"
 							  },
 							  "quantity": "1",
@@ -469,11 +469,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "EUR",
 								"value": "45.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "EUR",
 								"value": "5.00"
 							  },
 							  "quantity": "2",
@@ -484,12 +484,85 @@ router.post('/create-order', function(req, res, next) {
 						//"disbursement_mode":"DELAYED",
 					"platform_fees":[{
 							"amount":{
-								"currency_code":"USD",
+								"currency_code":"EUR",
 							"value":"10.00"
 							}
 						}]
 						}
-						}
+						},
+						{
+							"amount": {
+								"currency_code": "EUR",
+								"value": "200.00",
+								"breakdown": {
+									"item_total": {
+									  "currency_code": "EUR",
+									  "value": "180.00"
+									},
+									"tax_total": {
+										"currency_code": "EUR",
+										"value": "20.00"
+									  }
+							 }
+							},
+							 "payee":{
+								 "merchant_id":"EVVWLH2ZMBE7E"
+							 },
+							// "shipping":{
+							// 	"name":{
+							// 		 "full_name":"PayPal Customer"
+							// 	 },
+							//  "address":{
+							// 		   "address_line_1":"123 ABC Street",
+							// 		   "address_line_2":"Apt 2",
+							// 		  "admin_area_2":"San Jose",
+							// 		  "admin_area_1":"CA",
+							// 		   "postal_code":"95121",
+							// 		   "country_code":"US"
+							// 	   }
+							// },
+							"items": [
+								{
+								  "name": "T-Shirt",
+								  "description": "Green XL#AE_Seller_001#Merchandise",
+								  "sku": "sku01",
+								  "unit_amount": {
+									"currency_code": "EUR",
+									"value": "90.00"
+								  },
+								  "tax": {
+									"currency_code": "EUR",
+									"value": "10.00"
+								  },
+								  "quantity": "1",
+								  "category": "PHYSICAL_GOODS"
+								},
+								{
+								  "name": "Shoes",
+								  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
+								  "sku": "sku02",
+								  "unit_amount": {
+									"currency_code": "EUR",
+									"value": "45.00"
+								  },
+								  "tax": {
+									"currency_code": "EUR",
+									"value": "5.00"
+								  },
+								  "quantity": "2",
+								  "category": "PHYSICAL_GOODS"
+								}
+							  ],
+							"payment_instruction":{
+							//"disbursement_mode":"DELAYED",
+						"platform_fees":[{
+								"amount":{
+									"currency_code":"EUR",
+								"value":"15.00"
+								}
+							}]
+							}
+							}
 						// {
 						// 	"amount": {
 						// 		"currency_code": "EUR",
@@ -594,8 +667,8 @@ router.post('/create-billing-agreement', function(req, res, next) {
 			request.post(configuration.CREATE_BA_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI4TU1BRERaWlFIV0xRIgp9.",
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
             },
             body: {
@@ -727,8 +800,8 @@ router.post('/capture-order/:id', function(req, res, next) {
 				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVk0NW9GNDlIUlBUQmwxcU43SDBNVHhaSDE1aEVUX1VRcE5McG5aS1RRZDhFUzh6TnMtNTZsVkRGTVhFUXktWUtlVUxld2cyRHo3ZUVMVFIiLAogICJwYXllcl9pZCI6ICI2RVVaUFdBUzZROFZXIgp9.",
+						'authorization': "Bearer "+accessToken
+						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 						//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
 					}
 				}, function (err, response, body) {
