@@ -13,19 +13,19 @@ var request = require('request');
 var ejs = require('ejs');
 
 var braintree = require('braintree');
-//var gateway = braintree.connect({environment: braintree.Environment.Production,
-	 //merchantId: "83ghdy9cnwp4v3n8",
-	 //publicKey: "jgd28yfcckbnwbtp",
-	 //privateKey: "516f5aa74554da240e8439060026115f"
+var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
+	 merchantId: "83ghdy9cnwp4v3n8",
+	 publicKey: "jgd28yfcckbnwbtp",
+	 privateKey: "516f5aa74554da240e8439060026115f"
 	// merchantId: "tywncdswf825nrc9",
 	// publicKey: "crhds8qwnxhjt9wv",
 	// privateKey: "7c8a8aeea3a710d8312d3f669530b6e6"
 	
-//});
+});
 
-var gateway = braintree.connect({
-	accessToken: "access_token$production$t2kz2xvnj6qz54cr$c74d08d4cd2a22d24146cdfc62f5489f"
-  });
+//var gateway = braintree.connect({
+//	accessToken: "access_token$production$t2kz2xvnj6qz54cr$c74d08d4cd2a22d24146cdfc62f5489f"
+//  });
 
 
 var router = express();
@@ -81,10 +81,10 @@ const uuidV4 = require('uuid/v4');
 					   'authorization': "Bearer "+accessToken,
 					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 					   'cache-control': "no-cache",
-					  // 'PayPal-Partner-Attribution-Id':"TEST_TECHM_FREELANCE_MP"
+					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					   customer_id:"Jahnavi_Nigam_80"
+					   customer_id:"Saurabh_Nigam_98"
 				   },
 				   json:true				   
 				}
@@ -95,6 +95,18 @@ const uuidV4 = require('uuid/v4');
 				 else{
 				   console.log("Sending response",body);
 				  // res.redirect('/index1.html?id='+body.client_token);
+
+				//   gateway.dispute.find("28621").then(dispute=>{
+				// 	  console.log(dispute);
+				//   });
+
+				//   gateway.dispute.search((search) => {
+				// 	search.caseNumber().is("PP-D-28622");
+				//   }, (err, response) => {
+				// 	response.forEach((dispute) => {
+				// 	  console.log(dispute.id);
+				// 	});
+				//   });
 
 				  gateway.clientToken.generate({}, function (err, response) {
 					if(err)
@@ -323,8 +335,8 @@ router.post("/checkout", function (req, res) {
 	var nonce = req.body.payment_method_nonce;
 	console.log(nonce);
 	var payLoad = buildbtPaymentRequestPayload(req.body);
-	//payLoad.paymentMethodNonce = nonce;
-	payLoad.paymentMethodToken="5qhddn4";
+	payLoad.paymentMethodNonce = nonce;
+	//payLoad.paymentMethodToken="fhm3q5g";
 	//payLoad.options.storeInVaultOnSuccess = true;
 	//payLoad.deviceData = req.body.deviceData;
 	console.log(payLoad);
@@ -340,36 +352,36 @@ router.post("/checkout", function (req, res) {
 
 	
 
-	gateway.transaction.sale(payLoad, function (err, result) {
-		if (err) {
-			console.log("Inside error stream");
-			console.log(err.type); 
-   			console.log(err.name); 
-    		console.log(err.message);
-			res.send("<h1>Error:  " + err + "</h1>");
-		} else if (result.success) {
-		  console.log("Inside success. Transaction ID is :"+result.transaction.id);
-		  console.log("Result is : "+JSON.stringify(result));
-		  // console.log("PayPal paymentID is :"+result.transaction.paypal.paymentId);
-		  //console.log("Customer ID is :",result.customer.id);
-		  //console.log("Customer Payment Method Token is :",result.customer.paymentMethods[0].token);
-		  res.send("<h1>Success! Transaction ID: " + result.transaction.id + "</h1>");
-		} else {
-		  console.log("Inside result is false");
-		  console.log("Result is : "+JSON.stringify(result));
-		  console.log("Result transaction id is : "+result.transaction.id);
-		  var deepErrors = result.errors.deepErrors();
-		  for (var i in deepErrors) {
-			if (deepErrors.hasOwnProperty(i)) {
-			  console.log(deepErrors[i].attribute);
-			  console.log(deepErrors[i].code);
-			  console.log(deepErrors[i].message);
-			}
-		  }	
-		  console.log("Error is :"+result.message);
-		  res.send("<h1>Error:  " + result.transaction.id + "</h1>");
-		}
-	  });
+	// gateway.transaction.sale(payLoad, function (err, result) {
+	 //	if (err) {
+	 	//	console.log("Inside error stream");
+	 	//	console.log(err.type); 
+   	 	//	console.log(err.name); 
+     	//	console.log(err.message);
+	 	//	res.send("<h1>Error:  " + err + "</h1>");
+	 	//} else if (result.success) {
+	 	  //console.log("Inside success. Transaction ID is :"+result.transaction.id);
+	 	  //console.log("Result is : "+JSON.stringify(result));
+	 	  // console.log("PayPal paymentID is :"+result.transaction.paypal.paymentId);
+	 	  //console.log("Customer ID is :",result.customer.id);
+	 	  //console.log("Customer Payment Method Token is :",result.customer.paymentMethods[0].token);
+	 	  //res.send("<h1>Success! Transaction ID: " + result.transaction.id + "</h1>");
+	 	//} else {
+	 	  //console.log("Inside result is false");
+	 	  //console.log("Result is : "+JSON.stringify(result));
+	 	  //console.log("Result transaction id is : "+result.transaction.id);
+	 	  //var deepErrors = result.errors.deepErrors();
+	 	  //for (var i in deepErrors) {
+	 	//	if (deepErrors.hasOwnProperty(i)) {
+	 	//	  console.log(deepErrors[i].attribute);
+	 	//	  console.log(deepErrors[i].code);
+	 	//	  console.log(deepErrors[i].message);
+	 	//	}
+	 	 // }	
+	 	 // console.log("Error is :"+result.message);
+	 	  //res.send("<h1>Error:  " + result.transaction.id + "</h1>");
+	 	//}
+	   //});
 });
 
 router.post('/create-order', function(req, res, next) {
@@ -381,9 +393,9 @@ router.post('/create-order', function(req, res, next) {
 			request.post(configuration.CREATE_ORDER_URL, {
             headers: {
                 'content-type': "application/json",
-				'authorization': "Bearer "+accessToken
+				'authorization': "Bearer "+accessToken,
 				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
-				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
+				//"PayPal-Partner-Attribution-Id":"UAE-CHECKOUT-PSP"
             },
             body: {
 				"intent": "CAPTURE",
@@ -420,22 +432,22 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "EGP",
+							"currency_code": "USD",
 							"value": "200.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "EGP",
+								  "currency_code": "USD",
 								  "value": "180.00"
 								},
 								"tax_total": {
-									"currency_code": "EGP",
+									"currency_code": "USD",
 									"value": "20.00"
 								  }
 						 }
 						},
-					     "payee":{
-						 	"merchant_id":"KNVHN8T4FNYL4"
-						 },
+					 //   "payee":{
+						//  	"merchant_id":"BEA65VLZ7TYBE"
+					   //},
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
@@ -455,116 +467,116 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#AE_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "EGP",
+								"currency_code": "USD",
 								"value": "90.00"
 							  },
 							  "tax": {
-								"currency_code": "EGP",
+								"currency_code": "USD",
 								"value": "10.00"
 							  },
 							  "quantity": "1",
-							  "category": "PHYSICAL_GOODS"
+							  "category": "DIGITAL_GOODS"
 							},
 							{
 							  "name": "Shoes",
 							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "EGP",
+								"currency_code": "USD",
 								"value": "45.00"
 							  },
 							  "tax": {
-								"currency_code": "EGP",
+								"currency_code": "USD",
 								"value": "5.00"
 							  },
 							  "quantity": "2",
-							  "category": "PHYSICAL_GOODS"
+							  "category": "DIGITAL_GOODS"
 							}
 						  ],
-						"payment_instruction":{
-						//"disbursement_mode":"DELAYED",
-					"platform_fees":[{
-							"amount":{
-								"currency_code":"EGP",
-							"value":"10.00"
-							}
-						}]
-						}
+					// 	"payment_instruction":{
+					// 	//"disbursement_mode":"DELAYED",
+					// "platform_fees":[{
+					// 		"amount":{
+					// 			"currency_code":"USD",
+					// 		"value":"10.00"
+					// 		}
+					// 	}]
+					// 	}
 						},
-						{
-							"reference_id":"PU002",
-							"amount": {
-								"currency_code": "EGP",
-								"value": "200.00",
-								"breakdown": {
-									"item_total": {
-									  "currency_code": "EGP",
-									  "value": "180.00"
-									},
-									"tax_total": {
-										"currency_code": "EGP",
-										"value": "20.00"
-									  }
-							 }
-							},
-							 "payee":{
-								 "merchant_id":"EVVWLH2ZMBE7E"
-							 },
-							// "shipping":{
-							// 	"name":{
-							// 		 "full_name":"PayPal Customer"
-							// 	 },
-							//  "address":{
-							// 		   "address_line_1":"123 ABC Street",
-							// 		   "address_line_2":"Apt 2",
-							// 		  "admin_area_2":"San Jose",
-							// 		  "admin_area_1":"CA",
-							// 		   "postal_code":"95121",
-							// 		   "country_code":"US"
-							// 	   }
-							// },
-							"items": [
-								{
-								  "name": "T-Shirt",
-								  "description": "Green XL#AE_Seller_001#Merchandise",
-								  "sku": "sku01",
-								  "unit_amount": {
-									"currency_code": "EGP",
-									"value": "90.00"
-								  },
-								  "tax": {
-									"currency_code": "EGP",
-									"value": "10.00"
-								  },
-								  "quantity": "1",
-								  "category": "PHYSICAL_GOODS"
-								},
-								{
-								  "name": "Shoes",
-								  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
-								  "sku": "sku02",
-								  "unit_amount": {
-									"currency_code": "EGP",
-									"value": "45.00"
-								  },
-								  "tax": {
-									"currency_code": "EGP",
-									"value": "5.00"
-								  },
-								  "quantity": "2",
-								  "category": "PHYSICAL_GOODS"
-								}
-							  ],
-							"payment_instruction":{
-							//"disbursement_mode":"DELAYED",
-						"platform_fees":[{
-								"amount":{
-									"currency_code":"EGP",
-								"value":"15.00"
-								}
-							}]
-							}
-							}
+						// {
+						// 	"reference_id":"PU002",
+						// 	"amount": {
+						// 		"currency_code": "EGP",
+						// 		"value": "200.00",
+						// 		"breakdown": {
+						// 			"item_total": {
+						// 			  "currency_code": "EGP",
+						// 			  "value": "180.00"
+						// 			},
+						// 			"tax_total": {
+						// 				"currency_code": "EGP",
+						// 				"value": "20.00"
+						// 			  }
+						// 	 }
+						// 	},
+						// 	 "payee":{
+						// 		 "merchant_id":"EVVWLH2ZMBE7E"
+						// 	 },
+						// 	// "shipping":{
+						// 	// 	"name":{
+						// 	// 		 "full_name":"PayPal Customer"
+						// 	// 	 },
+						// 	//  "address":{
+						// 	// 		   "address_line_1":"123 ABC Street",
+						// 	// 		   "address_line_2":"Apt 2",
+						// 	// 		  "admin_area_2":"San Jose",
+						// 	// 		  "admin_area_1":"CA",
+						// 	// 		   "postal_code":"95121",
+						// 	// 		   "country_code":"US"
+						// 	// 	   }
+						// 	// },
+						// 	"items": [
+						// 		{
+						// 		  "name": "T-Shirt",
+						// 		  "description": "Green XL#AE_Seller_001#Merchandise",
+						// 		  "sku": "sku01",
+						// 		  "unit_amount": {
+						// 			"currency_code": "EGP",
+						// 			"value": "90.00"
+						// 		  },
+						// 		  "tax": {
+						// 			"currency_code": "EGP",
+						// 			"value": "10.00"
+						// 		  },
+						// 		  "quantity": "1",
+						// 		  "category": "PHYSICAL_GOODS"
+						// 		},
+						// 		{
+						// 		  "name": "Shoes",
+						// 		  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
+						// 		  "sku": "sku02",
+						// 		  "unit_amount": {
+						// 			"currency_code": "EGP",
+						// 			"value": "45.00"
+						// 		  },
+						// 		  "tax": {
+						// 			"currency_code": "EGP",
+						// 			"value": "5.00"
+						// 		  },
+						// 		  "quantity": "2",
+						// 		  "category": "PHYSICAL_GOODS"
+						// 		}
+						// 	  ],
+						// 	"payment_instruction":{
+						// 	//"disbursement_mode":"DELAYED",
+						// "platform_fees":[{
+						// 		"amount":{
+						// 			"currency_code":"EGP",
+						// 		"value":"15.00"
+						// 		}
+						// 	}]
+						// 	}
+						// 	}
 						// {
 						// 	"amount": {
 						// 		"currency_code": "EUR",
@@ -802,16 +814,16 @@ router.post('/capture-order/:id', function(req, res, next) {
 				request.post(configuration.CAPTURE_ORDER_URL + OrderID + '/capture', {
 					headers: {
 						'content-type': "application/json",
-						'authorization': "Bearer "+accessToken
+						'authorization': "Bearer "+accessToken,
 						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
-						//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
+						//"PayPal-Partner-Attribution-Id":"UAE-CHECKOUT-PSP"
 					}
 				}, function (err, response, body) {
 					if (err) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
-					console.log(response);
+					//console.log(response);
 					console.log(body);
 					res.send
 					res.json({

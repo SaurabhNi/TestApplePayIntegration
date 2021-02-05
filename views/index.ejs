@@ -89,12 +89,13 @@
        </head>
       <body>
         
-<script src="https://js.braintreegateway.com/web/3.62.1/js/client.min.js"></script>    
-<script src="https://js.braintreegateway.com/web/3.62.1/js/hosted-fields.min.js"></script> 
-<script src="https://js.braintreegateway.com/web/3.62.1/js/data-collector.min.js"></script> 
-<script src='https://js.braintreegateway.com/web/3.62.1/js/three-d-secure.min.js'></script>
+<script src="https://js.braintreegateway.com/web/3.70.0/js/client.min.js"></script>   
+<script src="https://js.braintreegateway.com/web/3.70.0/js/paypal-checkout.min.js"></script> 
+<script src="https://js.braintreegateway.com/web/3.70.0/js/hosted-fields.min.js"></script> 
+<script src="https://js.braintreegateway.com/web/3.70.0/js/data-collector.min.js"></script> 
+<script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AWWPT6nhAWZcL612kfWrnDbm8v3kSLwzwwwQ53PImXi0ZWi855HsChu7LN-lpP8FtQjWAXwihr59Oyi2&buyer-country=US&intent=capture&components=buttons,hosted-fields&merchant-id=*&currency=EGP" data-merchant-id="KNVHN8T4FNYL4,EVVWLH2ZMBE7E" data-client-token="<%=token%>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AY_7Ot1bDbkeUe0A61I6oaFeBAAu36vOUQ7dJCm7_6aqYdwXjjI_3fb1-tgq43BykTnq4dUg7D2jUZwf&intent=capture&components=buttons&currency=USD" data-client-token="<%= token %>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -110,7 +111,8 @@
 </form>
 </div>
 <div id="payments-sdk__contingency-lightbox"></div>
-<!--
+
+
 <script>
 // Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
 
@@ -212,7 +214,7 @@
               'Content-Type': 'application/json',
               },
               body: JSON.stringify({"payment_method_nonce":response.nonce,
-              "currency":"testalipayaliexpress","total":"100"})
+              "currency":"TestSGD","total":"100"})
                }).then(response => {
               if (!response.ok) {
                  alert('Something went wrong');
@@ -228,8 +230,9 @@
 });// end of hosted fields create
 });// end of braintree instance create            
 
+</script>
 
--->
+<!--
 <script>
 console.log("Just before entering hosted fields check");
   if (paypal.HostedFields.isEligible() === true) {
@@ -328,8 +331,9 @@ console.log("Just before entering hosted fields check");
     });
   }
 </script> 
-       
-       <!-- PayPal Payments JS SDK integration-->
+-->
+
+       <!--PayPal Payments JS SDK integration-->
           <div id="paypal-button-container"></div>
          <script>
            paypal.Buttons(
@@ -513,8 +517,10 @@ console.log("Just before entering hosted fields check");
               }).render('#paypal-button-container');
           </script>
 
+
+
           <!-- PayPal and PayPal Credit Integration via BT SDK Integration-->
-    <!--
+          <!--
           <div id="paypal-button"></div>
           <div id="paypal-credit-button"></div>
           
@@ -528,15 +534,73 @@ console.log("Just before entering hosted fields check");
             braintree.paypalCheckout.create({
               client: clientInstance
             }, function (err, paypalCheckoutInstance) {
+
+              paypalCheckoutInstance.loadPayPalSDK({
+  // Must be set to true when using the Vault flow
+  // vault: true
+
+  // Defaults to USD, but must match the value used in `createPayment`
+  // currency: 'USD'
+}, function (loadSDKErr) {
+  // Render the PayPal button (see Render the PayPal Button section)
+
+  paypal.Buttons({
+  fundingSource: paypal.FUNDING.PAYPAL,
+
+  createOrder: function () {
+    return paypalCheckoutInstance.createPayment({
+      flow: 'checkout',
+      amount: 50.00,
+      currency: 'USD',
+
+      // new required parameters for this flow
+      requestBillingAgreement: true,
+      billingAgreementDetails: {
+        description: 'Description of the billng agreement to display to the customer'
+      }
+    });
+  },
+  onApprove: function (data, actions) {
+          return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+            // Submit `payload.nonce` to your server
+
+            fetch('/checkout', {
+              method: 'POST',
+              headers: {
+              'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({"payment_method_nonce":payload.nonce,
+              "currency":"testalipayaliexpress","total":"50"})
+               }).then(response => {
+              if (!response.ok) {
+                 alert('Something went wrong');
+               }
+               console.log("Payment is successful");
+               alert("Payment is successful");
+              });// end of BT Server Side SDK invocation
+
+          });
+        },
+
+        onCancel: function (data) {
+          console.log('PayPal payment cancelled', JSON.stringify(data, 0, 2));
+        },
+
+        onError: function (err) {
+          console.error('PayPal error', err);
+        }
+}).render('#paypal-button');
+
+});
           
               // Set up regular PayPal button
-              paypal.Button.render({
-                env: 'production', // or 'sandbox'
-                payment: function () {
-                  return paypalCheckoutInstance.createPayment({
-                    flow: 'checkout',
-                    amount:"1",
-                    currency:"INR",
+             // paypal.Button.render({
+              //  env: 'sandbox', // or 'sandbox'
+               // payment: function () {
+                //  return paypalCheckoutInstance.createPayment({
+                  //  flow: 'checkout',
+                    //amount:"100",
+                    //currency:"AED",
                     // billingAgreementDescription: 'Your agreement description',
                     // enableShippingAddress: true,
                     // shippingAddressEditable: false,
@@ -550,43 +614,43 @@ console.log("Just before entering hosted fields check");
                     //   state: 'IL',
                     //   phone: '123.456.7890'
                     // }
-                  });
-                },
-                onAuthorize: function (data, actions) {
-                  return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+                  //});
+                //},
+                //onAuthorize: function (data, actions) {
+                  //return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
                     // Submit `payload.nonce` to your server
                     
-                    fetch('/checkout', {
-              method: 'POST',
-              headers: {
-              'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({"payment_method_nonce":payload.nonce,
-              "currency":"INR","total":"1"})
-               }).then(response => {
-              if (!response.ok) {
-                 alert('Something went wrong');
-               }
-               console.log("Payment is successful");
-               alert("Payment is successful");
-              });// end of BT Server Side SDK invocation
+                    //fetch('/checkout', {
+              //method: 'POST',
+              //headers: {
+              //'Content-Type': 'application/json',
+              //},
+              //body: JSON.stringify({"payment_method_nonce":payload.nonce,
+              //"currency":"AED","total":"100"})
+              // }).then(response => {
+              //if (!response.ok) {
+                // alert('Something went wrong');
+               //}
+               //console.log("Payment is successful");
+               //alert("Payment is successful");
+              //});// end of BT Server Side SDK invocation
 
-                  });
-                },
-              }, '#paypal-button');
+                //  });
+                //},
+              //}, '#paypal-button');
           
               // Set up PayPal Credit button
-              paypal.Button.render({
-                env: 'production', // or 'sandbox'
-                style: {
-                  label: 'credit'
-                },
-                payment: function () {
-                  return paypalCheckoutInstance.createPayment({
-                    flow: 'checkout',
-                    offerCredit: true,
-                    amount:"1",
-                    currency:"INR",
+            //  paypal.Button.render({
+              //  env: 'sandbox', // or 'sandbox'
+               // style: {
+                 // label: 'credit'
+                //},
+                //payment: function () {
+                  //return paypalCheckoutInstance.createPayment({
+                    //flow: 'checkout',
+                    //offerCredit: true,
+                    //amount:"100",
+                    //currency:"USD",
                     // billingAgreementDescription: 'Your agreement description',
                     // enableShippingAddress: true,
                     // shippingAddressEditable: false,
@@ -600,30 +664,32 @@ console.log("Just before entering hosted fields check");
                     //   state: 'IL',
                     //   phone: '123.456.7890'
                     // }
-                  });
-                },
-                onAuthorize: function (data, actions) {
-                  return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+                  //});
+                //},
+                //onAuthorize: function (data, actions) {
+                  //return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
                     // Submit `payload.nonce` to your server
                     
-                    fetch('/checkout', {
-              method: 'POST',
-              headers: {
-              'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({"payment_method_nonce":payload.nonce,
-              "currency":"INR","total":"1"})
-               }).then(response => {
-              if (!response.ok) {
-                 alert('Something went wrong');
-               }
-               console.log("Payment is successful");
-               alert("Payment is successful");
-              });// end of BT Server Side SDK invocation
+                    //fetch('/checkout', {
+              //method: 'POST',
+              //headers: {
+              //'Content-Type': 'application/json',
+              //},
+              //body: JSON.stringify({"payment_method_nonce":payload.nonce,
+              //"currency":"testalipayaliexpress","total":"100"})
+               //}).then(response => {
+              //if (!response.ok) {
+                // alert('Something went wrong');
+               //}
+               //console.log("Payment is successful");
+               //alert("Payment is successful");
+              //});// end of BT Server Side SDK invocation
 
-                  });
-                },
-              }, '#paypal-credit-button');
+                //  });
+                //},
+              //}, '#paypal-credit-button');
+
+
             });
           });
 
