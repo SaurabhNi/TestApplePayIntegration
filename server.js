@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_98"
+					   customer_id:"Saurabh_Nigam_100"
 				   },
 				   json:true				   
 				}
@@ -445,8 +445,8 @@ router.post('/create-order', function(req, res, next) {
 								  }
 						 }
 						},
-					 //   "payee":{
-						//  	"merchant_id":"BEA65VLZ7TYBE"
+					   //"payee":{
+						 // 	"merchant_id":"8BXRV4YSW769Q"
 					   //},
 						// "shipping":{
 						// 	"name":{
