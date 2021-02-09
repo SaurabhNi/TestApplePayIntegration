@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_100"
+					   customer_id:"Saurabh_Nigam_102"
 				   },
 				   json:true				   
 				}
