@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_102"
+					   customer_id:"Saurabh_Nigam_104"
 				   },
 				   json:true				   
 				}
@@ -399,7 +399,7 @@ router.post('/create-order', function(req, res, next) {
             },
             body: {
 				"intent": "CAPTURE",
-				"application_context":{"shipping_preference":"NO_SHIPPING","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
+				"application_context":{"shipping_preference":"GET_FROM_FILE","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
 				//"payer":{
 				//	"phone":{
 				//		"phone_number":{
@@ -432,22 +432,22 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "USD",
-							"value": "200.00",
+							"currency_code": "SGD",
+							"value": "10.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "USD",
-								  "value": "180.00"
+								  "currency_code": "SGD",
+								  "value": "8.00"
 								},
 								"tax_total": {
-									"currency_code": "USD",
-									"value": "20.00"
+									"currency_code": "SGD",
+									"value": "2.00"
 								  }
 						 }
 						},
-					   //"payee":{
-						 // 	"merchant_id":"8BXRV4YSW769Q"
-					   //},
+					   "payee":{
+						  	"merchant_id":"9969NM9657QQA"
+					   },
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
@@ -464,33 +464,33 @@ router.post('/create-order', function(req, res, next) {
 						"items": [
 							{
 							  "name": "T-Shirt",
-							  "description": "Green XL#AE_Seller_001#Merchandise",
+							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "90.00"
+								"currency_code": "SGD",
+								"value": "4.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
-								"value": "10.00"
+								"currency_code": "SGD",
+								"value": "1.00"
 							  },
 							  "quantity": "1",
-							  "category": "DIGITAL_GOODS"
+							  "category": "PHYSICAL_GOODS"
 							},
 							{
 							  "name": "Shoes",
-							  "description": "Running, Size 10.5#AE_Seller_002#Merchandise",
+							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "45.00"
+								"currency_code": "SGD",
+								"value": "4.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
-								"value": "5.00"
+								"currency_code": "SGD",
+								"value": "1.00"
 							  },
-							  "quantity": "2",
-							  "category": "DIGITAL_GOODS"
+							  "quantity": "1",
+							  "category": "PHYSICAL_GOODS"
 							}
 						  ],
 					// 	"payment_instruction":{

@@ -1,5 +1,5 @@
 var config = {
-	"IS_APPLICATION_IN_SANDBOX" : true,
+	"IS_APPLICATION_IN_SANDBOX" : false,
 
 	"sandbox" : {
 		//"CLIENT_ID" :"AZN1cfAKLJSwDHfnIks7oGrjriBD3b6HS91ziYeRcKAGLSgQejjJmrPAL501icsygCTya3KJAqqHUDny",
@@ -79,10 +79,10 @@ var config = {
 	},
 
 	"live" : {
-		"CLIENT_ID" :"AeIP3_gc2KU8iMd1JAZ-3P0WJMQCijHaqvTV6rwN7kLTjPl5oRyM0xZ43U6gwKjVhRciR-LQy21d7E74",
-		"SECRET":"EJQyU0dEc-d_uvm4QzpsQNexTx146ZTVz-gE_1ZArO53AUiyNKuppjTrcfuZDl3de6csjclXQhHcq-It",
+		"CLIENT_ID" :"AUiM2ANMaYeVmBFcHQvAxc6bKAjBCfCBt6StAw--FdtmYGISRP-kMTkpHsqDMr40SvLTHY_c1AV8cP_f",
+		"SECRET":"EAvbDf4LRCE4om4pKzUKsgIYvouqQFXB6BHT1mra_b7EWpXcLKjxNch2OY4wF3XrP0vLtTJvRxKY83gC",
 		"ACCESS_TOKEN_URL":"https://api.paypal.com/v1/oauth2/token",
-		"MERCHANTID":"SKBHKJUHPEPS8",
+		"MERCHANTID":"",
 		"GET_CLIENT_TOKEN":"https://api.paypal.com/v1/identity/generate-token",
 		"GET_GRAPHQL_URL":"https://api.paypal.com/payments/graphql",
 		"CREATE_PAYMENT_URL":"https://api.paypal.com/v1/payments/payment",
