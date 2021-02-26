@@ -399,7 +399,14 @@ router.post('/create-order', function(req, res, next) {
             },
             body: {
 				"intent": "CAPTURE",
-				"application_context":{"shipping_preference":"GET_FROM_FILE","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
+				"application_context":{"shipping_preference":"NO_SHIPPING","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com",
+				//"preferred_payment_source": {
+                  //  "token": {
+                    //    "type": "BILLING_AGREEMENT",
+                      //  "id": "B-8NX06056AY581663P"
+                   // }
+                //}
+			},
 				//"payer":{
 				//	"phone":{
 				//		"phone_number":{
@@ -432,21 +439,21 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "USD",
+							"currency_code": "SGD",
 							"value": "6.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "USD",
+								  "currency_code": "SGD",
 								  "value": "4.00"
 								},
 								"tax_total": {
-									"currency_code": "USD",
+									"currency_code": "SGD",
 									"value": "2.00"
 								  }
 						 }
 						},
-					   "payee":{
-						  	"merchant_id":"9969NM9657QQA"
+					  "payee":{
+						  	"merchant_id":"NXJHC626SXRTY"
 					   },
 						// "shipping":{
 						// 	"name":{
@@ -467,11 +474,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "SGD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "SGD",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
@@ -482,11 +489,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "SGD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "SGD",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
@@ -801,8 +808,39 @@ router.post('/create-billing-agreement', function(req, res, next) {
 }
 });	
 
+router.post('/create-agreement/:id', function(req, res, next) {
+	console.log ('In calling Create-Billing Agreement');
+	try{
+		getAccessToken(function(data) {
 
-
+			var accessToken = JSON.parse(data).access_token;
+			var OrderID = req.params.id;
+			request.post(configuration.CREATE_BAID_URL+OrderID + '/agreements', {
+            headers: {
+                'content-type': "application/json",
+				'authorization': "Bearer "+accessToken
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
+				//"PayPal-Partner-Attribution-Id":"TEST_TECHM_FREELANCE_MP"
+            },
+            body: { 
+            },
+            json: true
+        }, function (err, response, body) {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+			console.log (body);
+			var baid=body.id;
+			res.json({
+				id: baid
+			});			
+	});
+});
+}catch(e) {
+	console.log(e)
+}
+});	
 
 router.post('/capture-order/:id', function(req, res, next) {
 	console.log ('In calling Capture-Order');
@@ -817,7 +855,10 @@ router.post('/capture-order/:id', function(req, res, next) {
 						'authorization': "Bearer "+accessToken,
 						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 						//"PayPal-Partner-Attribution-Id":"UAE-CHECKOUT-PSP"
-					}
+					},
+					body: { 
+					},
+					json:true
 				}, function (err, response, body) {
 					if (err) {
 						console.error(err);
@@ -825,7 +866,6 @@ router.post('/capture-order/:id', function(req, res, next) {
 					}
 					console.log(response);
 					console.log(body);
-					res.send
 					res.json({
 						status: 'success'
 					});
