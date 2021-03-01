@@ -85,6 +85,7 @@ const uuidV4 = require('uuid/v4');
 				   },
 				   body: {
 					   customer_id:"Saurabh_Nigam_104"
+					   //"billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
 				}
@@ -439,20 +440,20 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "SGD",
+							"currency_code": "USD",
 							"value": "6.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "SGD",
+								  "currency_code": "USD",
 								  "value": "4.00"
 								},
 								"tax_total": {
-									"currency_code": "SGD",
+									"currency_code": "USD",
 									"value": "2.00"
 								  }
 						 }
 						},
-					  "payee":{
+					 "payee":{
 						  	"merchant_id":"NXJHC626SXRTY"
 					   },
 						// "shipping":{
@@ -474,11 +475,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "SGD",
+								"currency_code": "USD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "SGD",
+								"currency_code": "USD",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
@@ -489,11 +490,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "SGD",
+								"currency_code": "USD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "SGD",
+								"currency_code": "USD",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
