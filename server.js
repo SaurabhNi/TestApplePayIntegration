@@ -84,8 +84,8 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					  // customer_id:"Saurabh_Nigam_104"
-					   "billing_agreement_id": "B-8NX06056AY581663P"
+					   customer_id:"Saurabh_Nigam_104"
+					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
 				}
@@ -120,7 +120,7 @@ const uuidV4 = require('uuid/v4');
 					//let buff = new Buffer(body.client_token, 'base64');
 					let text = buff.toString('ascii');
 					console.log (text);
-					res.render("index",{token: JSON.parse(text).paypal.idToken,bt_client_token:response.clientToken});
+					res.render("index",{token: body.client_token,bt_client_token:response.clientToken});
 				  });
 				 }
 			   });
