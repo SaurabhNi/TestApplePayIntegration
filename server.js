@@ -84,8 +84,8 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_104"
-					   //"billing_agreement_id": "B-8NX06056AY581663P"
+					  // customer_id:"Saurabh_Nigam_104"
+					   "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
 				}
@@ -116,7 +116,11 @@ const uuidV4 = require('uuid/v4');
 					}
 					//console.log(response);
 					console.log("Token generated is"+response.clientToken);	
-					res.render("index",{token: body.client_token,bt_client_token:response.clientToken});
+					let buff = Buffer.from(body.client_token,'base64');
+					//let buff = new Buffer(body.client_token, 'base64');
+					let text = buff.toString('ascii');
+					console.log (text);
+					res.render("index",{token: JSON.parse(text).paypal.idToken,bt_client_token:response.clientToken});
 				  });
 				 }
 			   });
@@ -440,21 +444,21 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "USD",
+							"currency_code": "AED",
 							"value": "6.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "USD",
+								  "currency_code": "AED",
 								  "value": "4.00"
 								},
 								"tax_total": {
-									"currency_code": "USD",
+									"currency_code": "AED",
 									"value": "2.00"
 								  }
 						 }
 						},
 					 "payee":{
-						  	"merchant_id":"NXJHC626SXRTY"
+						  	"merchant_id":"2574QHZ8LHZG6"
 					   },
 						// "shipping":{
 						// 	"name":{
@@ -475,11 +479,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "AED",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "AED",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
@@ -490,11 +494,11 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "USD",
+								"currency_code": "AED",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "USD",
+								"currency_code": "AED",
 								"value": "1.00"
 							  },
 							  "quantity": "1",
