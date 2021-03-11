@@ -400,7 +400,7 @@ router.post('/create-order', function(req, res, next) {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
 				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
-				//"PayPal-Partner-Attribution-Id":"UAE-CHECKOUT-PSP"
+				"PayPal-Partner-Attribution-Id":"Checkout_MAM_PSP"
             },
             body: {
 				"intent": "CAPTURE",
@@ -444,16 +444,16 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "AED",
-							"value": "6.00",
+							"currency_code": "USD",
+							"value": "5.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "AED",
+								  "currency_code": "USD",
 								  "value": "4.00"
 								},
 								"tax_total": {
-									"currency_code": "AED",
-									"value": "2.00"
+									"currency_code": "USD",
+									"value": "1.00"
 								  }
 						 }
 						},
@@ -479,12 +479,12 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "AED",
+								"currency_code": "USD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "AED",
-								"value": "1.00"
+								"currency_code": "USD",
+								"value": "0.50"
 							  },
 							  "quantity": "1",
 							  "category": "PHYSICAL_GOODS"
@@ -494,12 +494,12 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "AED",
+								"currency_code": "USD",
 								"value": "2.00"
 							  },
 							  "tax": {
-								"currency_code": "AED",
-								"value": "1.00"
+								"currency_code": "USD",
+								"value": "0.50"
 							  },
 							  "quantity": "1",
 							  "category": "PHYSICAL_GOODS"
@@ -859,7 +859,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
 						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
-						//"PayPal-Partner-Attribution-Id":"UAE-CHECKOUT-PSP"
+						"PayPal-Partner-Attribution-Id":"Checkout_MAM_PSP"
 					},
 					body: { 
 					},
