@@ -458,7 +458,7 @@ router.post('/create-order', function(req, res, next) {
 						 }
 						},
 					 "payee":{
-						  	"merchant_id":"NXJHC626SXRTY"
+						  	"merchant_id":"2574QHZ8LHZG6"
 					   },
 						// "shipping":{
 						// 	"name":{
