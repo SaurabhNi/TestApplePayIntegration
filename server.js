@@ -81,10 +81,10 @@ const uuidV4 = require('uuid/v4');
 					   'authorization': "Bearer "+accessToken,
 					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
 					   'cache-control': "no-cache",
-					  //'PayPal-Partner-Attribution-Id':"UAE-CHECKOUT-PSP"
+					  'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_104"
+					   customer_id:"Saurabh_Nigam_106"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
@@ -444,16 +444,16 @@ router.post('/create-order', function(req, res, next) {
 					{
 						"reference_id":"PU001",
 						"amount": {
-							"currency_code": "USD",
-							"value": "5.00",
+							"currency_code": "SGD",
+							"value": "7.00",
 							"breakdown": {
 								"item_total": {
-								  "currency_code": "USD",
-								  "value": "4.00"
+								  "currency_code": "SGD",
+								  "value": "5.00"
 								},
 								"tax_total": {
-									"currency_code": "USD",
-									"value": "1.00"
+									"currency_code": "SGD",
+									"value": "2.00"
 								  }
 						 }
 						},
@@ -479,12 +479,12 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Green XL#Checkout_Seller_001#Merchandise",
 							  "sku": "sku01",
 							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "2.00"
+								"currency_code": "SGD",
+								"value": "2.50"
 							  },
 							  "tax": {
-								"currency_code": "USD",
-								"value": "0.50"
+								"currency_code": "SGD",
+								"value": "1.00"
 							  },
 							  "quantity": "1",
 							  "category": "PHYSICAL_GOODS"
@@ -494,12 +494,12 @@ router.post('/create-order', function(req, res, next) {
 							  "description": "Running, Size 10.5#Checkout_Seller_001#Merchandise",
 							  "sku": "sku02",
 							  "unit_amount": {
-								"currency_code": "USD",
-								"value": "2.00"
+								"currency_code": "SGD",
+								"value": "2.50"
 							  },
 							  "tax": {
-								"currency_code": "USD",
-								"value": "0.50"
+								"currency_code": "SGD",
+								"value": "1.00"
 							  },
 							  "quantity": "1",
 							  "category": "PHYSICAL_GOODS"
