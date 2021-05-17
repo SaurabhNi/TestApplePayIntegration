@@ -1,0 +1,25 @@
+{
+"owner_info": 
+            {
+            "email": "M30431@ipay88.com.my",
+            "name": {"given_name": "KOKWAH","surname": "TAN"},
+            "country_code_of_nationality": "MY",
+            "addresses": 
+            [{"type": "HOME","line1": "11, Jalan 7/149","line2": "Bandar Baru Seri Petaling","city": "Kuala Lumpur","state": "Kuala Lumpur","country_code": "MY","postal_code": "57000"}],
+            "date_of_birth": "1966-06-04",
+            "identifications": [{"type": "NATIONAL_ID","value": "660604106599","issuer_country_code": "MY"}]
+        },
+"business_info": {
+                "type": "INDIVIDUAL",
+                "names": [{"type": "LEGAL","name": "Expressionbook Sdn Bhd"}],
+                "addresses": [{"type": "WORK","line1": "11, Jalan 7/149","line2": "Bandar Baru Seri Petaling","city": "Kuala Lumpur","state": "Kuala Lumpur","country_code": "MY","postal_code": "57000"}],
+                "phones": [{"type": "BUSINESS","country_code": "+60","national_number": "173663613"}],
+                "merchant_category_code": "5699",
+                "customer_service":{"email": "kwtrump500@gmail.com"}
+            },
+            "account_currency": "MYR",
+            "secondary_currency": ["AUD","CAD","EUR","GBP","HKD","MYR","PHP","SGD","THB","TWD","USD"],
+            "account_relations": [{"type": "PARTNER"}],
+            "account_permissions": [{"permissions": ["EXPRESS_CHECKOUT","EXCEPTION_PROCESSING","SETTLEMENT_CONSOLIDATION","SETTLEMENT_REPORTING","DISPUTE_RESOLUTION","VIEW_PROFILE","EDIT_PROFILE"]}],
+            "partner_merchant_external_id": "M30431"
+}

@@ -89,13 +89,13 @@
        </head>
       <body>
         
-<script src="https://js.braintreegateway.com/web/3.70.0/js/client.min.js"></script>   
-<script src="https://js.braintreegateway.com/web/3.70.0/js/paypal-checkout.min.js"></script> 
-<script src="https://js.braintreegateway.com/web/3.70.0/js/hosted-fields.min.js"></script> 
+<script src="https://js.braintreegateway.com/web/3.76.3/js/client.min.js"></script>   
+<script src="https://js.braintreegateway.com/web/3.76.3/js/paypal-checkout.min.js"></script> 
+<!--<script src="https://js.braintreegateway.com/web/3.70.0/js/hosted-fields.min.js"></script> 
 <script src="https://js.braintreegateway.com/web/3.70.0/js/data-collector.min.js"></script> 
-<script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>
+<script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>-->
 
-<script src="https://www.paypal.com/sdk/js?client-id=AUiM2ANMaYeVmBFcHQvAxc6bKAjBCfCBt6StAw--FdtmYGISRP-kMTkpHsqDMr40SvLTHY_c1AV8cP_f&intent=capture&components=buttons&currency=SGD&merchant-id=2574QHZ8LHZG6"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AUiM2ANMaYeVmBFcHQvAxc6bKAjBCfCBt6StAw--FdtmYGISRP-kMTkpHsqDMr40SvLTHY_c1AV8cP_f&intent=capture&components=buttons,funding-eligibility&currency=USD&merchant-id=NXJHC626SXRTY" data-client-token="<%= token %>" data-enable-3ds></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -107,12 +107,12 @@
   <input type="checkbox" id="vault" name="vault">
   <label for="vault">Save this card</label>
   <input type="submit" value="Pay"/>
-  <!--<button value="submit" id="submit" class="btn">Pay with Card</button>-->
+  <button value="submit" id="submit" class="btn">Pay with Card</button>
 </form>
 </div>
 <div id="payments-sdk__contingency-lightbox"></div>
 
-
+<!--
 <script>
 // Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
 
@@ -230,7 +230,7 @@
 });// end of hosted fields create
 });// end of braintree instance create            
 
-</script>
+</script>-->
 
 <!--
 <script>
@@ -272,6 +272,7 @@ console.log("Just before entering hosted fields check");
     }).then(hostedFields => {
       document.querySelector('#my-sample-form').addEventListener('submit', event => {
         event.preventDefault();
+        console.log("Buyer Vaulting"+document.querySelector('#vault').checked);
         hostedFields.submit(
           {
           // Need to specify the buyer action to save the card
@@ -334,17 +335,19 @@ console.log("Just before entering hosted fields check");
 -->
 
        <!--PayPal Payments JS SDK integration-->
-          <div id="paypal-button-container"></div>
+       
+       <div id="paypal-button-container"></div>
          <script>
-           paypal.Buttons(
-             { 
-              style: {
-                color:  'blue',
-                shape:  'pill',
-                label:  'pay',
-                layout: 'vertical'
-            }, 
-                createOrder: function (data, actions) { 
+           var FUNDING_SOURCES = [
+    paypal.FUNDING.CARD
+];
+
+paypal.getFundingSources().forEach(function(fundingSource) {
+
+// Initialize the buttons
+    var button = paypal.Buttons({
+      fundingSource: fundingSource,
+      createOrder: function (data, actions) { 
                   return fetch('/create-order', { 
                      method: 'POST' 
                    }).then(function(res){
@@ -352,6 +355,50 @@ console.log("Just before entering hosted fields check");
                      }).then(function(data) {
                        return data.id;
                      });
+                    },
+                    onApprove: function (data, actions) {
+                    return fetch('/capture-order/' + data.orderID, {
+                    method: 'POST'}
+                    ).then(function(res) {
+                      if(!res.ok)
+                      {
+                        alert('Something went wrong'); 
+                      }
+                      return res.json();
+                    }).then(function(data){
+                      if(data.status=='success'){
+                      alert("Payment captured successfully");
+                    }
+                    });
+                    }
+    });
+
+// Check if the button is eligible
+if (button.isEligible()) {
+
+    // Render the standalone button for that funding source
+    button.render('#paypal-button-container');
+}
+});
+
+
+          //  paypal.Buttons(
+          //    { 
+          //     style: {
+          //       color:  'blue',
+          //       shape:  'pill',
+          //       label:  'pay',
+          //       layout: 'vertical'
+          //   }, 
+          //       createOrder: function (data, actions) { 
+          //         return fetch('/create-order', { 
+          //            method: 'POST' 
+          //          }).then(function(res){
+          //            return res.json();
+          //            }).then(function(data) {
+          //              return data.id;
+          //            });
+                     
         //           return actions.order.create({
         //             "intent": "CAPTURE",
 				// "application_context":{"shipping_preference":"SET_PROVIDED_ADDRESS","return_url":"https://www.google.com","cancel_url":"https://www.amazon.com"},
@@ -446,7 +493,7 @@ console.log("Just before entering hosted fields check");
 		// 				  ],
 		// 			}
 		// ]});
-},
+//},
 
 //createBillingAgreement: function() {
   //   return fetch('/create-billing-agreement', {
@@ -474,21 +521,21 @@ console.log("Just before entering hosted fields check");
                   
 
 
-                  onApprove: function (data, actions) {
-                    return fetch('/capture-order/' + data.orderID, {
-                    method: 'POST'}
-                    ).then(function(res) {
-                      if(!res.ok)
-                      {
-                        alert('Something went wrong'); 
-                      }
-                      return res.json();
-                    }).then(function(data){
-                      if(data.status=='success'){
-                      alert("Payment captured successfully");
-                    }
-                    });
-                    },
+                  // onApprove: function (data, actions) {
+                  //   return fetch('/capture-order/' + data.orderID, {
+                  //   method: 'POST'}
+                  //   ).then(function(res) {
+                  //     if(!res.ok)
+                  //     {
+                  //       alert('Something went wrong'); 
+                  //     }
+                  //     return res.json();
+                  //   }).then(function(data){
+                  //     if(data.status=='success'){
+                  //     alert("Payment captured successfully");
+                  //   }
+                  //   });
+                  //   },
 
 
                     // onApprove: function (data, actions) {
@@ -507,23 +554,23 @@ console.log("Just before entering hosted fields check");
                     // });
                     // },
 
-                    onError: function (err) {
-                      console.log("Some unknown error happened"+err);
-                    }
-                    ,
-                    onCancel: function (data) {
-                      console.log("The buyer cancelled the transaction");
-                    }
-              }).render('#paypal-button-container');
+              //       onError: function (err) {
+              //         console.log("Some unknown error happened"+err);
+              //       }
+              //       ,
+              //       onCancel: function (data) {
+              //         console.log("The buyer cancelled the transaction");
+              //       }
+              // }).render('#paypal-button-container');
           </script>
-
+ 
 
 
           <!-- PayPal and PayPal Credit Integration via BT SDK Integration-->
           <!--
           <div id="paypal-button"></div>
           <div id="paypal-credit-button"></div>
-          
+         
           <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/client.min.js"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/paypal-checkout.min.js"></script>
@@ -532,7 +579,8 @@ console.log("Just before entering hosted fields check");
             authorization: "<%= bt_client_token %>"
           }, function (err, clientInstance) {
             braintree.paypalCheckout.create({
-              client: clientInstance
+              client: clientInstance,
+              autoSetDataUserIdToken: true,
             }, function (err, paypalCheckoutInstance) {
 
               paypalCheckoutInstance.loadPayPalSDK({
@@ -540,7 +588,11 @@ console.log("Just before entering hosted fields check");
   // vault: true
 
   // Defaults to USD, but must match the value used in `createPayment`
-  // currency: 'USD'
+   currency: 'USD',
+   intent: 'capture',
+   dataAttributes: {
+        amount: "100.00"
+      }
 }, function (loadSDKErr) {
   // Render the PayPal button (see Render the PayPal Button section)
 
@@ -550,14 +602,15 @@ console.log("Just before entering hosted fields check");
   createOrder: function () {
     return paypalCheckoutInstance.createPayment({
       flow: 'checkout',
-      amount: 50.00,
+      amount: 100.00,
       currency: 'USD',
+      intent: 'capture',
 
       // new required parameters for this flow
-      requestBillingAgreement: true,
-      billingAgreementDetails: {
-        description: 'Description of the billng agreement to display to the customer'
-      }
+      //requestBillingAgreement: true,
+      //billingAgreementDetails: {
+        //description: 'Description of the billng agreement to display to the customer'
+      //}
     });
   },
   onApprove: function (data, actions) {
@@ -570,7 +623,7 @@ console.log("Just before entering hosted fields check");
               'Content-Type': 'application/json',
               },
               body: JSON.stringify({"payment_method_nonce":payload.nonce,
-              "currency":"testalipayaliexpress","total":"50"})
+              "currency":"testalipayaliexpress","total":"100"})
                }).then(response => {
               if (!response.ok) {
                  alert('Something went wrong');

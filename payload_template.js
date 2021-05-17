@@ -60,21 +60,18 @@ exports.getCreateBTPaymentsPayLoadTemplate = function()
 return {
 		amount: "2.0",
 		orderId: "Mapped to PayPal Invoice Number",
-		channel:"Flutterwave_PSP_MEA",
+		//channel:"Flutterwave_PSP_MEA",
 		//customerId:"Jahnavi_Nigam_21",
-	customer:{
-		id:"Jahnavi_Nigam_102"
-	}, 
+	// customer:{
+	// 	id:"Jahnavi_Nigam_210"
+	// }, 
 		options: {
 			submitForSettlement: true,
-			storeInVaultOnSuccess: true,
-		"paypal":{
-		//"description":"Your Uber ride fare"
-	"payee_email":"sb-qlnwf2868128@business.example.com",
-	"supplementary_data": { "receiver_account_id": "AE_MERCHANT_004", 
-	"vertical": "MERCHANDISE"
-}
-}
+		//	storeInVaultOnSuccess: true,
+// 		"paypal":{
+// 		//"description":"Your Uber ride fare"
+// 	"payee_email":"sb-qlnwf2868128@business.example.com",
+// }
 }
 }	
 }
