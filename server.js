@@ -859,7 +859,8 @@ router.post('/create-agreement/:id', function(req, res, next) {
 			console.log (JSON.stringify(body));
 			var baid=body.id;
 			res.json({
-				id: baid
+				id: baid,
+				status: "success"
 			});			
 	});
 });
