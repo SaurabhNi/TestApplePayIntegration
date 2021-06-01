@@ -79,12 +79,12 @@ const uuidV4 = require('uuid/v4');
 				 headers : {
 					   'content-type': "application/json",
 					   'authorization': "Bearer "+accessToken,
-					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
+					   //'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVJMRjRMVXd6N0xIc05NNkxHX2s3bE1jSDlNOVVDU291TjVMdnZMdjZLeFJqVmV6emZQZUFDWFNxWjdGQ2xyRzNVeXFTZU5MRXdXV2stRl8iLAogICJwYXllcl9pZCI6ICJRTkw0WkFMTExOUkVHIgp9.",
 					   'cache-control': "no-cache",
 					  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_216"
+					   customer_id:"Saurabh_Nigam_236"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
@@ -109,7 +109,7 @@ const uuidV4 = require('uuid/v4');
 				// 	});
 				//   });
 
-				  gateway.clientToken.generate({customer_id:"Jahnavi_Nigam_212"}, function (err, response) {
+				  gateway.clientToken.generate({}, function (err, response) {
 					if(err)
 					{
 						throw new Error(err);
@@ -147,7 +147,7 @@ const queryString = require('querystring');
 
 const configuration = config.getConfig();
 var GQclient = require('graphql-client')
-//const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
+const createPaymentPayloadTemplates = payLoadTemplate.getCreatePaymentsPayloadTemplate();
 //const createNVPPaymentPayloadTemplates = payLoadTemplate.getNVPCreatePaymentsPayloadTemplate();
 //const executeNVPPaymentPayloadTemplates = payLoadTemplate.getNVPExecutePaymentsPayloadTemplate();
 //const productsJson = products.getProductsTemplate()
@@ -195,29 +195,30 @@ function getAccessToken(cb) {
 function buildCreatePaymentPayload(data) {
 	console.log("Data in API Request is",data);
 	var template = createPaymentPayloadTemplates;
-		template.transactions[0].amount.total = data.total
-		template.transactions[0].amount.currency = data.currency
+	console.log("Data received in request is:"+JSON.stringify(data));
+		template.transactions[0].amount.total = data.transactions[0].amount.total
+		template.transactions[0].amount.currency = data.transactions[0].amount.currency
 		
-		template.transactions[0].amount.details.subtotal = data.subtotal
-		template.transactions[0].amount.details.shipping_discount = data.shipping_discount
-		template.transactions[0].amount.details.insurance = data.insurance
-		template.transactions[0].amount.details.shipping = data.shipping
-		template.transactions[0].amount.details.tax = data.tax
-		template.transactions[0].amount.details.handling_fee = data.handling_fee
+		template.transactions[0].amount.details.subtotal = data.transactions[0].amount.details.subtotal
+		template.transactions[0].amount.details.shipping_discount = data.transactions[0].amount.details.shipping_discount
+		template.transactions[0].amount.details.insurance = data.transactions[0].amount.details.insurance
+		template.transactions[0].amount.details.shipping = data.transactions[0].amount.details.shipping
+		template.transactions[0].amount.details.tax = data.transactions[0].amount.details.tax
+		template.transactions[0].amount.details.handling_fee = data.transactions[0].amount.details.handling_fee
 
 		template.transactions[0].invoice_number = makeid();
 
-		template.transactions[0].item_list.items[0].name = data.description	
-		template.transactions[0].item_list.items[0].description = data.description	
-		template.transactions[0].item_list.items[0].quantity = data.quantity	
-		template.transactions[0].item_list.items[0].price = data.price	
-		template.transactions[0].item_list.items[0].tax = data.tax	
-		template.transactions[0].item_list.items[0].currency = data.currency	
+		template.transactions[0].item_list.items[0].name = data.transactions[0].item_list.items[0].name	
+		template.transactions[0].item_list.items[0].description = data.transactions[0].item_list.items[0].description	
+		template.transactions[0].item_list.items[0].quantity = data.transactions[0].item_list.items[0].quantity	
+		template.transactions[0].item_list.items[0].price = data.transactions[0].item_list.items[0].price	
+		template.transactions[0].item_list.items[0].tax = data.transactions[0].item_list.items[0].tax	
+		template.transactions[0].item_list.items[0].currency = data.transactions[0].item_list.items[0].currency	
 
 
 
-		template.redirect_urls.return_url = configuration.RETURN_URL
-		template.redirect_urls.cancel_url = configuration.CANCEL_URL
+		template.redirect_urls.return_url = data.redirect_urls.return_url
+		template.redirect_urls.cancel_url = data.redirect_urls.cancel_url
 		
 		if(data.customFlag == "true") {
 			template.transactions[0].item_list.shipping_address.recipient_name = data.recipient_name	
@@ -319,8 +320,17 @@ router.post('/create-payments', function(req, res, next) {
 			  }
 			  else{
 			    console.log("Sending response",body);
-			  	res.send(body);
-			  }
+				let token;
+
+				for (let link of body.links) {
+  				if (link.rel === 'approval_url') {
+    			token = link.href.match(/EC-\w+/)[0];
+  				}
+			}
+			res.json({
+				id: token
+			});
+		}
 			});
 			
 		});
@@ -340,10 +350,10 @@ router.post("/checkout", function (req, res) {
 	var nonce = req.body.payment_method_nonce;
 	console.log(nonce);
 	var payLoad = buildbtPaymentRequestPayload(req.body);
-	payLoad.paymentMethodNonce = nonce;
-	//payLoad.paymentMethodToken="fhm3q5g";
+	//payLoad.paymentMethodNonce = nonce;
+	payLoad.paymentMethodToken="m28v6wm";
 	//payLoad.options.storeInVaultOnSuccess = true;
-	//payLoad.deviceData = req.body.deviceData;
+	payLoad.deviceData = req.body.deviceData;
 	console.log(payLoad);
 
 	// gateway.transaction.submitForSettlement("02w4cssx", function (err, result) {
@@ -369,7 +379,8 @@ router.post("/checkout", function (req, res) {
 	 	  console.log("Result is : "+JSON.stringify(result));
 	 	  console.log("PayPal paymentID is :"+result.transaction.paypal.paymentId);
 	 	  console.log("Customer is :"+JSON.stringify(result.transaction.customer));
-		  console.log("Customer vault token is:"+result.transaction.paypal.implicitlyVaultedPaymentMethodToken); 
+		  console.log("PayPal PMT is :"+JSON.stringify(result.transaction.paypal));
+		 // console.log("Customer vault token is:"+result.transaction.paypal.implicitlyVaultedPaymentMethodToken); 
 		//    gateway.customer.update("Jahnavi_Nigam_210", {
 		// 	defaultPaymentMethodToken: result.transaction.paypal.implicitlyVaultedPaymentMethodToken,
 		//   }, (err, result) => {
@@ -377,7 +388,7 @@ router.post("/checkout", function (req, res) {
 		// 		console.log("Updated customer successfully");
 		// 	 }
 		//   });
-		 // console.log("Customer ID is :",result.transaction.customer.paymentMethods[0].token);
+		  //console.log("Customer PMT is :",result.transaction.customer.paymentMethods[0].token);
 	 	  //console.log("Customer Payment Method Token is :",result.customer.paymentMethods[0].token);
 		  // console.log("Customer Implicit Payment Method Token is :",result.customer.paymentMethods[0].token); 
 	 	  res.send("<h1>Success! Transaction ID: " + result.transaction.id + "</h1>");
@@ -409,7 +420,7 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
+				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVJMRjRMVXd6N0xIc05NNkxHX2s3bE1jSDlNOVVDU291TjVMdnZMdjZLeFJqVmV6emZQZUFDWFNxWjdGQ2xyRzNVeXFTZU5MRXdXV2stRl8iLAogICJwYXllcl9pZCI6ICJRTkw0WkFMTExOUkVHIgp9."
 				//"PayPal-Partner-Attribution-Id":"Checkout_MAM_PSP"
             },
             body: {
@@ -467,9 +478,9 @@ router.post('/create-order', function(req, res, next) {
 								  }
 						 }
 						},
-					 "payee":{
-						  	"merchant_id":"NXJHC626SXRTY"
-					  },
+						"payee":{
+							"merchant_id":"QNL4ZALLLNREG"
+						  },
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
@@ -845,7 +856,7 @@ router.post('/create-agreement/:id', function(req, res, next) {
                 console.error(err);
                 return res.sendStatus(500);
             }
-			console.log (body);
+			console.log (JSON.stringify(body));
 			var baid=body.id;
 			res.json({
 				id: baid
@@ -868,7 +879,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
-						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVdXUFQ2bmhBV1pjTDYxMmtmV3JuRGJtOHYza1NMd3p3d3dRNTNQSW1YaTBaV2k4NTVIc0NodTdMTi1scFA4RnRRaldBWHdpaHI1OU95aTIiLAogICJwYXllcl9pZCI6ICJFVlZXTEgyWk1CRTdFIgp9.",
+						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVJMRjRMVXd6N0xIc05NNkxHX2s3bE1jSDlNOVVDU291TjVMdnZMdjZLeFJqVmV6emZQZUFDWFNxWjdGQ2xyRzNVeXFTZU5MRXdXV2stRl8iLAogICJwYXllcl9pZCI6ICJRTkw0WkFMTExOUkVHIgp9."
 						//"PayPal-Partner-Attribution-Id":"Checkout_MAM_PSP"
 					},
 					body: { 
@@ -879,11 +890,44 @@ router.post('/capture-order/:id', function(req, res, next) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
-					console.log(response);
-					console.log(body);
+					//console.log(response);
+					console.log(JSON.stringify(body));
 					res.json({
 						status: 'success'
 					});
+				});
+			}
+		});
+}catch(e) {
+		console.log(e)
+	}
+});
+
+router.get('/get-order/:id', function(req, res, next) {
+	console.log ('In calling Get-Order');
+	try{
+		getAccessToken(function(data) {
+			{
+				var OrderID = req.params.id;
+				var accessToken = JSON.parse(data).access_token;
+				request.get(configuration.CAPTURE_ORDER_URL + OrderID, {
+					headers: {
+						'content-type': "application/json",
+						'authorization': "Bearer "+accessToken,
+						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.ewogICJpc3MiOiAiQVJMRjRMVXd6N0xIc05NNkxHX2s3bE1jSDlNOVVDU291TjVMdnZMdjZLeFJqVmV6emZQZUFDWFNxWjdGQ2xyRzNVeXFTZU5MRXdXV2stRl8iLAogICJwYXllcl9pZCI6ICJRTkw0WkFMTExOUkVHIgp9."
+						//"PayPal-Partner-Attribution-Id":"Checkout_MAM_PSP"
+					},
+					body: { 
+					},
+					json:true
+				}, function (err, response, body) {
+					if (err) {
+						console.error(err);
+						return res.sendStatus(500);
+					}
+					//console.log(response);
+					console.log(JSON.stringify(body));
+					res.json(body);
 				});
 			}
 		});

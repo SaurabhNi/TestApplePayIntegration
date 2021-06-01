@@ -18,6 +18,9 @@ exports.getCreatePaymentsPayloadTemplate = function() {
 		          "insurance": "0.00"
 		        }
 		      },
+			  "payee":{
+				"email":"Mario1267@gmail.com"
+			  },
 		      "description": "This is the payment transaction description.",
 		      "custom": "SOME_CUSTOM_MESSAGING",
 		      "invoice_number": "0000000",
@@ -61,13 +64,13 @@ return {
 		amount: "2.0",
 		orderId: "Mapped to PayPal Invoice Number",
 		//channel:"Flutterwave_PSP_MEA",
-		//customerId:"Jahnavi_Nigam_21",
+		//customerId:"Jahnavi_Nigam_220",
 	// customer:{
-	// 	id:"Jahnavi_Nigam_210"
-	// }, 
+	 //	id:"Jahnavi_Nigam_230"
+	 //}, 
 		options: {
-			submitForSettlement: true,
-		//	storeInVaultOnSuccess: true,
+			submitForSettlement: true
+		//	storeInVaultOnSuccess: true
 // 		"paypal":{
 // 		//"description":"Your Uber ride fare"
 // 	"payee_email":"sb-qlnwf2868128@business.example.com",
