@@ -350,8 +350,8 @@ router.post("/checkout", function (req, res) {
 	var nonce = req.body.payment_method_nonce;
 	console.log(nonce);
 	var payLoad = buildbtPaymentRequestPayload(req.body);
-	//payLoad.paymentMethodNonce = nonce;
-	payLoad.paymentMethodToken="m28v6wm";
+	payLoad.paymentMethodNonce = nonce;
+	//payLoad.paymentMethodToken="m28v6wm";
 	//payLoad.options.storeInVaultOnSuccess = true;
 	payLoad.deviceData = req.body.deviceData;
 	console.log(payLoad);
