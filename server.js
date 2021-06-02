@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_242"
+					   customer_id:"Saurabh_Nigam_244"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
