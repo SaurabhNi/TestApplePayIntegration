@@ -69,8 +69,8 @@ return {
 	 	id:"Jahnavi_Nigam_244"
 	 }, 
 		options: {
-			submitForSettlement: true
-		//	storeInVaultOnSuccess: true
+			submitForSettlement: true,
+			storeInVaultOnSuccess: true
 // 		"paypal":{
 // 		//"description":"Your Uber ride fare"
 // 	"payee_email":"sb-qlnwf2868128@business.example.com",
