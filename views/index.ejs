@@ -656,11 +656,11 @@ console.log("Just before entering hosted fields check");
       currency: 'USD',
       intent: 'capture',
 
-      // new required parameters for this flow
-      //requestBillingAgreement: true,
-      //billingAgreementDetails: {
-        //description: 'Save your PayPal account for future top ups'
-      //}
+      //new required parameters for this flow
+      requestBillingAgreement: true,
+      billingAgreementDetails: {
+        description: 'Save your PayPal account for future top ups'
+      }
     });
   },
   //  createBillingAgreement: function () {

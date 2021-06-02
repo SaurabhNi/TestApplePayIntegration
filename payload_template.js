@@ -65,9 +65,9 @@ return {
 		orderId: "Mapped to PayPal Invoice Number",
 		//channel:"Flutterwave_PSP_MEA",
 		//customerId:"Jahnavi_Nigam_220",
-	// customer:{
-	 //	id:"Jahnavi_Nigam_230"
-	 //}, 
+	customer:{
+	 	id:"Jahnavi_Nigam_240"
+	 }, 
 		options: {
 			submitForSettlement: true
 		//	storeInVaultOnSuccess: true
