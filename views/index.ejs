@@ -96,7 +96,7 @@
 
 <script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>-->
 
-<script src="https://www.paypal.com/sdk/js?client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&vault=true&components=buttons&intent=tokenize"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&components=buttons&intent=capture&currency=USD" data-client-token="<%=token%>"></script>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -362,8 +362,8 @@ console.log("Just before entering hosted fields check");
 // Initialize the buttons
     //var button = paypal.Buttons({fundingSource: fundingSource,
       paypal.Buttons({
-        createBillingAgreement: function (data, actions) { 
-                    return fetch('/create-billing-agreement',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({}),json:true}).then(function(res)
+        createOrder: function (data, actions) { 
+                    return fetch('/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({}),json:true}).then(function(res)
                     {
                         return res.json();
                     }
@@ -388,7 +388,7 @@ console.log("Just before entering hosted fields check");
                     //   console.log(data);
                     // });
                     
-                    return fetch('/create-agreement/' + data.billingToken, 
+                    return fetch('/capture-order/' + data.orderID, 
                     {
                     method: 'POST',
                     headers: {

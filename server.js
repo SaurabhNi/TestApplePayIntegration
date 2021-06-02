@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_236"
+					   customer_id:"Saurabh_Nigam_242"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
@@ -478,9 +478,9 @@ router.post('/create-order', function(req, res, next) {
 								  }
 						 }
 						},
-						"payee":{
-							"merchant_id":"QNL4ZALLLNREG"
-						  },
+						//"payee":{
+						//	"merchant_id":"QNL4ZALLLNREG"
+						 // },
 						// "shipping":{
 						// 	"name":{
 						// 		 "full_name":"PayPal Customer"
