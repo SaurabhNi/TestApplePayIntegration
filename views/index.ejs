@@ -88,14 +88,14 @@
         </style>
        </head>
       <body>
-
+<!--
 <script src="https://js.braintreegateway.com/web/3.76.4/js/client.min.js"></script>   
 <script src="https://js.braintreegateway.com/web/3.76.4/js/paypal-checkout.min.js"></script> 
-<!--<script src="https://js.braintreegateway.com/web/3.70.0/js/hosted-fields.min.js"></script> -->
-<script src="https://js.braintreegateway.com/web/3.76.4/js/data-collector.min.js"></script> 
+<script src="https://js.braintreegateway.com/web/3.70.0/js/hosted-fields.min.js"></script> 
+<script src="https://js.braintreegateway.com/web/3.76.4/js/data-collector.min.js"></script> -->
 <!--
 <script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>-->
-<!--
+
 <script src="https://www.paypal.com/sdk/js?client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&components=buttons&intent=capture&currency=USD" data-client-token="<%=token%>"></script>
 <div id=div1  >
 <form id="my-sample-form">
@@ -111,7 +111,7 @@
   <button value="submit" id="submit" class="btn">Pay with Card</button>
 </form>
 </div>
-<div id="payments-sdk__contingency-lightbox"></div>-->
+<div id="payments-sdk__contingency-lightbox"></div>
 
 <!--
 <script>
@@ -350,7 +350,7 @@ console.log("Just before entering hosted fields check");
 
 
        <!--PayPal Payments JS SDK integration-->
-       <!--
+       
        <div id="paypal-button-container"></div>
          <script>
            var FUNDING_SOURCES = [
@@ -599,17 +599,18 @@ console.log("Just before entering hosted fields check");
               //       }
               // }).render('#paypal-button-container');
           </script>
- -->
+ 
 
 
           <!-- PayPal and PayPal Credit Integration via BT SDK Integration-->
-          
+          <!--
           <div id="paypal-button"></div>
           <div id="paypal-credit-button"></div>
-         <!--
+         
           <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/client.min.js"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/paypal-checkout.min.js"></script>-->
+          <!--
           <script>
           braintree.client.create({
             authorization: "<%= bt_client_token %>"
@@ -816,6 +817,6 @@ console.log("Just before entering hosted fields check");
             });
           });
 
-</script>
+</script>-->
       
     </body></html>
