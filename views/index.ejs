@@ -635,11 +635,11 @@ console.log("Just before entering hosted fields check");
 
               paypalCheckoutInstance.loadPayPalSDK({
   // Must be set to true when using the Vault flow
- // vault: true
+  vault: true
 
   // Defaults to USD, but must match the value used in `createPayment`
-   currency: 'USD',
-   intent: 'capture',
+   //currency: 'USD',
+   //intent: 'capture',
    //dataAttributes: {
      //   amount: "100.00"
       //}
@@ -649,40 +649,40 @@ console.log("Just before entering hosted fields check");
   paypal.Buttons({
   fundingSource: paypal.FUNDING.PAYPAL,
 
-  createOrder: function () {
-    return paypalCheckoutInstance.createPayment({
-      flow: 'checkout',
-      amount: 100.00,
-      currency: 'USD',
-      intent: 'capture',
+  // createOrder: function () {
+  //   return paypalCheckoutInstance.createPayment({
+  //     flow: 'checkout',
+  //     amount: 100.00,
+  //     currency: 'USD',
+  //     intent: 'capture',
 
-      //new required parameters for this flow
-      requestBillingAgreement: true,
-      billingAgreementDetails: {
-        description: 'Save your PayPal account for future top ups'
-      }
-    });
-  },
-  //  createBillingAgreement: function () {
-  //         return paypalCheckoutInstance.createPayment({
-  //           flow: 'vault', // Required
+  //     //new required parameters for this flow
+  //     requestBillingAgreement: true,
+  //     billingAgreementDetails: {
+  //       description: 'Save your PayPal account for future top ups'
+  //     }
+  //   });
+  // },
+   createBillingAgreement: function () {
+          return paypalCheckoutInstance.createPayment({
+            flow: 'vault', // Required
 
-  //           // The following are optional params
-  //           billingAgreementDescription: 'Save your PayPal account for future top ups',
-  //           enableShippingAddress: false,
-  //           shippingAddressEditable: false
-  //           // shippingAddressOverride: {
-  //           //   recipientName: 'Scruff McGruff',
-  //           //   line1: '1234 Main St.',
-  //           //   line2: 'Unit 1',
-  //           //   city: 'Chicago',
-  //           //   countryCode: 'US',
-  //           //   postalCode: '60652',
-  //           //   state: 'IL',
-  //           //   phone: '123.456.7890'
-  //           // }
-  //         });
-  //       },
+            // The following are optional params
+            billingAgreementDescription: 'Save your PayPal account for future top ups',
+            enableShippingAddress: false,
+            shippingAddressEditable: false
+            // shippingAddressOverride: {
+            //   recipientName: 'Scruff McGruff',
+            //   line1: '1234 Main St.',
+            //   line2: 'Unit 1',
+            //   city: 'Chicago',
+            //   countryCode: 'US',
+            //   postalCode: '60652',
+            //   state: 'IL',
+            //   phone: '123.456.7890'
+            // }
+          });
+        },
   onApprove: function (data, actions) {
           return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
             // Submit `payload.nonce` to your server
