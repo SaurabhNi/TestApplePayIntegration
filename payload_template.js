@@ -66,7 +66,7 @@ return {
 		//channel:"Flutterwave_PSP_MEA",
 		//customerId:"Jahnavi_Nigam_220",
 	customer:{
-	 	id:"Jahnavi_Nigam_244"
+	 	id:"Jahnavi_Nigam_248"
 	 }, 
 		options: {
 			submitForSettlement: true,
