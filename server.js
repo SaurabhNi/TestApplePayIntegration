@@ -84,7 +84,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_254"
+					   customer_id:"Saurabh_Nigam_256"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
@@ -891,7 +891,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						console.error(err);
 						return res.sendStatus(500);
 					}
-					//console.log(response);
+					console.log(response);
 					console.log(JSON.stringify(body));
 					res.json({
 						status: 'success'
