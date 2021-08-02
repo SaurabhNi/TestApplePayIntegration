@@ -13,6 +13,8 @@ var request = require('request');
 var ejs = require('ejs');
 
 var braintree = require('braintree');
+//const gateway = new braintree.BraintreeGateway({
+//	accessToken: "access_token$sandbox$83ghdy9cnwp4v3n8$c520911e1c6118dd624888fd45ce725f" });
 var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
 	 merchantId: "83ghdy9cnwp4v3n8",
 	 publicKey: "jgd28yfcckbnwbtp",
@@ -24,8 +26,7 @@ var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
 });
 
 //var gateway = braintree.connect({
-//	accessToken: "access_token$production$t2kz2xvnj6qz54cr$c74d08d4cd2a22d24146cdfc62f5489f"
-//  });
+//	accessToken: "access_token$sandbox$83ghdy9cnwp4v3n8$afd705e70a780effe7bd218be5a9d569" });
 
 
 var router = express();
@@ -84,7 +85,7 @@ const uuidV4 = require('uuid/v4');
 					  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 				   },
 				   body: {
-					   customer_id:"Saurabh_Nigam_258"
+					   customer_id:"Saurabh_Nigam_262"
 					  // "billing_agreement_id": "B-8NX06056AY581663P"
 				   },
 				   json:true				   
@@ -108,6 +109,43 @@ const uuidV4 = require('uuid/v4');
 				// 	  console.log(dispute.id);
 				// 	});
 				//   });
+				  
+				// const gateway = new braintree.BraintreeGateway({
+				// 	clientId: "client_id$sandbox$7qfbqb39q96wr6bj",
+				// 	clientSecret: "client_secret$sandbox$455a8ba5e9c0c1e09cdd4f8937e0c594"
+				//   });
+				  
+				//   const url = gateway.oauth.connectUrl({
+				// 	redirectUri: "https://www.google.com",
+				// 	scope: "client_token:generate,customer:create,payment_method:create,payment_method:delete,payment_method:find,payment_method:update,payment_method_nonce:create,payment_method_nonce:find,transaction:sale,transaction:search,transaction:refund,transaction:void,transaction:manage_settlement",
+				// 	state: "foo_state"
+				//   });
+				//   console.log("Oauth URL is:"+url);
+				//   res.render("index",{token: body.client_token,oauth_url:url});
+
+				  
+				//   gateway.oauth.createTokenFromCode({
+				// 	code: "4217f28c3de27a71a312e1984420adf4"
+				//   }, (err, response) => {
+				  
+				// 	const accessToken = response.credentials.accessToken;
+				// 	console.log("AT:"+accessToken);
+				// 	const expiresAt = response.credentials.expiresAt;
+				// 	console.log("AT Expires at:"+expiresAt);
+				// 	const refreshToken = response.credentials.refreshToken;
+				// 	console.log("RT:"+refreshToken);
+				//   });
+					
+				
+				
+// 				var gateway = braintree.connect({environment: braintree.Environment.Sandbox,
+// 	 merchantId: "83ghdy9cnwp4v3n8",
+// 	 publicKey: "jgd28yfcckbnwbtp",
+// 	 privateKey: "516f5aa74554da240e8439060026115f"
+// 	// merchantId: "tywncdswf825nrc9",
+// 	 //publicKey: "crhds8qwnxhjt9wv",
+// 	 //privateKey: "7c8a8aeea3a710d8312d3f669530b6e6"	
+// });
 
 				  gateway.clientToken.generate({}, function (err, response) {
 					if(err)
@@ -350,8 +388,8 @@ router.post("/checkout", function (req, res) {
 	var nonce = req.body.payment_method_nonce;
 	console.log(nonce);
 	var payLoad = buildbtPaymentRequestPayload(req.body);
-	payLoad.paymentMethodNonce = nonce;
-	//payLoad.paymentMethodToken="m28v6wm";
+	//payLoad.paymentMethodNonce = nonce;
+	payLoad.paymentMethodToken="72w23qg";
 	//payLoad.options.storeInVaultOnSuccess = true;
 	payLoad.deviceData = req.body.deviceData;
 	console.log(payLoad);

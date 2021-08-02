@@ -96,9 +96,11 @@
 <!--
 <script src='https://js.braintreegateway.com/web/3.70.0/js/three-d-secure.min.js'></script>-->
 
+<!--<script src="https://assets.braintreegateway.com/v1/braintree-oauth-connect.js"></script>-->
+
 <script src="https://www.paypal.com/sdk/js?client-id=ARLF4LUwz7LHsNM6LG_k7lMcH9M9UCSouN5LvvLv6KxRjVezzfPeACXSqZ7FClrG3UyqSeNLEwWWk-F_&components=buttons&intent=capture&currency=USD&vault=true" data-client-token="<%=token%>"></script>
-<!--<div id=div1  >
-<form id="my-sample-form">
+<div id=div1  >
+<!--<form id="my-sample-form">
   <label for="card-number">Card Number</label>
   <div id="card-number"  class="hosted-field"></div>
   <label for="expiration-date">Expiration Date</label>
@@ -109,129 +111,9 @@
   <label for="vault">Save this card</label>
   <input type="submit" value="Pay"/>
   <button value="submit" id="submit" class="btn">Pay with Card</button>
-</form>
+</form>-->
 </div>
-<div id="payments-sdk__contingency-lightbox"></div>-->
-
-<!--
-<script>
-// Check if card fields are eligible to render for the buyer's country. The card fields are not eligible in all countries where buyers are located.
-
-      var form = document.querySelector('#my-sample-form');
-      var submit = document.querySelector('input[type="submit"]');
-
-      braintree.client.create({
-        authorization: "<%= bt_client_token %>"
-      }, function (clientErr, clientInstance) {
-        if (clientErr) {
-          console.error(clientErr);
-          return;
-        }
-
-        // This example shows Hosted Fields, but you can also use this
-        // client instance to create additional components here, such as
-        // PayPal or Data Collector.
-
-        braintree.hostedFields.create({
-          client: clientInstance,
-          styles: {
-            'input': {
-              'font-size': '14px'
-            },
-            'input.invalid': {
-              'color': 'red'
-            },
-            'input.valid': {
-              'color': 'green'
-            }
-          },
-          fields: {
-            number: {
-              selector: '#card-number',
-              placeholder: '4111 1111 1111 1111'
-            },
-            cvv: {
-              selector: '#cvv',
-              placeholder: '123'
-            },
-            expirationDate: {
-              selector: '#expiration-date',
-              placeholder: '10/2022'
-            }
-          }
-        }, function (hostedFieldsErr, hostedFieldsInstance) {
-          if (hostedFieldsErr) {
-            console.error(hostedFieldsErr);
-            return;
-          }
-
-          submit.removeAttribute('disabled');
-
-          form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-              if (tokenizeErr) {
-                console.error(tokenizeErr);
-                return;
-              }
-
-              // If this was a real integration, this is where you would
-              // send the nonce to your server.
-              console.log('Got a nonce: ' + payload.nonce);
-              var threeDSecure;
-              var nonce=payload.nonce;
-              var bin=payload.details.bin;
-              braintree.threeDSecure.create({
-              version: 2, // Will use 3DS 2 whenever possible
-              client: clientInstance
-              }, function (threeDSecureErr, threeDSecureInstance) {
-                if (threeDSecureErr) {
-                // Handle error in 3D Secure component creation
-                return;
-              }
-              threeDSecure = threeDSecureInstance;
-              
-              var threeDSecureParameters = {
-               amount: '100.00',
-               nonce: nonce, // Example: hostedFieldsTokenizationPayload.nonce
-               // bin: bin, // Example: hostedFieldsTokenizationPayload.details.bin
-                onLookupComplete: function (data, next) {
-            // use `data` here, then call `next()`
-            next();
-            }};
-
-            threeDSecure.verifyCard(threeDSecureParameters, function (err, response) {
-            if (err) {
-            // Handle error
-            return;
-            }
-  // Send response.nonce to your server for use in your integration
-  // The 3D Secure Authentication ID can be found 
-  //  at response.threeDSecureInfo.threeDSecureAuthenticationId
-  fetch('/checkout', {
-              method: 'POST',
-              headers: {
-              'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({"payment_method_nonce":response.nonce,
-              "currency":"TestSGD","total":"100"})
-               }).then(response => {
-              if (!response.ok) {
-                 alert('Something went wrong');
-               }
-               console.log("Payment is successful");
-               alert("Payment is successful");
-              });
-
-      });// end of 3DS verify card
-  });// end of 3DS object creation
-});// end of hosted field tokenization 
-},false); // end of form submit event handler 
-});// end of hosted fields create
-});// end of braintree instance create            
-
-</script>-->
+<!--<div id="payments-sdk__contingency-lightbox"></div>-->
 
 <!--
 <script>
@@ -353,9 +235,9 @@ console.log("Just before entering hosted fields check");
        
        <div id="paypal-button-container"></div>
          <script>
-           var FUNDING_SOURCES = [
-    paypal.FUNDING.CARD
-];
+//            var FUNDING_SOURCES = [
+//     paypal.FUNDING.CARD
+// ];
 
 //paypal.getFundingSources().forEach(function(fundingSource) {
 
@@ -602,11 +484,9 @@ console.log("Just before entering hosted fields check");
  
 
 
-          <!-- PayPal and PayPal Credit Integration via BT SDK Integration-->
-          <!--
+<!-- PayPal and PayPal Credit Integration via BT SDK Integration-->
+         <!-- 
           <div id="paypal-button"></div>
-          <div id="paypal-credit-button"></div>
-         
           <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/client.min.js"></script>
           <script src="https://js.braintreegateway.com/web/3.62.2/js/paypal-checkout.min.js"></script>-->
@@ -636,54 +516,54 @@ console.log("Just before entering hosted fields check");
 
               paypalCheckoutInstance.loadPayPalSDK({
   // Must be set to true when using the Vault flow
-  vault: true
+  //vault: true
 
   // Defaults to USD, but must match the value used in `createPayment`
-   //currency: 'USD',
-   //intent: 'capture',
-   //dataAttributes: {
-     //   amount: "100.00"
-      //}
+   currency: 'USD',
+   intent: 'capture',
+  //  dataAttributes: {
+  //       amount: "100.00"
+  // }
 }, function (loadSDKErr) {
   // Render the PayPal button (see Render the PayPal Button section)
 
   paypal.Buttons({
   fundingSource: paypal.FUNDING.PAYPAL,
 
-  // createOrder: function () {
-  //   return paypalCheckoutInstance.createPayment({
-  //     flow: 'checkout',
-  //     amount: 100.00,
-  //     currency: 'USD',
-  //     intent: 'capture',
+  createOrder: function () {
+    return paypalCheckoutInstance.createPayment({
+      flow: 'checkout',
+      amount: 100.00,
+      currency: 'USD',
+      intent: 'capture',
 
-  //     //new required parameters for this flow
-  //     requestBillingAgreement: true,
-  //     billingAgreementDetails: {
-  //       description: 'Save your PayPal account for future top ups'
-  //     }
-  //   });
-  // },
-   createBillingAgreement: function () {
-          return paypalCheckoutInstance.createPayment({
-            flow: 'vault', // Required
+     // new required parameters for this flow
+      requestBillingAgreement: true,
+      billingAgreementDetails: {
+        description: 'Save your PayPal account for future top ups'
+      }
+    });
+  },
+  //  createBillingAgreement: function () {
+  //         return paypalCheckoutInstance.createPayment({
+  //           flow: 'vault', // Required
 
-            // The following are optional params
-            billingAgreementDescription: 'Save your PayPal account for future top ups',
-            enableShippingAddress: false,
-            shippingAddressEditable: false
-            // shippingAddressOverride: {
-            //   recipientName: 'Scruff McGruff',
-            //   line1: '1234 Main St.',
-            //   line2: 'Unit 1',
-            //   city: 'Chicago',
-            //   countryCode: 'US',
-            //   postalCode: '60652',
-            //   state: 'IL',
-            //   phone: '123.456.7890'
-            // }
-          });
-        },
+  //           // The following are optional params
+  //           billingAgreementDescription: 'Save your PayPal account for future top ups',
+  //           enableShippingAddress: false,
+  //           shippingAddressEditable: false
+  //           // shippingAddressOverride: {
+  //           //   recipientName: 'Scruff McGruff',
+  //           //   line1: '1234 Main St.',
+  //           //   line2: 'Unit 1',
+  //           //   city: 'Chicago',
+  //           //   countryCode: 'US',
+  //           //   postalCode: '60652',
+  //           //   state: 'IL',
+  //           //   phone: '123.456.7890'
+  //           // }
+  //         });
+  //       },
   onApprove: function (data, actions) {
           return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
             // Submit `payload.nonce` to your server
@@ -716,107 +596,11 @@ console.log("Just before entering hosted fields check");
 }).render('#paypal-button');
 
 });
-          
-              // Set up regular PayPal button
-             // paypal.Button.render({
-              //  env: 'sandbox', // or 'sandbox'
-               // payment: function () {
-                //  return paypalCheckoutInstance.createPayment({
-                  //  flow: 'checkout',
-                    //amount:"100",
-                    //currency:"AED",
-                    // billingAgreementDescription: 'Your agreement description',
-                    // enableShippingAddress: true,
-                    // shippingAddressEditable: false,
-                    // shippingAddressOverride: {
-                    //   recipientName: 'Scruff McGruff',
-                    //   line1: '1234 Main St.',
-                    //   line2: 'Unit 1',
-                    //   city: 'Chicago',
-                    //   countryCode: 'US',
-                    //   postalCode: '60652',
-                    //   state: 'IL',
-                    //   phone: '123.456.7890'
-                    // }
-                  //});
-                //},
-                //onAuthorize: function (data, actions) {
-                  //return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
-                    // Submit `payload.nonce` to your server
-                    
-                    //fetch('/checkout', {
-              //method: 'POST',
-              //headers: {
-              //'Content-Type': 'application/json',
-              //},
-              //body: JSON.stringify({"payment_method_nonce":payload.nonce,
-              //"currency":"AED","total":"100"})
-              // }).then(response => {
-              //if (!response.ok) {
-                // alert('Something went wrong');
-               //}
-               //console.log("Payment is successful");
-               //alert("Payment is successful");
-              //});// end of BT Server Side SDK invocation
-
-                //  });
-                //},
-              //}, '#paypal-button');
-          
-              // Set up PayPal Credit button
-            //  paypal.Button.render({
-              //  env: 'sandbox', // or 'sandbox'
-               // style: {
-                 // label: 'credit'
-                //},
-                //payment: function () {
-                  //return paypalCheckoutInstance.createPayment({
-                    //flow: 'checkout',
-                    //offerCredit: true,
-                    //amount:"100",
-                    //currency:"USD",
-                    // billingAgreementDescription: 'Your agreement description',
-                    // enableShippingAddress: true,
-                    // shippingAddressEditable: false,
-                    // shippingAddressOverride: {
-                    //   recipientName: 'Scruff McGruff',
-                    //   line1: '1234 Main St.',
-                    //   line2: 'Unit 1',
-                    //   city: 'Chicago',
-                    //   countryCode: 'US',
-                    //   postalCode: '60652',
-                    //   state: 'IL',
-                    //   phone: '123.456.7890'
-                    // }
-                  //});
-                //},
-                //onAuthorize: function (data, actions) {
-                  //return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
-                    // Submit `payload.nonce` to your server
-                    
-                    //fetch('/checkout', {
-              //method: 'POST',
-              //headers: {
-              //'Content-Type': 'application/json',
-              //},
-              //body: JSON.stringify({"payment_method_nonce":payload.nonce,
-              //"currency":"testalipayaliexpress","total":"100"})
-               //}).then(response => {
-              //if (!response.ok) {
-                // alert('Something went wrong');
-               //}
-               //console.log("Payment is successful");
-               //alert("Payment is successful");
-              //});// end of BT Server Side SDK invocation
-
-                //  });
-                //},
-              //}, '#paypal-credit-button');
-
-
-            });
-          });
+});
+});
 
 </script>-->
-      
-    </body></html>
+
+                   
+
+</body></html>

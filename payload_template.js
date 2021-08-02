@@ -65,12 +65,12 @@ return {
 		orderId: "Mapped to PayPal Invoice Number",
 		//channel:"Flutterwave_PSP_MEA",
 		//customerId:"Jahnavi_Nigam_220",
-	customer:{
-	 	id:"Jahnavi_Nigam_248"
-	 }, 
+	// customer:{
+	//  	id:"Jahnavi_Nigam_302"
+	//  }, 
 		options: {
 			submitForSettlement: true,
-			storeInVaultOnSuccess: true
+			//storeInVaultOnSuccess: true
 // 		"paypal":{
 // 		//"description":"Your Uber ride fare"
 // 	"payee_email":"sb-qlnwf2868128@business.example.com",
