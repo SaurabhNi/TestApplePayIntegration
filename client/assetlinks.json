@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.paypalcustomtabdemo",
+    "sha256_cert_fingerprints":
+    ["75:13:3D:C4:E6:1F:E1:29:D2:8E:75:27:60:E0:45:C8:5D:7F:D1:7D:46:29:69:23:43:FE:3F:D7:17:80:E8:A1"]
+  }
+}]

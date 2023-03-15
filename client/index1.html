@@ -1,0 +1,38 @@
+<html lang="en" ng-app=""><head>
+    <title>PayPal Payments SDK Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  </head>
+  <body>
+    <script>
+  
+      function getParameterByName(name, url) { console.log("im called");if (!url) url = window.location.href; name = name.replace(/[\[\]]/g, "\\$&"); var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url); if (!results) return null; if (!results[2]) return ''; return decodeURIComponent(results[2].replace(/\+/g, " ")); }
+      
+      let token= getParameterByName("id");
+      console.log(token);
+      </script>
+       <!--
+    <script>
+    
+   fetch('get-client-token', {
+            method: 'POST'
+          }).then(response =>{
+           return response.json();
+          }).then(function(myJson){
+          console.log(myJson.client_token);
+          client_token=myJson.client_token;
+          //document.getElementById("PayPal-button").innerHTML='<script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&vault=true" data-client-token='+client_token+'> <\/script><script>alert("Here");<\/script><div id="paypal-button-container"><\/div><script> paypal.Buttons({ style:{layout:  \'vertical\', color:\'blue\', shape:\'rect\', label: \'paypal\'},   createOrder: function (data, actions) { return fetch(\'/create-order\', { method: \'POST\' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch(\'/capture-order\' + data.orderID, {method: \'POST\'}).then(function(res) {if (!res.ok) {alert(\'Something went wrong\'); }});}}).render(\'#paypal-button-container\');<\/script>'; 
+   });
+   </script>
+   -->
+   <!--<script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&amp;vault=true" data-client-token="eyJicmFpbnRyZWUiOnsiYXV0aG9yaXphdGlvbkZpbmdlcnByaW50IjoiODI5MTZkYTQ2OTlhZDkyYzUyZmJkN2RmZGViMTg3OGMyZWU5OGM2ZmVjYjc5YTMxN2YyM2UyMDNkYzYyOTY0YXxtZXJjaGFudF9pZD1yd3dua3FnMnhnNTZobTJuJnB1YmxpY19rZXk9NjNrdm4zN3Z0MjlxYjRkZiZjcmVhdGVkX2F0PTIwMTktMDctMDJUMDQ6MzY6MDMuMTI5WiZjdXN0b21lcl9pZD1DVVNUT01FUl9JRF8xMjM0NSIsInZlcnNpb24iOiIzLXBheXBhbCJ9LCJwYXlwYWwiOnsiYWNjZXNzVG9rZW4iOiJBMjFBQUdUU25tZnVyNDVpQi1yWGVmY2llUWhqSWpqcTRPUncwNlJNQTQ1RGllMGFNSXRURXVzVnZxZUpCZHJoQVRoVGlKUVFwQkc2WnBsSGFSVllVYTRuSG8wd2JJZ1F3In19"> </script><script>alert("Here");</script><div id="paypal-button-container"></div><script> paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},   createOrder: function (data, actions) { return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch('/capture-order' + data.orderID, {method: 'POST'}).then(function(res) {if (!res.ok) {alert('Something went wrong'); }});}}).render('#paypal-button-container');</script></div>-->
+  
+      <script src="https://www.paypal.com/sdk/js?client-id=AYDT9tEozAuA53QfD0IoTLxiETetu52UoSb48m_ndpjjmr5w1k1imNdoNEkMACg_rFJwhl6Xp0r3PfH_&vault=true&currency=INR" data-client-token=eval(token)></script>
+      
+      <div id="paypal-button-container"></div>
+      <script>
+       paypal.Buttons({ style:{layout:  'vertical', color:'blue', shape:'rect', label: 'paypal'},   createOrder: function (data, actions) { return fetch('/create-order', { method: 'POST' }).then(function(res){ return res.json();}).then(function(data) {return data.id;});},onApprove: function (data, actions) {return fetch('/capture-order' + data.orderID, {method: 'POST'}).then(function(res) {if (!res.ok) {alert('Something went wrong'); }});}}).render('#paypal-button-container');
+      </script>
+      </div>
+  
+</body></html>
