@@ -98,7 +98,9 @@
 
 <!--<script src="https://assets.braintreegateway.com/v1/braintree-oauth-connect.js"></script>-->
 
-<script src="https://www.paypal.com/sdk/js?client-id=Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9&components=buttons&intent=capture&currency=USD&merchant-id=VQCQKTADVW2GQ" data-user-id-token="<%=token%>"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9&components=buttons,applepay&intent=capture&currency=USD&buyer-country=US&merchant-id=K8L3BRWBCN9W4&debug=true" data-user-id-token="<%=token%>"></script>
+<script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+<div id="applepay-container"></div>
 <div id=div1  >
 <form id="my-sample-form">
   <label for="card-number">Card Number</label>
@@ -230,6 +232,246 @@ console.log("Just before entering hosted fields check");
   }
 </script> 
 -->
+
+
+<!-- Apple Pay Integration-->
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOMContentLoaded");
+  
+  if (!window.ApplePaySession) {
+  console.error('This device does not support Apple Pay');
+}
+
+if (!ApplePaySession.canMakePayments()) {
+  console.error('This device is not capable of making Apple Pay payments');
+}
+  
+  if(window.ApplePaySession?.supportsVersion(4) && window.ApplePaySession?.canMakePayments()) {
+    console.log("Before calling Apple Pay Setup Process");
+    setupApplepay().catch(console.log);
+  }
+});
+
+
+async function setupApplepay() {
+  console.log("Inside Apple Pay Setup block");
+  const applepay = paypal.Applepay();
+    const {
+      isEligible,
+      countryCode,
+      currencyCode,
+      merchantCapabilities,
+      supportedNetworks,
+    } = await  applepay.config();
+
+  if (!isEligible) {
+    throw new Error("applepay is not eligible");
+  }
+
+  document.getElementById("applepay-container").innerHTML =
+    '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en">';
+
+  document.getElementById("btn-appl").addEventListener("click", onClick);
+
+  async function onClick() {
+    console.log({ merchantCapabilities, currencyCode, supportedNetworks })
+
+    const paymentRequest = {
+      countryCode,
+      currencyCode: 'USD',
+      merchantCapabilities,
+      supportedNetworks,
+      shippingMethods: [
+        {
+          label: "Free Standard Shipping",
+          amount: "0.00",
+          detail: "Arrives in 5-7 days",
+          identifier: "standardShipping",
+          dateComponentsRange: {
+            startDateComponents: {
+              years: 2022,
+              months: 9,
+              days: 11,
+              hours: 0,
+            },
+            endDateComponents: {
+              years: 2022,
+              months: 9,
+              days: 13,
+              hours: 0,
+            },
+          },
+        },
+        {
+          label: "Express Shipping",
+          amount: "1.00",
+          detail: "Arrives in 2-3 days",
+          identifier: "expressShipping",
+          dateComponentsRange: {
+            startDateComponents: {
+              years: 2022,
+              months: 9,
+              days: 8,
+              hours: 0,
+            },
+            endDateComponents: {
+              years: 2022,
+              months: 9,
+              days: 9,
+              hours: 0,
+            },
+          },
+        },
+      ],
+      shippingType: "shipping",
+      requiredBillingContactFields: [
+        "name",
+        "phone",
+        "email",
+        "postalAddress",
+      ],
+      requiredShippingContactFields: [
+        "postalAddress",
+        "name",
+        "phone",
+        "email",
+      ],
+      lineItems: [
+        {
+          label: "Goods",
+          amount: "3.00",
+        },
+        {
+          label: "Sales Tax",
+          amount: "1.00",
+        },
+        {
+          label: "Shipping",
+          amount: "1.00",
+        },
+      ],
+      total: {
+        label: "Demo (Card is not charged)",
+        amount: "5.00",
+        type: "final",
+      },
+    };
+
+    var session = new ApplePaySession(4, paymentRequest);
+
+    session.onvalidatemerchant = (event) => {
+      applepay
+        .validateMerchant({
+          validationUrl: event.validationURL,
+        })
+        .then((payload) => {
+          session.completeMerchantValidation(payload.merchantSession);
+          console.log("Complete Merchant validation Done !", {payload})
+
+        })
+        .catch((err) => {
+          console.error(err);
+          session.abort();
+        });
+    };
+
+    session.onpaymentmethodselected = (event) => {
+      console.log("onpaymentmethodselected");
+      console.log(event.paymentMethod); // {type: "credit"}
+
+      session.completePaymentMethodSelection({
+        newTotal: paymentRequest.total,
+      });
+    };
+
+    session.onshippingcontactselected = async (event) => {
+
+      console.log("Your shipping contacts selected is:"+ event.shippingContact)
+      const shippingContactUpdate = { 
+        newTotal: paymentRequest.total,
+        newLineItems: []
+      };
+
+      session.completeShippingContactSelection(shippingContactUpdate);
+    };
+
+    session.onshippingmethodselected = (event) => {
+      console.log("onshippingmethodselected");
+      console.log(JSON.stringify(event.shippingMethod, null, 4));
+      console.log("Your shipping method selected is:", event.shippingMethod);
+      
+      var shippingMethodUpdate = { 
+        newTotal: paymentRequest.total,
+        newLineItems: []
+      }; 
+      
+      session.completeShippingMethodSelection(shippingMethodUpdate);
+    };
+
+    session.onpaymentauthorized = async (event) => {
+      try {
+        console.log("onpaymentauthorized");
+        console.log(JSON.stringify(event, null, 4));
+
+        const order = {
+          intent: "CAPTURE",
+          purchase_units: [
+            {
+              amount: {
+                currency_code: "USD",
+                value: paymentRequest.total.amount,
+              }
+            }
+          ],
+        }
+
+        /* Create Order on the Server Side */
+        
+        const { id } = await fetch(`/create-order`,{
+          method:'POST',
+          headers : {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(order)
+        }).then((res) => res.json());
+
+        /**
+         * Confirm Payment 
+         */
+        await applepay.confirmOrder({ orderID: id, token: event.payment.token, billingContact: event.payment.billingContact , shippingContact: event.payment.shippingContact });
+
+        /*
+        * Capture order (must currently be made on server)
+        */
+        await fetch(`/capture-order/${id}`, {
+          method: 'POST',
+        });
+
+
+        session.completePayment({
+          status: window.ApplePaySession.STATUS_SUCCESS,
+        });
+      } catch (err) {
+        console.error(err);
+        session.completePayment({
+          status: window.ApplePaySession.STATUS_FAILURE,
+        });
+      }
+    };
+
+    session.oncancel  = (event) => {
+      console.log(event);
+      console.log("Apple Pay Cancelled !!")
+    }
+
+    session.begin();
+  }
+}
+
+
+
+</script>
 
        <!--PayPal Payments JS SDK integration-->
        

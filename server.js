@@ -574,7 +574,7 @@ router.post('/create-order', function(req, res, next) {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
 				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
-				'PayPal-Request-Id':"GHIJKLMNOPQR12346",
+				//'PayPal-Request-Id':"GHIJKLMNOPQR12346",
 				'PayPal-Partner-Attribution-Id':"TestPPWalletVaultV3"
             },
             body: {
@@ -634,7 +634,7 @@ router.post('/create-order', function(req, res, next) {
 						 }
 						},
 						"payee":{
-							"merchant_id":"VQCQKTADVW2GQ"
+							"merchant_id":"K8L3BRWBCN9W4"
 						 },
 						 "shipping":{
 							"name":{
@@ -1064,7 +1064,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
 						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
-						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST123456",
+						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678",
 						'PayPal-Partner-Attribution-Id':"TestPPWalletVaultV3"
 					},
 					body: { 
