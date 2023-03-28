@@ -434,7 +434,10 @@ async function setupApplepay() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(order)
-        }).then((res) => res.json());
+        }).then((res) => res.json()).then(function(data)
+        {
+         return data.id;
+        });
 
         /**
          * Confirm Payment 
