@@ -428,27 +428,29 @@ async function setupApplepay() {
 
         /* Create Order on the Server Side */
         
-        const { id } = await fetch(`/create-order`,{
+        const { OrderID } = await fetch(`/create-order`,{
           method:'POST',
           headers : {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(order)
-        }).then((res) => res.json()).then(function(data)
+        }).then((res) => 
+        res.json()).then(function(data)
         {
-         return data.id;
+          console.log("Data returned from Create Order is :"+data);
+          return data.id;
         });
         
-        console.log("Order ID is : "+id);
+        console.log("Order ID is : "+OrderID);
         /**
          * Confirm Payment 
          */
-        await applepay.confirmOrder({ orderID: id, token: event.payment.token, billingContact: event.payment.billingContact , shippingContact: event.payment.shippingContact });
+        await applepay.confirmOrder({ orderID: OrderID, token: event.payment.token, billingContact: event.payment.billingContact , shippingContact: event.payment.shippingContact });
 
         /*
         * Capture order (must currently be made on server)
         */
-        await fetch(`/capture-order/${id}`, {
+        await fetch(`/capture-order/${OrderID}`, {
           method: 'POST',
         });
 
