@@ -836,7 +836,7 @@ router.post('/create-order', function(req, res, next) {
 			// STC API Call
 			console.log("Before calling STC API");
 			res.json({
-				id: orderId
+				OrderID: orderId
 			});
 		// 	request.put(configuration.STC +configuration.MERCHANTID+ '/'+body.id, {
         //     headers: {

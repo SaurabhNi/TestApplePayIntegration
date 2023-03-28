@@ -435,11 +435,7 @@ async function setupApplepay() {
           },
           body: JSON.stringify(order)
         }).then((res) => 
-        res.json()).then(function(data)
-        {
-          console.log("Data returned from Create Order is :"+data);
-          return data.id;
-        });
+        res.json());
         
         console.log("Order ID is : "+OrderID);
         /**
