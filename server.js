@@ -575,7 +575,7 @@ router.post('/create-order', function(req, res, next) {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
 				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
-				'PayPal-Request-Id':"GHIJKLMNOPQR12346ab34",
+				'PayPal-Request-Id':"GHIJKLMNOPQR12346ab3456",
 				'PayPal-Partner-Attribution-Id':"TestCIBCP3"
             },
             body: {
@@ -1078,7 +1078,7 @@ router.post('/capture-order/:id', function(req, res, next) {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
 						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
-						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678jh12",
+						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678jh1267",
 						'PayPal-Partner-Attribution-Id':"TestCIBCP3"
 					},
 					body: { 
