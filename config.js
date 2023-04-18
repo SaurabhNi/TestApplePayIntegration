@@ -105,7 +105,7 @@ var config = {
 		"GET_PAYMENT_DETAILS":"https://api.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",
 		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
-		"BN_CODE":"PP-DemoPortal-EC-JSV4-python-REST"
+		"BN_CODE":"TESTCIBCP3"
 	}
 }
 

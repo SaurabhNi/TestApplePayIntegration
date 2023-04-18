@@ -48,7 +48,8 @@ const uuidV4 = require('uuid/v4');
 			
 			getAccessToken(function(data) {
 				var accessToken = JSON.parse(data).access_token;
-				getUserIdTokenForReturnUser(function(data1) {
+				getUserIdToken(function(data1) {
+				//getUserIdTokenForReturnUser(function(data1) {
 				console.log("Sending response of user id token call",data1);
 				var user_id_token=JSON.parse(data1).id_token;
 				console.log("Data User Id Token : ",user_id_token);
@@ -58,7 +59,7 @@ const uuidV4 = require('uuid/v4');
 						 headers : {
 							   'content-type': "application/json",
 							   'authorization': "Bearer "+accessToken,
-							   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
+							   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
 							   'cache-control': "no-cache",
 							  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
 						   },
@@ -288,7 +289,7 @@ function getAccessToken(cb) {
 									'accept-language': "en_US",
 									'cache-control': "no-cache",
 									'content-type': "application/x-www-form-urlencoded",
-									//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
+									'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
 									'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 								},
 						body:payload
@@ -329,7 +330,7 @@ function getAccessToken(cb) {
 											'accept-language': "en_US",
 											'cache-control': "no-cache",
 											'content-type': "application/x-www-form-urlencoded",
-											//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
+											'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
 											'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 										},
 								body:payload
