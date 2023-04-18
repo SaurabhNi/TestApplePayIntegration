@@ -263,6 +263,7 @@ async function setupApplepay() {
       currencyCode,
       merchantCapabilities,
       supportedNetworks,
+      tokenNotificationURL
     } = await  applepay.config();
 
   if (!isEligible) {
@@ -383,7 +384,7 @@ billingAgreement: "A localized billing agreement displayed to the user in the pa
 
 managementURL: "https://merchant.com/billingagreement1234",
 
-tokenNotificationURL: applepayConfig.tokenNotificationURL
+tokenNotificationURL: tokenNotificationURL
 
 },
       total: {
