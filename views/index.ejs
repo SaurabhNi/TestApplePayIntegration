@@ -351,6 +351,41 @@ async function setupApplepay() {
           amount: "1.00",
         },
       ],
+      recurringPaymentRequest: {
+
+paymentDescription: "A description of the recurring payment to display to the user in the payment sheet.",
+
+regularBilling: {
+
+label: "Recurring",
+
+amount: "4.99",
+
+paymentTiming: "recurring",
+
+recurringPaymentStartDate: "2023-04-20T07:56:44.582Z"
+
+},
+
+trialBilling: {
+
+label: "7 Day Trial",
+
+amount: "1.99",
+
+paymentTiming: "recurring",
+
+recurringPaymentEndDate: "2024-04-20T07:56:44.582Z"
+
+},
+
+billingAgreement: "A localized billing agreement displayed to the user in the payment sheet prior to the payment authorization.",
+
+managementURL: "https://merchant.com/billingagreement1234",
+
+tokenNotificationURL: applepayConfig.tokenNotificationURL
+
+},
       total: {
         label: "Demo (Card is not charged)",
         amount: "5.00",

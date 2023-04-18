@@ -573,8 +573,8 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
-				//'PayPal-Request-Id':"GHIJKLMNOPQR12346",
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
+				'PayPal-Request-Id':"GHIJKLMNOPQR12346ab34",
 				'PayPal-Partner-Attribution-Id':"TestCIBCP3"
             },
             body: {
@@ -824,6 +824,19 @@ router.post('/create-order', function(req, res, next) {
 					// 	  }
 					// 	}
 					//   }
+					"payment_source": {
+							"apple_pay": {
+								"stored_credential": {
+									"payment_initiator": "CUSTOMER",
+									"payment_type": "RECURRING"
+								},
+							  "attributes": {
+								"vault": {
+								  "store_in_vault": "ON_SUCCESS"
+								  }
+							  },
+							}
+						  }
             },
             json: true
         }, function (err, response, body) {
@@ -1063,8 +1076,8 @@ router.post('/capture-order/:id', function(req, res, next) {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
-						//'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBUUR1a2pDMzlJX096UlU4MzlCaURXY21qQ2czT1R1VGtBRkJWMEx6SVZZZGlHb1lHejZLWFY3MnhnSnhLWGZwV0Q5VDBSbTRzNXVidFFIOCIsInBheWVyX2lkIjoiRUNXUUFZU0I2VDdHSiJ9.",
-						//'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678",
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
+						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678jh12",
 						'PayPal-Partner-Attribution-Id':"TestCIBCP3"
 					},
 					body: { 
