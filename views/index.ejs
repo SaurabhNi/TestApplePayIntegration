@@ -98,7 +98,7 @@
 
 <!--<script src="https://assets.braintreegateway.com/v1/braintree-oauth-connect.js"></script>-->
 
-<script src="https://www.paypal.com/sdk/js?client-id=Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9&components=buttons,applepay&intent=capture&currency=USD&buyer-country=US&merchant-id=K8L3BRWBCN9W4&debug=true" data-user-id-token="<%=token%>" data-partner-attribution-id="TestCIBCP3"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9&components=buttons,funding-eligibility,applepay&intent=capture&currency=USD&buyer-country=US&merchant-id=K8L3BRWBCN9W4&debug=true" data-user-id-token="<%=token%>" data-partner-attribution-id="TestCIBCP3"></script>
 <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
 <div id="applepay-container"></div>
 <div id=div1  >
@@ -515,15 +515,14 @@ tokenNotificationURL: tokenNotificationURL
        
        <div id="paypal-button-container"></div>
          <script>
-//            var FUNDING_SOURCES = [
-//     paypal.FUNDING.CARD
-// ];
+           //var FUNDING_SOURCES = [paypal.FUNDING.APPLEPAY];
+ 
 
 //paypal.getFundingSources().forEach(function(fundingSource) {
 
 // Initialize the buttons
-    //var button = paypal.Buttons({fundingSource: fundingSource,
-      paypal.Buttons({
+    var button = paypal.Buttons({fundingSource: paypal.FUNDING.APPLEPAY,
+     // paypal.Buttons({
         createOrder: function (data, actions) { 
                     return fetch('/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({}),json:true}).then(function(res)
                     {
@@ -569,15 +568,16 @@ tokenNotificationURL: tokenNotificationURL
                     }
                     });
                     }
-    }).render('#paypal-button-container');
+                  });
+   // }).render('#paypal-button-container');
 
 // Check if the button is eligible
-//if (button.isEligible()) {
+if (button.isEligible()) {
 
     // Render the standalone button for that funding source
-  // button.render('#paypal-button-container');
-//}
-//});
+   button.render('#paypal-button-container');
+}
+
 
 
           //  paypal.Buttons(
