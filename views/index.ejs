@@ -270,10 +270,10 @@ async function setupApplepay() {
     throw new Error("applepay is not eligible");
   }
 
-  //document.getElementById("applepay-container").innerHTML =
-    //'<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en">';
+  document.getElementById("applepay-container").innerHTML =
+    '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en">';
 
-  //document.getElementById("btn-appl").addEventListener("click", onClick);
+  document.getElementById("btn-appl").addEventListener("click", onClick);
 
   async function onClick() {
     console.log({ merchantCapabilities, currencyCode, supportedNetworks })
