@@ -59,9 +59,9 @@ const uuidV4 = require('uuid/v4');
 						 headers : {
 							   'content-type': "application/json",
 							   'authorization': "Bearer "+accessToken,
-							   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
+							   'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBVmxiVDRaa1RrSzZCZFFIUUFmRnNNdjBJYnJjcEI1QUZpMGdqLXdBMVVxTG01NjlDeG1sbkRlZ0ZfTHRmMlNBYWl0a1B3akRQWlBwbmxWMCIsInBheWVyX2lkIjoiM0FMSzc2SktUQ0pQMiJ9.",
 							   'cache-control': "no-cache",
-							  //'PayPal-Partner-Attribution-Id':"Checkout_MAM_PSP"
+							  'PayPal-Partner-Attribution-Id':"TESTAPVAULTING"
 						   },
 						   body: {
 							  	customer_id:"Saurabh_Nigam_500"
@@ -289,7 +289,7 @@ function getAccessToken(cb) {
 									'accept-language': "en_US",
 									'cache-control': "no-cache",
 									'content-type': "application/x-www-form-urlencoded",
-									'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
+									'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBVmxiVDRaa1RrSzZCZFFIUUFmRnNNdjBJYnJjcEI1QUZpMGdqLXdBMVVxTG01NjlDeG1sbkRlZ0ZfTHRmMlNBYWl0a1B3akRQWlBwbmxWMCIsInBheWVyX2lkIjoiM0FMSzc2SktUQ0pQMiJ9.",
 									'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 								},
 						body:payload
@@ -330,7 +330,7 @@ function getAccessToken(cb) {
 											'accept-language': "en_US",
 											'cache-control': "no-cache",
 											'content-type': "application/x-www-form-urlencoded",
-											'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
+											'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBVmxiVDRaa1RrSzZCZFFIUUFmRnNNdjBJYnJjcEI1QUZpMGdqLXdBMVVxTG01NjlDeG1sbkRlZ0ZfTHRmMlNBYWl0a1B3akRQWlBwbmxWMCIsInBheWVyX2lkIjoiM0FMSzc2SktUQ0pQMiJ9.",
 											'PayPal-Partner-Attribution-Id' : configuration.BN_CODE
 										},
 								body:payload
@@ -574,9 +574,9 @@ router.post('/create-order', function(req, res, next) {
             headers: {
                 'content-type': "application/json",
 				'authorization': "Bearer "+accessToken,
-				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
-				'PayPal-Request-Id':"GHIJKLMNOPQR12346ab34568",
-				'PayPal-Partner-Attribution-Id':"TestCIBCP3"
+				'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBVmxiVDRaa1RrSzZCZFFIUUFmRnNNdjBJYnJjcEI1QUZpMGdqLXdBMVVxTG01NjlDeG1sbkRlZ0ZfTHRmMlNBYWl0a1B3akRQWlBwbmxWMCIsInBheWVyX2lkIjoiM0FMSzc2SktUQ0pQMiJ9.",
+				'PayPal-Request-Id':"GHIJKLMNOPQR12346ab34568DG",
+				'PayPal-Partner-Attribution-Id':"TESTAPVAULTING"
             },
             body: {
 				"intent": "CAPTURE",
@@ -635,7 +635,7 @@ router.post('/create-order', function(req, res, next) {
 						 }
 						},
 						"payee":{
-							"merchant_id":"K8L3BRWBCN9W4"
+							"merchant_id":"3ALK76JKTCJP2"
 						 },
 						 "shipping":{
 							"name":{
@@ -1077,9 +1077,9 @@ router.post('/capture-order/:id', function(req, res, next) {
 					headers: {
 						'content-type': "application/json",
 						'authorization': "Bearer "+accessToken,
-						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBYzRFTkhKTjV6UUNrTTZQSkNtUVhaVW5IMWFZdXllUWUxU2RyREkyRlpWS0N5eDF1ZzZ4c2lmZEJITm1KbEtoQVhWSVlGbTVsc0FOZVZGOSIsInBheWVyX2lkIjoiSzhMM0JSV0JDTjlXNCJ9.",
-						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678jh12678",
-						'PayPal-Partner-Attribution-Id':"TestCIBCP3"
+						'PayPal-Auth-Assertion':"ewogICJhbGciOiAibm9uZSIKfQ==.eyJpc3MiOiJBVmxiVDRaa1RrSzZCZFFIUUFmRnNNdjBJYnJjcEI1QUZpMGdqLXdBMVVxTG01NjlDeG1sbkRlZ0ZfTHRmMlNBYWl0a1B3akRQWlBwbmxWMCIsInBheWVyX2lkIjoiM0FMSzc2SktUQ0pQMiJ9.",
+						'PayPal-Request-Id':"ABCDEFGHIJKLMNOPQRST12345678jh12678DG",
+						'PayPal-Partner-Attribution-Id':"TESTAPVAULTING"
 					},
 					body: { 
 					},

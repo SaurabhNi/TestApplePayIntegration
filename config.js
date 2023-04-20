@@ -14,8 +14,10 @@ var config = {
 		//"SECRET":"EHWbvfsKh049HIs9vb0TnBko6pqoUhcACaC4nxNUYaycrXhK7JZxSz-PCFsz-IaYywTsluwhG4OkfkK7",
 		// "CLIENT_ID" :"AdGR7Cs9JGdxLveenn07Lz7mnvxjuPF9IJapRR0nnXUAaTFfmQyQ_hdeOPqjNYV7qQQp64ifXmwwpraP",
 		// "SECRET":"EGA1-NgnMq95reQhWmH4As29fmoqNhOSCsvhCPmOnZxBm-fETezGxmk_3kvb2WzSb-CS3nHJkrRl-7mt",
-		"CLIENT_ID" :"Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9",
-		"SECRET":"EL1P7DJ21svrYK-gONbC5ayvCGEKOcUYj6k01B_lFeQHNOXmKbNSgle5Y6835ftsn5uNxsmr3bwUVzj1",
+		//"CLIENT_ID" :"Ac4ENHJN5zQCkM6PJCmQXZUnH1aYuyeQe1SdrDI2FZVKCyx1ug6xsifdBHNmJlKhAXVIYFm5lsANeVF9",
+		//"SECRET":"EL1P7DJ21svrYK-gONbC5ayvCGEKOcUYj6k01B_lFeQHNOXmKbNSgle5Y6835ftsn5uNxsmr3bwUVzj1",
+		"CLIENT_ID" :"AVlbT4ZkTkK6BdQHQAfFsMv0IbrcpB5AFi0gj-wA1UqLm569CxmlnDegF_Ltf2SAaitkPwjDPZPpnlV0",
+		"SECRET":"EKwcEjmmkd9Oow9iKrrOFAmg1UbDqe7A2Uw7ACqrG29OGGeEalKs_PxQYdX-L7pOHsOt_H1qD7ZZn58D",
 		//"CLIENT_ID" :"AQDukjC39I_OzRU839BiDWcmjCg3OTuTkAFBV0LzIVYdiGoYGz6KXV72xgJxKXfpWD9T0Rm4s5ubtQH8",
 		//"SECRET":"EJKtFLKkpcTfvHnrmjlausVe24CpwDwuE1BVMKMBh9_c9eP_crJHZvdNxr9uaiD8JOCLngebyxDcnYUN",
 		//"MERCHANTID":"PPC6CRGZNWY5C",// MAM NLM account
@@ -87,7 +89,7 @@ var config = {
 		"GET_PAYMENT_DETAILS":"https://api.sandbox.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",
 		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
-		"BN_CODE":"TESTVAULTV3"
+		"BN_CODE":"TESTAPVAULTING"
 	},
 
 	"live" : {
@@ -105,7 +107,7 @@ var config = {
 		"GET_PAYMENT_DETAILS":"https://api.paypal.com/v1/payments/payment/{payment_id}",
 		"CANCEL_URL":"https://ignis.serveo.net/cancel-url",
 		"RETURN_URL":"https://android-ec-nvp-server.herokuapp.com/execute-payments",
-		"BN_CODE":"TESTCIBCP3"
+		"BN_CODE":"TESTAPVAULTING"
 	}
 }
 
